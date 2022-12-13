@@ -47,11 +47,11 @@ while len(urls_to_crawl) > 0 and len(crawled_urls) < max_urls:
 # Print the list of adaptive URLs
 print(adaptive_urls)
 
-Documentation: 
-This script begins by importing the necessary libraries and setting the base URL to crawl. It then initializes the lists of URLs to crawl, URLs that have been crawled, and URLs that use adaptive design or separate mobile URLs.
+#Documentation: 
+#This script begins by importing the necessary libraries and setting the base URL to crawl. It then initializes the lists of URLs to crawl, URLs that have been crawled, and URLs that use adaptive design or separate mobile URLs.
 
-Next, the script enters a while loop that continues until there are no more URLs to crawl or the maximum number of URLs has been reached. Within this loop, the script crawls the next URL and checks if it uses adaptive design or separate mobile URLs by looking for specific headers in the HTTP response. If the URL uses one of these techniques, it is added to the list of adaptive URLs.
+#Next, the script enters a while loop that continues until there are no more URLs to crawl or the maximum number of URLs has been reached. Within this loop, the script crawls the next URL and checks if it uses adaptive design or separate mobile URLs by looking for specific headers in the HTTP response. If the URL uses one of these techniques, it is added to the list of adaptive URLs.
 
-The script then parses the HTML response to find any new URLs to crawl, adds the current URL to the list of crawled URLs, and continues the loop. Once all of the URLs have been crawled, the script prints the list of adaptive URLs that were found.
+#The script then parses the HTML response to find any new URLs to crawl, adds the current URL to the list of crawled URLs, and continues the loop. Once all of the URLs have been crawled, the script prints the list of adaptive URLs that were found.
 
-Note that this is just a simple example of how a web-crawling script could be designed to only crawl and index websites that use adaptive design or separate mobile URLs. A more advanced and robust implementation would likely require additional features and functionality.
+#Note that this is just a simple example of how a web-crawling script could be designed to only crawl and index websites that use adaptive design or separate mobile URLs. A more advanced and robust implementation would likely require additional features and functionality.
