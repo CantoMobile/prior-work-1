@@ -2,8 +2,8 @@
 import requests
 from bs4 import BeautifulSoup
 
-# Set the base URL to crawl
-base_url = "https://www.example.com"
+url = input()
+base_url = ({url})
 
 # Initialize the list of URLs to crawl
 urls_to_crawl = [base_url]
