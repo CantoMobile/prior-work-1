@@ -1,18 +1,26 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
-        <script defer src="https://pyscript.net/latest/pyscript.js"></script>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-    </head>
-    <body>
-      
-
-      </py-script>
-    </body>
+  <head>
+    <title>Cantonica</title>
+  </head>
+  <body>
+    <div id="logo">
+      <img src="logo.png" alt="Logo">
+    </div>
+    <div id="search-bar">
+      <form>
+        <input type="text" placeholder="Search for mobile apps">
+        <button type="submit">Nearby Events</button>
+      </form>
+    </div>
+    <div id="app-list">
+      {% for app in apps %}
+        <div class="app-box">
+          <img src="{{ app.image }}" alt="{{ app.name }}">
+          <h2>{{ app.name }}</h2>
+          <p>{{ app.description }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </body>
 </html>
