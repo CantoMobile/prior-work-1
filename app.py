@@ -1,6 +1,12 @@
-from flask import Flask, render_template
+from flask import Flask
+from flask import render_template
+import os 
+from requests import request
+
+assets = os.path.join('static', 'assets')
 
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = assets
 
 @app.route('/')
 def Apps():
@@ -21,7 +27,7 @@ def Apps():
             'description': 'This is the mobile link for Instagram'
         }
     ]
-    return render_template('index.html', apps=apps)
+    return render_template('temp.html', apps=apps)
 
 if __name__ == '__main__':
-  app.run(host='0.0.0.0')
+    app.run(debug=True)

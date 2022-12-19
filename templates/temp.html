@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" href='/static/styling.css'/>
     <title>Cantonica</title>
   </head>
   <body>
     <div id="logo">
-      <img src="logo.png" alt="Logo">
+      <img src="/templates/assets/logo.png" alt="Logo">
     </div>
     <div id="search-bar">
       <form>
-        <input type="text" placeholder="Search for mobile apps">
-        <button type="submit">Nearby Events</button>
+        <input type="text" placeholder="Nearby Events">
+        <button type="submit" name="submit_button" value="Do Something">Search</button>
       </form>
     </div>
     <div id="app-list">
       {% for app in apps %}
         <div class="app-box">
-          <img src="{{ app.image }}" alt="{{ app.name }}">
+          <img src="/templates/assets" alt="{{ app.name }}">
           <h2>{{ app.name }}</h2>
           <p>{{ app.description }}</p>
         </div>
