@@ -9,10 +9,16 @@
       <img src="/templates/assets/logo.png" alt="Logo">
     </div>
     <div id="search-bar">
-      <form>
-        <input type="text" placeholder="Nearby Events">
-        <button type="submit" name="submit_button" value="Do Something">Search</button>
+      <form action="/Search" method="post">
+        <input type="text" name="query">
+        <button type="submit">Search</button>
       </form>
+    </div>
+    <div id="top-nav-bar">
+      <a href="/Apps">Apps</a>
+      <a href="/Info">Info</a>
+      <a href="/News">News</a>
+      <a href="/My Apps">My Apps</a>
     </div>
     <div id="app-list">
       {% for app in apps %}
@@ -22,6 +28,6 @@
           <p>{{ app.description }}</p>
         </div>
       {% endfor %}
-    </div>
+    </div> 
   </body>
 </html>

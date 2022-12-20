@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cantonica</title>
+  </head>
+  <body>
+    <h1>Search Results</h1>
+    <ul>
+      {% for result in results %}
+        <li>
+          <a href="{{ result.url }}">{{ result.name }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>

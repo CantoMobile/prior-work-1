@@ -8,7 +8,14 @@ assets = os.path.join('static', 'assets')
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = assets
 
+@app.route('/Search', methods=['POST'])
+def Search():
+    query = request.form['query']
+    results = Search(query)
+    return render_template('searchtemp.html', results=results)
+
 @app.route('/')
+@app.route('/Apps')
 def Apps():
     apps = [
         {
@@ -29,5 +36,16 @@ def Apps():
     ]
     return render_template('temp.html', apps=apps)
 
+@app.route('/Info')
+def Info():
+    return render_template('temp.html')
+
+@app.route('/News')
+def News():
+    return render_template('temp.html')
+
+@app.route('/My Apps')
+def MyApps():
+    return render_template('temp.html')
 if __name__ == '__main__':
     app.run(debug=True)

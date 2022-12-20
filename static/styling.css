@@ -76,3 +76,23 @@ body {
     line-height: 1.5;
   }
   
+  #top-nav-bar {
+    display: flex;
+    align-items: center;
+    background-color: #fff; 
+    padding: 0 20px;
+  }
+  
+  #top-nav-bar a {
+    color: #333; 
+    text-decoration: none;
+    font-size: 16px;
+    padding: 0 20px; 
+  }
+  
+  #top-nav-bar a.selected { 
+    color: #333;
+    text-decoration: none;
+    font-weight: bold; 
+    border-bottom: 2px solid #333; 
+  }  
