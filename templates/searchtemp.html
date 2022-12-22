@@ -1,16 +1,33 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" href='/static/styling.css'/>
     <title>Cantonica</title>
   </head>
   <body>
+    <div id="logo">
+      <img src="/templates/assets/logo.png" alt="Logo">
+    </div>
+    <div id="search-bar">
+      <form action="/Search" method="post">
+        <input type="text" name="query">
+        <button type="submit">Search</button>
+      </form>
+    </div>
+    <div id="top-nav-bar">
+      <a href="/Apps">Apps</a>
+      <a href="/Info">Info</a>
+      <a href="/News">News</a>
+      <a href="/My Apps">My Apps</a>
+    </div>
+    <div>
     <h1>Search Results</h1>
     <ul>
       {% for result in results %}
-        <li>
-          <a href="{{ result.url }}">{{ result.name }}</a>
-        </li>
+        <a href="{{ result.link }}">{{ result.name }}</a><br>
       {% endfor %}
+
     </ul>
+    </div>
   </body>
 </html>

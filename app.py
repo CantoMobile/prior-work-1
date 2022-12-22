@@ -2,18 +2,33 @@ from flask import Flask
 from flask import render_template
 import os 
 from requests import request
+from flask_wtf import FlaskForm
+from wtforms import StringField
+from wtforms.validators import DataRequired
 
 assets = os.path.join('static', 'assets')
 
+class SearchForm(FlaskForm):
+    query = StringField('Query', validators=[DataRequired()])
+
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = assets
+app.config['SECRET_KEY'] = os.urandom(1)
+
+def Search(query):
+    results = [{'name': 'Facebook',
+            'image': 'facebook.png' ,
+            'description': 'This is the mobile link for facebook'}]
+    return results 
 
 @app.route('/Search', methods=['POST'])
-def Search():
-    query = request.form['query']
-    results = Search(query)
-    return render_template('searchtemp.html', results=results)
-
+def search_route():
+    form = SearchForm()
+    if form.validate_on_submit():
+        query = form.query.data
+        results = Search(query)
+        return render_template('searchtemp.html', results=results)
+    return render_template('searchtemp.html', form=form)
 @app.route('/')
 @app.route('/Apps')
 def Apps():
