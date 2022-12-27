@@ -21,13 +21,11 @@
       <a href="/My Apps">My Apps</a>
     </div>
     <div>
-    <h1>Search Results</h1>
-    <ul>
-      {% for result in results %}
-        <a href="{{ result.link }}">{{ result.name }}</a><br>
-      {% endfor %}
-
-    </ul>
-    </div>
+      <h1>Search Results</h1>
+      <ul>
+        {% for link in mobile_links %}
+          <li>{{ link }}</li>
+        {% endfor %}
+      </ul>
   </body>
 </html>
