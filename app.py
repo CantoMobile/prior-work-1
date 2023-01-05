@@ -7,6 +7,7 @@ from wtforms import StringField
 from wtforms.validators import DataRequired
 from google.oauth2.credentials import Credentials 
 from googleapiclient.discovery import build
+from bs4 import BeautifulSoup
 
 assets = os.path.join('static', 'assets')
 
@@ -18,31 +19,29 @@ app.config['UPLOAD_FOLDER'] = assets
 app.config['SECRET_KEY'] = os.urandom(1)
 
 def Search(query):
-    credentials = Credentials.from_api_key('AIzaSyDjwXrvNJ3fNVIY1yAY-FAUffx8VYGMcDE')
-    service = build('customsearch', 'v1', credentials=credentials)
-    response = service.cse().list(q=f"{query} site:m", cx='017576662512468239146:omuauf_lfve').execute()
-    results = response.get('items', [])
-    if not results:
-        return ["NO RESULTS FOUND"]
+    req = request.get(f'https://www.google.com/search?q={query}')
+    soup = BeautifulSoup(req.text, 'html.parser')
 
     mobile_links = []
-    for result in results:
-        mobile_links.append(result['link'])
+    for link in soup.find_all('a'):
+        href = link.get('href')
+        if href and '/url?q=' in href and '&sa=U&ved=' in href:
+            mobile_link = href.split('/url?q=')[1].split('&sa=U&ved=')[0]
+            mobile_links.append(mobile_link)
     return mobile_links
 
 @app.route('/Search', methods=['POST'])
-def search_route():
-    form = SearchForm()
-    if form.validate_on_submit():
-        query = form.query.data
-        mobile_links = Search(query)
-        print("Return ")
-        return render_template('searchtemp.html', mobile_links=mobile_links)
-    return render_template('searchtemp.html', form=form)
+def search_route(form):
+    query = form.query.data
+    mobile_links = Search(query)
+    for i, mobile_link in enumerate(mobile_links): 
+        print(f'{i+1}. {mobile_link}')
+    return render_template('searchtemp.html', mobile_links=mobile_links, form=form)
     
 @app.route('/')
 @app.route('/Apps')
 def Apps():
+    form = SearchForm()
     apps = [
         {
             'name': 'Facebook',
@@ -60,7 +59,7 @@ def Apps():
             'description': 'This is the mobile link for Instagram'
         }
     ]
-    return render_template('temp.html', apps=apps)
+    return render_template('temp.html', apps=apps, form=form)
 
 @app.route('/Info')
 def Info():
