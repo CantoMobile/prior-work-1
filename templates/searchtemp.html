@@ -9,9 +9,12 @@
       <img src="/templates/assets/logo.png" alt="Logo">
     </div>
     <h1>Search Results</h1>
-        {% for link in mobile_links %}
-          <li>{{ link }}</li>
-        {% endfor %}
+    <div id="search-results">
+      {% for mobile_link in mobile_links %}
+        <p>{{ mobile_link }}</p>
+      {% endfor %}
+    </div>
+
     <div id="search-bar">
       <form action="/Search" method="POST">
         {{ form.csrf_token }}

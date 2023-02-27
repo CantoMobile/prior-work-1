@@ -18,6 +18,7 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = assets
 app.config['SECRET_KEY'] = os.urandom(1)
 
+@app.route('/Search')
 def Search(query):
     req = request.get(f'https://www.google.com/search?q={query}')
     soup = BeautifulSoup(req.text, 'html.parser')
@@ -30,14 +31,17 @@ def Search(query):
             mobile_links.append(mobile_link)
     return mobile_links
 
-@app.route('/Search', methods=['POST'])
-def search_route(form):
-    query = form.query.data
-    mobile_links = Search(query)
-    for i, mobile_link in enumerate(mobile_links): 
-        print(f'{i+1}. {mobile_link}')
-    return render_template('searchtemp.html', mobile_links=mobile_links, form=form)
-    
+@app.route('/Search', methods=['GET','POST'])
+def search_route():
+    form = SearchForm()
+    if form.validate_on_submit():
+        query = form.query.data
+        mobile_links = Search(query)
+        for i, mobile_link in enumerate(mobile_links): 
+            print(f'{i+1}. {mobile_link}')
+        return render_template('searchtemp.html', mobile_links=mobile_links, form=form)
+    return render_template('searchtemp.html', form=form)
+
 @app.route('/')
 @app.route('/Apps')
 def Apps():
@@ -59,6 +63,8 @@ def Apps():
             'description': 'This is the mobile link for Instagram'
         }
     ]
+    if form.validate_on_submit():
+        return search_route(form)
     return render_template('temp.html', apps=apps, form=form)
 
 @app.route('/Info')
