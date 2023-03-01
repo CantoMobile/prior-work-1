@@ -5,8 +5,8 @@ from requests import request
 from flask_wtf import FlaskForm
 from wtforms import StringField
 from wtforms.validators import DataRequired
-from google.oauth2.credentials import Credentials 
-from googleapiclient.discovery import build
+#from google.oauth2.credentials import Credentials 
+#from googleapiclient.discovery import build
 from bs4 import BeautifulSoup
 
 assets = os.path.join('static', 'assets')
@@ -31,14 +31,13 @@ def Search(query):
             mobile_links.append(mobile_link)
     return mobile_links
 
+
 @app.route('/Search', methods=['GET','POST'])
 def search_route():
     form = SearchForm()
     if form.validate_on_submit():
         query = form.query.data
         mobile_links = Search(query)
-        for i, mobile_link in enumerate(mobile_links): 
-            print(f'{i+1}. {mobile_link}')
         return render_template('searchtemp.html', mobile_links=mobile_links, form=form)
     return render_template('searchtemp.html', form=form)
 
