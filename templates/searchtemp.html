@@ -9,14 +9,16 @@
       <img src="/templates/assets/logo.png" alt="Logo">
     </div>
     <h1>Search Results</h1>
-        {% for link in mobile_links %}
-          <li>{{ link }}</li>
-        {% endfor %}
+    <div id="search-results">
+      {% for mobile_link in mobile_links %}
+        <p>{{ mobile_link }}</p>
+      {% endfor %}
+    </div>
+
     <div id="search-bar">
       <form action="/Search" method="POST">
         {{ form.csrf_token }}
         {{ form.query }}
-        <input type="submit" value="Search">
       </form>
     </div>
     <div id="top-nav-bar">
@@ -25,7 +27,5 @@
       <a href="/News">News</a>
       <a href="/My Apps">My Apps</a>
     </div>
-    <div>
-      </div>
   </body>
 </html>
