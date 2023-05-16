@@ -3,10 +3,12 @@ from flask import Flask, g
 from flask import render_template
 from flask import request
 from flask_cors import CORS #comment this on deployment
+from database import db
 import os 
 import re
 import sys
 import requests
+from scrape import filter
 from flask_wtf import FlaskForm
 from wtforms import StringField
 from wtforms.validators import DataRequired
@@ -26,6 +28,9 @@ app.config['UPLOAD_FOLDER'] = assets
 app.config['SECRET_KEY'] = os.urandom(1)
 CORS(app) #comment this on deployment
 
+# todos = db.todos
+# print(todos)
+
 # @app.route('/Search')
 
 
@@ -43,7 +48,8 @@ def Search(query):
             mobile_link = href.split('/url?q=')[1].split('&sa=U&ved=')[0]
             mobile_links.append({"id": index, "link": mobile_link, "name": mobile_link.split("://")[1].split(".")[1], "description": description})
             index+=1
-    return (mobile_links)
+    print(filter(mobile_links), file=sys.stderr)
+    return filter(mobile_links)
 
 
 

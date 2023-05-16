@@ -41,22 +41,24 @@ export const SearchBar = () => {
         e.preventDefault();
         setSearchInput(e.target.value);
         const input = e.target.value
-        const response = await fetch("http://localhost:5000/Search", {
-            method: "POST",
-            headers: {
-                'Content-Type':'application/json'
-            },
-            body: JSON.stringify({query: input})
-        }).then(response => response.json())
-        .catch(error => {console.log(error); console.log(JSON.stringify({query: input}))})
+        // const response = await fetch("http://localhost:5000/Search", {
+        //     method: "POST",
+        //     headers: {
+        //         'Content-Type':'application/json'
+        //     },
+        //     body: JSON.stringify({query: input})
+        // }).then(response => response.json())
+        // .catch(error => {console.log(error); console.log(JSON.stringify({query: input}))})
 
-        const searchResults = await fetch("http://localhost:5000/Search", {
-            method: "GET",
-            headers: {
-                'Content-Type':'application/json'
-            }
-        }).then(response => response.json())
-        .catch(error => console.log(error))
+        const searchResults = ['https://www.microsoft.com/en-ca', 'https://www.disney.com/', 'https://www.starbucks.com',
+        'https://www.sony.com/en/', 'https://www.dotdashmeredith.com/', 'https://dribbble.com/',
+        'https://github.com/', 'https://www.shopify.com/ca', 'https://www.paypal.com/us/home', "https://www.amazon.com"]//await fetch("http://localhost:5000/Search", {
+        //     method: "GET",
+        //     headers: {
+        //         'Content-Type':'application/json'
+        //     }
+        // }).then(response => response.json())
+        // .catch(error => console.log(error))
         console.log(`Search results: ${typeof searchResults}`)
         console.log(searchResults)
 
@@ -92,8 +94,8 @@ export const SearchBar = () => {
                         <tr>
                             <th>Results</th>
                         </tr>
-                        {filteredResults.slice(0, 10).map((result) => {
-                            return (<SearchResult key={result.id} link={result.link} name={result.name} description={result.description} />
+                        {filteredResults.slice(0, 6).map((result) => {
+                            return (<SearchResult /*key={result.id}*/ link={result} /*name={result.name} description={result.description}*/ />
                         )})}
                     </tbody>
                 </table>

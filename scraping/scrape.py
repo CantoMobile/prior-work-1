@@ -77,6 +77,9 @@ def filter(results):
             filtered_results.append(result)
     return filtered_results
 
+# adaptive_links = ['https://www.paypal.com/us/home', "https://www.amazon.com", "https://www.amazon.ca/"]
+# print(filter(adaptive_links))
+
 # url = input()
 # base_url = ({url})
 

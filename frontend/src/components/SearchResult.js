@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
 
 
-export const SearchResult = ({ link, name, description }) => {
+export const SearchResult = ({ link/*, name, description */}) => {
     return (
         
         <div className="singleResult">
-            {console.log(link, description)}
+            {console.log(link)}
             <div className="siteName">
                 {link}
             </div>
             <a href={link}>
                 <div className="siteDescription">
-                    {name}
+                    {/*name*/}
                 </div>
             </a>
             

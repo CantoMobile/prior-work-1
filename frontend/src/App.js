@@ -1,40 +1,71 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
-import { SearchBar } from './components/SearchBar'
+import { Tab } from './components/Tab'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home'
+import { AddSite } from './pages/AddSite';
 import axios from 'axios'
 
-function App() {
-  const [getMessage, setGetMessage] = useState({})
-  const [x, setX] = useState(0)
-  const [data, setData] = useState([{}]);
+export default function App() {
+  const [selectedTab, setSelectedTab] = useState("Apps");
 
-  // useEffect(()=>{
-  //   axios.get('http://127.0.0.1:5000').then(response => {
-  //     console.log("SUCCESS", response)
-  //     setGetMessage(response)
-  //   }).catch(error => {
-  //     console.log(error)
-  //   })
-  // }, [])
-
-  const updateX = () => {
-    setX(x+1)
-    console.log(x)
+  function handleTabClick(tabTitle) {
+    setSelectedTab(tabTitle);
   }
 
+  useEffect(() => {
+    setSelectedTab("Apps");
+  }, []);
+
+  useEffect(() => {
+    console.log(selectedTab);
+  }, [handleTabClick]);
+
   return (
-    <div className="App">
-        <h1 onClick={updateX}>CANTONICA</h1>
-        <SearchBar/>
-        <p>React + Flask</p>
-        <p onClick={updateX}>The current time is {x}</p>
-        <div>{getMessage.status === 200 ? 
-          <h3>{getMessage.data.message}</h3>
-          :
-          <h3>LOADING</h3>}</div>
-      
-    </div>
+    <Router>
+      <div className="App">
+        <h1>Cantonica</h1>
+        <div className="tab-container">
+          <Tab
+            title="Apps"
+            selected={selectedTab === "Apps"}
+            onClick={() => handleTabClick("Apps")}
+          />
+          <Tab
+            title="Saved Apps"
+            selected={selectedTab === "Saved Apps"}
+            onClick={() => handleTabClick("Saved Apps")}
+          />
+          <Tab
+            title="Index New Apps"
+            selected={selectedTab === "Index New Apps"}
+            onClick={() => handleTabClick("Index New Apps")}
+          />
+        </div>
+        <div className="content">
+          {selectedTab === "Apps" && (
+            <div>
+              <Home />
+            </div>
+          )}
+          {selectedTab === "Saved Apps" && (
+            <div>
+              <h1>Hey</h1>
+            </div>
+          )}
+          {selectedTab === "Index New Apps" && (
+            <div>
+              <AddSite />
+            </div>
+          )}
+        </div>
+      </div>
+
+    
+      <Routes>
+        <Route index path="/"  />
+        <Route path="/AddSite" element={<AddSite />} />
+      </Routes>
+    </Router>
   );
 }
-
-export default App;
