@@ -1,0 +1,3 @@
+#IGNORE PYTHON ENVIRONMENT 
+venv/
+**/__pycache__/
