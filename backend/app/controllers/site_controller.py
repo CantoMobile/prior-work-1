@@ -69,6 +69,26 @@ def site(site_id):
         return '', 204
 
 
+@site_bp.route('/sites/search', methods=['GET'])
+def search_sites():
+    query = request.args.get('query')  
+    # Get the search query from the request parameters
+    if not query:
+        return jsonify({'error': 'Missing search query'}), 400
+
+    sites = site_repo.query({
+        '$or': [
+            {'name': {'$regex': query, '$options': 'i'}},
+            {'description': {'$regex': query, '$options': 'i'}},
+            {'keywords': {'$regex': query, '$options': 'i'}}
+        ]
+    })
+
+    serialized_sites = [site.serialize() for site in sites]
+
+    return jsonify(serialized_sites)
+
+
 @site_bp.route('/sites/<site_id>/stats', methods=['GET'])
 def site_stats(site_id):
     site = site_repo.findById(site_id)
