@@ -15,8 +15,10 @@ class AbstractRepository(Generic[T]):
         laColeccion = db[self.coleccion]
         elId = ""
         item = self.transformRefs(item)
+        print("acá estoy")
         if hasattr(item, "_id") and item._id != "":
             elId = item._id
+            print(elId)
             _id = ObjectId(elId)
             laColeccion = db[self.coleccion]
             delattr(item, "_id")
@@ -40,16 +42,54 @@ class AbstractRepository(Generic[T]):
         _id = ObjectId(id)
         laColeccion = db[self.coleccion]
         if hasattr(item, '_id'):
-            delattr(item, "_id")
-        item = item.__dict__
-        updateItem = {"$set": item}
+            delattr(item, '_id')
+        if not isinstance(item, dict):
+            item = item.__dict__
+        updateItem = {"$set": {key: value for key,
+                               value in item.items() if key != '_id'}}
         x = laColeccion.update_one({"_id": _id}, updateItem)
         return {"updated_count": x.matched_count}
 
-    def findById(self, id):
+    def updateArray(self, id, array, obj):
         laColeccion = db[self.coleccion]
+        _id_collection = ObjectId(id)
+        _id_array = ObjectId(obj._id)
+        print(obj._id)
+        element_class = str(obj.__class__.__name__.lower())
+        x = laColeccion.update_one({"_id": _id_collection}, {
+                                   '$push': {array: {'collection': element_class, '_id': _id_array}}})
+        return {"updated_count": x.matched_count}
+
+    def deleteFromArray(self, id, array, obj):
+        laColeccion = db[self.coleccion]
+        _id_collection = ObjectId(id)
+        _id_array = ObjectId(obj._id)
+        element_class = str(obj.__class__.__name__.lower())
+        x = laColeccion.update_one({"_id": _id_collection}, {
+            '$pull': {array: {'collection': element_class, '_id': _id_array}}})
+        return {"updated_count": x.matched_count}
+
+    def findById(self, id, laColeccion=None):
+        if laColeccion == None:
+            laColeccion = db[self.coleccion]
         x = laColeccion.find_one({"_id": ObjectId(id)})
-        x = self.getValuesDBRef(x)
+        if x != None:
+            x = self.replaceDBRefsWithObjects(x)
+        else:
+            return x
+        if x == None:
+            x = {}
+        else:
+            x["_id"] = x["_id"].__str__()
+        return x
+
+    def findByField(self, field, field_value):
+        laColeccion = db[self.coleccion]
+        x = laColeccion.find_one({field: field_value})
+        if x != None:
+            x = self.replaceDBRefsWithObjects(x)
+        else:
+            return x
         if x == None:
             x = {}
         else:
@@ -62,8 +102,11 @@ class AbstractRepository(Generic[T]):
         data = []
         for x in laColeccion.find():
             x["_id"] = x["_id"].__str__()
+            print("llegué acá 1")
             x = self.transformObjectIds(x)
-            x = self.getValuesDBRef(x)
+            print(x)
+            print("llegué acá 2")
+            x = self.replaceDBRefsWithObjects(x)
             data.append(x)
 
         print(data)
@@ -96,6 +139,7 @@ class AbstractRepository(Generic[T]):
 
                 laColeccion = db[x[k].collection]
                 valor = laColeccion.find_one({"_id": ObjectId(x[k].id)})
+                print("valor cadena", x[k])
                 valor["_id"] = valor["_id"].__str__()
                 x[k] = valor
                 x[k] = self.getValuesDBRef(x[k])
@@ -146,3 +190,17 @@ class AbstractRepository(Generic[T]):
     def ObjectToDBRef(self, item: T):
         nameCollection = item.__class__.__name__.lower()
         return DBRef(nameCollection, ObjectId(item._id))
+
+    def replaceDBRefsWithObjects(self, obj):
+        modified_obj = obj.copy()
+        for key in modified_obj:
+            if isinstance(modified_obj[key], list):
+                for i in range(len(modified_obj[key])):
+                    if isinstance(modified_obj[key][i], dict) and "collection" in modified_obj[key][i] and "_id" in modified_obj[key][i]:
+                        ref_collection = modified_obj[key][i]["collection"]
+                        obj_id = modified_obj[key][i]["_id"]
+                        # Search the entire object in the database
+                        result = self.findById(obj_id, db[ref_collection])
+
+                        modified_obj[key][i] = result
+        return modified_obj

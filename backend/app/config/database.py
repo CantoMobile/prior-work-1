@@ -1,5 +1,4 @@
 import os
-from .config import Config
 from pymongo import MongoClient
 import certifi
 from .config import ProductionConfig, DevelopmentConfig

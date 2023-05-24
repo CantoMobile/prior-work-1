@@ -12,6 +12,8 @@ app = Flask(__name__)
 db = dbase.connect()
 
 # App exception handling
+
+
 @app.errorhandler(Exception)
 def handle_error(error):
     response = {

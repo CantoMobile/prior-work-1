@@ -29,24 +29,17 @@ def role(role_id):
         abort(404)
 
     if request.method == 'GET':
-        role_data = role.__dict__.copy()
-        role_data.pop('collection', None)
-        role_data.pop('_id', None)
-        return jsonify(role_data)
+        return role
 
     elif request.method == 'PUT':
         data = request.json
         if 'name' in data:
-            role.name = data['name']
+            role['name'] = data['name']
         if 'description' in data:
-            role.description = data['description']
+            role['description'] = data['description']
         if 'permissions' in data:
-            role.permissions = data['permissions']
-        role = role_repo.update(role_id, role)
-        role_data = role.__dict__.copy()
-        role_data.pop('collection', None)
-        role_data.pop('_id', None)
-        return jsonify(role_data)
+            role['permissions'] = data['permissions']
+        return role_repo.update(role_id, role)
 
     elif request.method == 'DELETE':
         role_repo.delete(role_id)

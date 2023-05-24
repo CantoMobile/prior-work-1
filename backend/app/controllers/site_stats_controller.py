@@ -17,64 +17,49 @@ def site_stats():
 
     elif request.method == 'POST':
         data = request.json
-        site_id = data.get('site_id')
-        visits = data.get('visits', 0)
-        unique_visitors = data.get('unique_visitors', 0)
-        last_visit = datetime.strptime(data.get(
-            'last_visit'), '%Y-%m-%d %H:%M:%S') if data.get('last_visit') else None
-
-        site = site_repo.findById(site_id)
-
-        if not site:
-            abort(404)
-
+        if 'site' in data:
+            site = site_repo.findByField('url', data['site'])
+            if not site:
+                abort(404)
         site_stats = SiteStats(
-            site=site, visits=visits, unique_visitors=unique_visitors, last_visit=last_visit)
-        site_stats = site_stats_repo.save(site_stats)
-        response_data = {
-            'site_id': str(site_stats.site),
-            'visits': site_stats.visits,
-            'unique_visitors': site_stats.unique_visitors,
-            'last_visit': site_stats.last_visit.strftime('%Y-%m-%d %H:%M:%S')
-        }
-
-        return jsonify(response_data)
+            site={'_id': site['_id']}
+        )
+        site_stats_d = site_stats_repo.save(site_stats)
+        site['site_stats'] = {'_id': site_stats_d['_id']}
+        site_repo.update(site['_id'], site)
+        return site_stats_d
 
 
 @site_stats_bp.route('/site_stats/<stat_id>', methods=['GET', 'PUT', 'DELETE'])
 def site_stat(stat_id):
     site_stats = site_stats_repo.findById(stat_id)
-
+    print(site_stats)
     if not site_stats:
         abort(404)
 
     if request.method == 'GET':
-        stat_data = {
-            'site_id': str(site_stats.site),
-            'visits': site_stats.visits,
-            'unique_visitors': site_stats.unique_visitors,
-            'last_visit': site_stats.last_visit.strftime('%Y-%m-%d %H:%M:%S')
-        }
-        return jsonify(stat_data)
+        return site_stats
 
     elif request.method == 'PUT':
         data = request.json
-        site_stats.visits = data.get('visits', site_stats.visits)
-        site_stats.unique_visitors = data.get(
-            'unique_visitors', site_stats.unique_visitors)
-        site_stats.last_visit = datetime.strptime(data.get(
-            'last_visit'), '%Y-%m-%d %H:%M:%S') if data.get('last_visit') else None
-        site_stats = site_stats_repo.update(stat_data, site_stats)
+        if 'site' in data:
+            site = site_repo.findByField('url', data['site'])
+            if not site:
+                abort(404)
+            if site_stats['site']['_id'] != site['_id']:
+                abort(404)
 
-        response_data = {
-            'site_id': str(site_stats.site),
-            'visits': site_stats.visits,
-            'unique_visitors': site_stats.unique_visitors,
-            'last_visit': site_stats.last_visit.strftime('%Y-%m-%d %H:%M:%S')
-        }
+        if 'visits' in data:
+            site_stats['visits'] += data['visits']
+        if 'unique_visitors' in data:
+            site_stats['unique_visitors'] += data['unique_visitors']
+        site_stats['last_visit'] = datetime.now()
 
-        return jsonify(response_data)
+        return site_stats_repo.update(stat_id, site_stats)
 
     elif request.method == 'DELETE':
+        site = site_repo.findByField('site_stats._id', stat_id)
+        site['site_stats'] = None
+        site_repo.update(site['_id'], site)
         site_stats_repo.delete(stat_id)
         return '', 204

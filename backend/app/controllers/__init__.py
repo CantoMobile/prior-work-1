@@ -23,12 +23,12 @@ __all__ = [
 # IMPORT CONTROLLERS FROM CONTROLLERS FILE AND REGISTRATION BLUEPRINT
 
 # USER CONTROLLER
-from .user_controller import users, user, verify_user_password, set_user_password, add_user_role, remove_user_role
+from .user_controller import users, user, set_user_password, add_user_role, remove_user_role, authentication
 user_bp.add_url_rule('/users', view_func=users, methods=['GET', 'POST'])
 user_bp.add_url_rule('/users/<string:user_id>', view_func=user,
                      methods=['GET', 'PUT', 'DELETE'])
-user_bp.add_url_rule('/users/<user_id>/verify_password',
-                     view_func=verify_user_password, methods=['POST'])
+user_bp.add_url_rule('//users/authentication', view_func=authentication,
+                     methods=['POST'])
 user_bp.add_url_rule('/users/<string:user_id>/set_password',
                      view_func=set_user_password, methods=['PUT'])
 user_bp.add_url_rule('/users/<user_id>/add_role/<role_id>',

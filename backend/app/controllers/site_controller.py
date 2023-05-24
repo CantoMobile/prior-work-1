@@ -1,5 +1,5 @@
 from flask import jsonify, request, abort
-from models import Site, SiteStats
+from models import Site
 from . import site_bp
 from repositories.site_repository import SiteRepository
 from repositories.site_stats_repository import SiteStatsRepository
@@ -25,11 +25,7 @@ def sites():
             media=data['media'],
             admin_email=data['admin_email']
         )
-        site_d = site_repo.save(site)
-        site_data = site_d.__dict__.copy()
-        site_data.pop('collection', None)
-        site_data.pop('_id', None)
-        site_data['site_stats'] = str(site_data.get('site_stats'))
+        site_data = site_repo.save(site)
         return jsonify(site_data)
 
 
@@ -41,28 +37,25 @@ def site(site_id):
         abort(404)
 
     if request.method == 'GET':
-        site_data = site.__dict__.copy()
-        site_data.pop('collection', None)
-        site_data.pop('_id', None)
-        site_data['site_stats'] = str(site_data.get('site_stats'))
-
-        return jsonify(site_data)
+        return site
 
     elif request.method == 'PUT':
         data = request.json
-        site.url = data['url']
-        site.name = data['name']
-        site.description = data['description']
-        site.keywords = data['keywords']
-        site.media = data['media']
-        site.admin_email = data['admin_email']
-        site = site_repo.update(site_id, site)
-        site_data = site.__dict__.copy()
-        site_data.pop('collection', None)
-        site_data.pop('_id', None)
-        site_data['site_stats'] = str(site_data.get('site_stats'))
 
-        return jsonify(site_data)
+        if 'url' in data:
+            site['url'] = data['url']
+        if 'name' in data:
+            site['name'] = data['name']
+        if 'description' in data:
+            site['description'] = data['description']
+        if 'keywords' in data:
+            site['keywords'] = data['keywords']
+        if 'media' in data:
+            site['media'] = data['media']
+        if 'admin_email' in data:
+            site['admin_email'] = data['admin_email']
+
+        return site_repo.update(site_id, site)
 
     elif request.method == 'DELETE':
         site_repo.delete(site_id)
@@ -76,17 +69,13 @@ def site_stats(site_id):
     if not site:
         abort(404)
 
-    if not site.site_stats:
+    if not site['site_stats']:
         abort(404)
 
-    stats = site_stats_repo.findById(site.site_stats)
+    stats = site_stats_repo.findById(site['site_stats'])
 
     if not stats:
         abort(404)
+    return stats
 
-    stats_data = {
-        'visits': stats.visits,
-        'unique_visitors': stats.unique_visitors,
-        'last_visit': stats.last_visit.strftime('%Y-%m-%d %H:%M:%S')
-    }
-    return jsonify(stats_data)
+# PENDIENTE AÑADIR METODOS PARA AÑADIR Y ELIMINAR ESTADISTICAS
