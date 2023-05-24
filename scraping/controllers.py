@@ -53,10 +53,11 @@ def roles():
 
 
 @app.route('/sites', methods=['GET', 'POST'])
-def sites():
+def get_all_sites():
     if request.method == 'GET':
         sites = Site.objects.all()
-        return jsonify(sites)
+        site_data = [{'id': str(site.id), 'name': site.name, 'url': site.url, 'description': site.description} for site in sites]
+        return jsonify(site_data)
 
     elif request.method == 'POST':
         data = request.json
@@ -70,6 +71,30 @@ def sites():
         )
         site.save()
         return jsonify(site)
+    
+
+@app.route('/sites/<site_id>', methods=['GET'])
+def get_site(site_id):
+    site = Site.objects.get(id=site_id)
+    site_data = {'id': str(site.id), 'name': site.name, 'url': site.url, 'description': site.description}
+    return jsonify(site_data)
+
+
+@app.route('/sites/search', methods=['GET'])
+def search_sites():
+    query = request.args.get('query')  
+    # Get the search query from the request parameters
+    if not query:
+        return jsonify({'error': 'Missing search query'}), 400
+
+    # Perform the search query on the database
+    sites = Site.objects.filter(
+        Q(name__icontains=query) | Q(description__icontains=query) | Q(keywords__icontains=query)
+    )
+
+    serialized_sites = [site.serialize() for site in sites]
+
+    return jsonify(serialized_sites)
 
 
 @app.route('/search_results', methods=['GET', 'POST'])

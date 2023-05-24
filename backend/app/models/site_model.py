@@ -16,3 +16,27 @@ class Site:
                 self._id = _id
             else:
                 self._id = _id
+
+    def serialize(self):
+        return {
+            'id': str(self.id),
+            'url': self.url,
+            'name': self.name,
+            'description': self.description,
+            'keywords': self.keywords,
+            'media': self.media,
+            'admin_email': self.admin_email,
+            'site_stats': str(self.site_stats.id) if self.site_stats else None
+    }
+
+    def serialize(self):
+        return {
+            'id': str(self.id),
+            'url': self.url,
+            'name': self.name,
+            'description': self.description,
+            'keywords': self.keywords,
+            'media': self.media,
+            'admin_email': self.admin_email,
+            'site_stats': str(self.site_stats.id) if self.site_stats else None
+    }

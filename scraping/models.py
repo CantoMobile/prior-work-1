@@ -57,6 +57,18 @@ class Site(db.Document):
     def __repr__(self):
         return f"Site(name='{self.name}', url='{self.url}')"
 
+    def serialize(self):
+        return {
+            'id': str(self.id),
+            'url': self.url,
+            'name': self.name,
+            'description': self.description,
+            'keywords': self.keywords,
+            'media': self.media,
+            'admin_email': self.admin_email,
+            'site_stats': str(self.site_stats.id) if self.site_stats else None
+        }
+
 
 class SearchResult(db.Document):
     query_string = db.StringField(required=True)
