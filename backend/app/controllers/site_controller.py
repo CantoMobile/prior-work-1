@@ -64,22 +64,21 @@ def site(site_id):
 
 @site_bp.route('/sites/search', methods=['GET'])
 def search_sites():
-    query = request.args.get('query')  
+    query = request.args.get('query')
+    print(query)
     # Get the search query from the request parameters
     if not query:
         return jsonify({'error': 'Missing search query'}), 400
 
     sites = site_repo.query({
         '$or': [
+             {'url': {'$regex': query, '$options': 'i'}},
             {'name': {'$regex': query, '$options': 'i'}},
             {'description': {'$regex': query, '$options': 'i'}},
             {'keywords': {'$regex': query, '$options': 'i'}}
         ]
     })
-
-    serialized_sites = [site.serialize() for site in sites]
-
-    return jsonify(serialized_sites)
+    return sites
 
 
 @site_bp.route('/sites/<site_id>/stats', methods=['GET'])
@@ -97,5 +96,3 @@ def site_stats(site_id):
     if not stats:
         abort(404)
     return stats
-
-# PENDIENTE AÑADIR METODOS PARA AÑADIR Y ELIMINAR ESTADISTICAS

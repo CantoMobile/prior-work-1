@@ -1,6 +1,5 @@
 import datetime
 from bson import ObjectId
-from models.authentication_model import Authentication
 
 
 class User:

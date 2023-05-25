@@ -38,11 +38,12 @@ def run_app(config):
 
 
 if __name__ == '__main__':
-    from controllers import user_bp, auth_bp, role_bp, site_bp, search_results_bp, user_sites_bp, site_stats_bp
+    from controllers import user_bp, auth_bp, role_bp, permissions_bp, site_bp, search_results_bp, user_sites_bp, site_stats_bp
     # import controllers and regristation them.
     app.register_blueprint(user_bp)
     app.register_blueprint(auth_bp)
     app.register_blueprint(role_bp)
+    app.register_blueprint(permissions_bp)
     app.register_blueprint(site_bp)
     app.register_blueprint(search_results_bp)
     app.register_blueprint(user_sites_bp)

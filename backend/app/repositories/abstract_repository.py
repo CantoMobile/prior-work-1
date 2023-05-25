@@ -54,7 +54,6 @@ class AbstractRepository(Generic[T]):
         laColeccion = db[self.coleccion]
         _id_collection = ObjectId(id)
         _id_array = ObjectId(obj._id)
-        print(obj._id)
         element_class = str(obj.__class__.__name__.lower())
         x = laColeccion.update_one({"_id": _id_collection}, {
                                    '$push': {array: {'collection': element_class, '_id': _id_array}}})
@@ -102,14 +101,11 @@ class AbstractRepository(Generic[T]):
         data = []
         for x in laColeccion.find():
             x["_id"] = x["_id"].__str__()
-            print("llegué acá 1")
             x = self.transformObjectIds(x)
-            print(x)
-            print("llegué acá 2")
+
             x = self.replaceDBRefsWithObjects(x)
             data.append(x)
 
-        print(data)
         return data
 
     def query(self, theQuery):
@@ -118,7 +114,7 @@ class AbstractRepository(Generic[T]):
         for x in laColeccion.find(theQuery):
             x["_id"] = x["_id"].__str__()
             x = self.transformObjectIds(x)
-            x = self.getValuesDBRef(x)
+            x = self.replaceDBRefsWithObjects(x)
             data.append(x)
         return data
 
@@ -160,7 +156,7 @@ class AbstractRepository(Generic[T]):
 
     def transformObjectIds(self, x):
         for attribute in x.keys():
-            print('atribute', x[attribute])
+            #print('atribute', x[attribute], "type", type(x[attribute]))
             if isinstance(x[attribute], ObjectId):
                 x[attribute] = x[attribute].__str__()
             elif isinstance(x[attribute], list):
@@ -196,11 +192,18 @@ class AbstractRepository(Generic[T]):
         for key in modified_obj:
             if isinstance(modified_obj[key], list):
                 for i in range(len(modified_obj[key])):
-                    if isinstance(modified_obj[key][i], dict) and "collection" in modified_obj[key][i] and "_id" in modified_obj[key][i]:
+                    if isinstance(modified_obj[key][i], dict) and "collection" in modified_obj[key][i] \
+                            and "_id" in modified_obj[key][i]:
                         ref_collection = modified_obj[key][i]["collection"]
                         obj_id = modified_obj[key][i]["_id"]
                         # Search the entire object in the database
                         result = self.findById(obj_id, db[ref_collection])
-
                         modified_obj[key][i] = result
+            if isinstance(modified_obj[key], dict) and ("collection" in modified_obj[key]
+                                                        and "_id" in modified_obj[key]):
+                ref_collection = modified_obj[key]["collection"]
+                obj_id = modified_obj[key]["_id"]
+                result = self.findById(str(obj_id), db[ref_collection])
+                print("result", result)
+                modified_obj[key] = result
         return modified_obj

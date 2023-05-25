@@ -19,3 +19,39 @@ class UserRepository(AbstractRepository[User]):
             user_data["_id"] = user_data["_id"].__str__()
         return user_data
 
+    def verify_permissions(self, email_user, resource, method):
+        laColeccion = db[self.coleccion]
+        pipeline = [
+            {
+                '$match': {'email': email_user}
+            },
+            {
+                '$lookup': {
+                    'from': "role",
+                    'localField': "roles._id",
+                    'foreignField': "_id",
+                    'as': "roles"
+                }
+            },
+            {
+                '$unwind': "$roles"
+            },
+            {
+                '$lookup': {
+                    'from': "permissions",
+                    'localField': "roles.permissions._id",
+                    'foreignField': "_id",
+                    'as': "permissions"
+                }
+            },
+            {
+                '$match': {
+                    "permissions.resource": resource,
+                    "permissions.actions": method
+                }
+            }, {
+                "$limit": 1
+            }
+        ]
+        result = laColeccion.aggregate(pipeline)
+        return bool(next(result, False))

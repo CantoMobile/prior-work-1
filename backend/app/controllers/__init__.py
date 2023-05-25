@@ -3,6 +3,7 @@ from flask import Blueprint
 user_bp = Blueprint('user', __name__)
 auth_bp = Blueprint('auth', __name__)
 role_bp = Blueprint('role', __name__)
+permissions_bp = Blueprint('permissions', __name__)
 site_bp = Blueprint('site', __name__)
 search_results_bp = Blueprint('search_results', __name__)
 user_sites_bp = Blueprint('user_sites', __name__)
@@ -13,6 +14,7 @@ __all__ = [
     'user_bp',
     'auth_bp',
     'role_bp',
+    'permissions_bp',
     'site_bp',
     'search_results_bp',
     'user_sites_bp',
@@ -43,17 +45,21 @@ user_sites_bp.add_url_rule(
 user_sites_bp.add_url_rule(
     '/user_sites/<relationship_id>', view_func=user_site, methods=['GET', 'POST'])
 
-# AUTHENTICATION CONTROLLER
-from .authentication_controller import auth, logout
-auth_bp.add_url_rule('/auth', view_func=auth, methods=['POST'])
-auth_bp.add_url_rule('/auth/<token>', view_func=logout, methods=['DELETE'])
-
 # ROLE CONTROLLER
-from .role_controller import role, roles
+from .role_controller import role, roles, add_role_permissions, remove_role_permissions
 role_bp.add_url_rule('/roles', view_func=roles, methods=['GET', 'POST'])
 role_bp.add_url_rule('/roles/<role_id>', view_func=role,
                      methods=['GET', 'PUT', 'DELETE'])
+role_bp.add_url_rule('/roles/<role_id>/add_permissions/<permission_id>', 
+                     view_func=add_role_permissions, methods=['PUT'])
+role_bp.add_url_rule('/roles/<role_id>/remove_permissions/<permission_id>', 
+                     view_func=remove_role_permissions, methods=['PUT'])
 
+#PERMISSIONS CONTROLLER 
+from .permissions_controller import permissions, permission, permissions_by_group
+permissions_bp.add_url_rule('/permissions', view_func=permissions, methods=['GET', 'POST'])
+permissions_bp.add_url_rule('/permissions/<string:permission_id>', view_func=permission, methods=['GET', 'PUT', 'DELETE'])
+permissions_bp.add_url_rule('/permissions/permissions_by_group', view_func=permissions_by_group, methods=['GET'])
 # SEARCH_RESULT CONTROLLER
 from .search_result_controller import search_results, search_result
 search_results_bp.add_url_rule(
@@ -62,12 +68,14 @@ search_results_bp.add_url_rule('/search_results/<result_id>',
                                view_func=search_result, methods=['GET', 'PUT', 'DELETE'])
 
 # SITE CONTROLLER
-from .site_controller import site_stats, sites, site
+from .site_controller import site_stats, sites, site, search_sites
 site_bp.add_url_rule('/sites', view_func=sites, methods=['GET', 'POST'])
 site_bp.add_url_rule('/sites/<site_id>', view_func=site,
                      methods=['GET', 'PUT', 'DELETE'])
 site_bp.add_url_rule('/sites/<site_id>/stats',
                      view_func=site_stats, methods=['GET'])
+user_sites_bp.add_url_rule(
+    '/sites/search>', view_func=search_sites, methods=['GET'])
 
 # SITE_STATS CONTROLLER
 from .site_stats_controller import site_stat, site_stats
@@ -75,6 +83,8 @@ site_stats_bp.add_url_rule(
     '/site_stats', view_func=site_stats, methods=['GET', 'POST'])
 site_stats_bp.add_url_rule(
     '/site_stats/<stat_id>', view_func=site_stat, methods=['GET', 'PUT', 'DELETE'])
+
+
 
 
 

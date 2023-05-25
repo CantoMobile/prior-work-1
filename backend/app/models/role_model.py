@@ -5,11 +5,11 @@ class Role:
     def __init__(self, name, description, permissions, _id=None):
         self.name = name
         self.description = description
-        self.permissions = permissions
+        self.permissions = permissions or []
         if _id is not None:
             if isinstance(_id, str):
-               # self._id = ObjectId(_id)
-               self._id = _id
+                # self._id = ObjectId(_id)
+                self._id = _id
             else:
                 self._id = _id
 

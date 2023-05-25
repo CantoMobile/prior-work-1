@@ -89,7 +89,7 @@ def set_user_password(user_id):
         print("update:", update)
         return jsonify(update)
     else:
-        return {"error": "Error al actualizar la contraseña"}, 304
+        return {"error": "Failed to update password"}, 304
 
 
 @user_bp.route('/users/<user_id>/add_role/<role_id>', methods=['PUT'])
@@ -102,8 +102,10 @@ def add_user_role(user_id, role_id):
 
     user = User(**user_data)
     role = Role(**role_data)
-    if role in user.roles:
-        return {'Error': 'El usuario ya tiene el rol asignado'}, 304
+
+    validation = any(role_item['_id'] == role_id for role_item in user.roles)
+    if validation:
+        return {'Error': 'The user already has the role assigned'}, 304
     else:
         return user_repo.updateArray(user_id, 'roles', role)
 

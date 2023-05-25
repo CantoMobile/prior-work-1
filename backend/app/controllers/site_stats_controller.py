@@ -25,7 +25,9 @@ def site_stats():
             site={'_id': site['_id']}
         )
         site_stats_d = site_stats_repo.save(site_stats)
-        site['site_stats'] = {'_id': site_stats_d['_id']}
+        site['site_stats'] = {'collection': 'sitestats',
+                              '_id': site_stats_d['_id']
+                              }
         site_repo.update(site['_id'], site)
         return site_stats_d
 
