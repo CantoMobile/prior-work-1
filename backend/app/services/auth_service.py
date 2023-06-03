@@ -2,7 +2,7 @@ import os
 from datetime import datetime, timedelta
 import jwt
 from jwt import InvalidTokenError
-from config.config import ProductionConfig, DevelopmentConfig
+from app.config.config import ProductionConfig, DevelopmentConfig
 import hashlib
 
 

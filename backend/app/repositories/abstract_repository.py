@@ -1,7 +1,7 @@
 from bson import DBRef
 from bson.objectid import ObjectId
 from typing import Generic, TypeVar, get_args, List
-from main import db
+from app.main import db
 
 T = TypeVar("T")
 

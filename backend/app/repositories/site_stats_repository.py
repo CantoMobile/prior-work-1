@@ -1,8 +1,7 @@
 from flask import abort, request
-from models.site_stats_model import SiteStats
+from app.models.site_stats_model import SiteStats
 from bson.objectid import ObjectId
-from repositories.abstract_repository import AbstractRepository
-from main import db
+from app.repositories.abstract_repository import AbstractRepository
 
 
 class SiteStatsRepository(AbstractRepository[SiteStats]):

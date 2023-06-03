@@ -1,9 +1,9 @@
 from flask import jsonify, request, abort
-from models import UserSite, User, Site
+from app.models import UserSite, User, Site
 from . import user_sites_bp
-from repositories.user_site_repository import UserSiteRepository
-from repositories.user_repository import UserRepository
-from repositories.site_repository import SiteRepository
+from app.repositories.user_site_repository import UserSiteRepository
+from app.repositories.user_repository import UserRepository
+from app.repositories.site_repository import SiteRepository
 user_repo = UserRepository()
 user_site_repo = UserSiteRepository()
 site_repo = SiteRepository()

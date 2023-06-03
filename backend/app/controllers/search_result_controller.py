@@ -1,8 +1,8 @@
 from flask import jsonify, request, abort
-from models import SearchResult, Site
+from app.models import SearchResult, Site
 from . import search_results_bp
-from repositories.search_result_repository import SearchResultRepository
-from repositories.site_repository import SiteRepository
+from app.repositories.search_result_repository import SearchResultRepository
+from app.repositories.site_repository import SiteRepository
 
 site_repo = SiteRepository()
 search_result_repo = SearchResultRepository()

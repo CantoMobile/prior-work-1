@@ -1,8 +1,8 @@
 from flask import jsonify, request, abort
-from models import Site
+from app.models import Site
 from . import site_bp
-from repositories.site_repository import SiteRepository
-from repositories.site_stats_repository import SiteStatsRepository
+from app.repositories.site_repository import SiteRepository
+from app.repositories.site_stats_repository import SiteStatsRepository
 
 
 site_stats_repo = SiteStatsRepository()

@@ -1,7 +1,4 @@
 from flask import current_app
-from models.role_model import Role
-from models.user_model import User
-
 
 class Authorization:
     def __init__(self, user_id, role_id, permission_id):

@@ -1,11 +1,11 @@
 from flask import request, jsonify, abort
-from models.role_model import Role
-from models.user_model import User
+from app.models.role_model import Role
+from app.models.user_model import User
 from . import user_bp
-from repositories.user_repository import UserRepository
-from repositories.role_repository import RoleRepository
-from services.auth_service import AuthService
-from services.middleware import validate_token
+from app.repositories.user_repository import UserRepository
+from app.repositories.role_repository import RoleRepository
+from app.services.auth_service import AuthService
+from app.services.middleware import validate_token
 role_repo = RoleRepository()
 user_repo = UserRepository()
 auth = AuthService()

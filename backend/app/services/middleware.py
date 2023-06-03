@@ -1,7 +1,7 @@
 from flask import request, jsonify, url_for
 from functools import wraps
 from .auth_service import AuthService
-from repositories.user_repository import UserRepository
+from app.repositories.user_repository import UserRepository
 
 user_repo = UserRepository()
 

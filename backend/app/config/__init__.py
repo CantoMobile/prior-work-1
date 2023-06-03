@@ -1,6 +1,6 @@
 # Archivo: config/__init__.py
 
-from config.config import Config, ProductionConfig, DevelopmentConfig
+from app.config.config import Config, ProductionConfig, DevelopmentConfig
 
 
 

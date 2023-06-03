@@ -2,8 +2,8 @@ import json
 import os
 import click
 from flask import Flask, jsonify, g
-from config import ProductionConfig, DevelopmentConfig
-from config import database as dbase
+from app.config import ProductionConfig, DevelopmentConfig
+from app.config import database as dbase
 
 
 app = Flask(__name__)

@@ -1,8 +1,7 @@
 from flask import abort, request
-from models.role_model import Role
+from app.models.role_model import Role
 from bson.objectid import ObjectId
-from repositories.abstract_repository import AbstractRepository
-from main import db
+from app.repositories.abstract_repository import AbstractRepository
 
 
 class RoleRepository(AbstractRepository[Role]):

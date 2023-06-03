@@ -1,6 +1,6 @@
 from flask import jsonify, request, abort
-from models import Permissions
-from repositories.permissions_repository import PermissionsRepository
+from app.models import Permissions
+from app.repositories.permissions_repository import PermissionsRepository
 from . import permissions_bp
 permissions_repo = PermissionsRepository()
 
