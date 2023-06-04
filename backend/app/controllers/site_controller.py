@@ -1,6 +1,5 @@
-from flask import jsonify, request, abort
+from flask import Blueprint, jsonify, request, abort
 from app.models import Site
-from . import site_bp
 from app.repositories.site_repository import SiteRepository
 from app.repositories.site_stats_repository import SiteStatsRepository
 
@@ -8,8 +7,8 @@ from app.repositories.site_stats_repository import SiteStatsRepository
 site_stats_repo = SiteStatsRepository()
 site_repo = SiteRepository()
 
-
-@site_bp.route('/sites', methods=['GET', 'POST'])
+site_bp = Blueprint('site_bp', __name__, url_prefix='/sites')
+@site_bp.route('/', methods=['GET', 'POST'])
 def sites():
     if request.method == 'GET':
         sites_data = site_repo.findAll()
@@ -29,7 +28,7 @@ def sites():
         return jsonify(site_data)
 
 
-@site_bp.route('/sites/<site_id>', methods=['GET', 'PUT', 'DELETE'])
+@site_bp.route('/<site_id>', methods=['GET', 'PUT', 'DELETE'])
 def site(site_id):
     site = site_repo.findById(site_id)
 
@@ -62,7 +61,7 @@ def site(site_id):
         return '', 204
 
 
-@site_bp.route('/sites/search', methods=['GET'])
+@site_bp.route('/search', methods=['GET'])
 def search_sites():
     query = request.args.get('query')
     print(query)
@@ -81,7 +80,7 @@ def search_sites():
     return sites
 
 
-@site_bp.route('/sites/<site_id>/stats', methods=['GET'])
+@site_bp.route('/<site_id>/stats', methods=['GET'])
 def site_stats(site_id):
     site = site_repo.findById(site_id)
 

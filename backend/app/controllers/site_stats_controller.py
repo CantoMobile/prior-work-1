@@ -1,15 +1,15 @@
-from flask import jsonify, request, abort
+from flask import Blueprint, jsonify, request, abort
 from app.models import SiteStats, Site
 from datetime import datetime
-from . import site_stats_bp
 from app.repositories.site_stats_repository import SiteStatsRepository
 from app.repositories.site_repository import SiteRepository
 
 site_stats_repo = SiteStatsRepository()
 site_repo = SiteRepository()
 
+site_stats_bp = Blueprint('site_stats_bp', __name__, url_prefix='/site_stats')
 
-@site_stats_bp.route('/site_stats', methods=['GET', 'POST'])
+@site_stats_bp.route('/', methods=['GET', 'POST'])
 def site_stats():
     if request.method == 'GET':
         site_stats_data = site_stats_repo.findAll()
@@ -32,7 +32,7 @@ def site_stats():
         return site_stats_d
 
 
-@site_stats_bp.route('/site_stats/<stat_id>', methods=['GET', 'PUT', 'DELETE'])
+@site_stats_bp.route('/<stat_id>', methods=['GET', 'PUT', 'DELETE'])
 def site_stat(stat_id):
     site_stats = site_stats_repo.findById(stat_id)
     print(site_stats)

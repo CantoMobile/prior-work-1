@@ -1,11 +1,12 @@
-from flask import jsonify, request, abort
+from flask import Blueprint, jsonify, request, abort
 from app.models import Permissions
 from app.repositories.permissions_repository import PermissionsRepository
-from . import permissions_bp
 permissions_repo = PermissionsRepository()
 
 
-@permissions_bp.route('/permissions', methods=['GET', 'POST'])
+permissions_bp = Blueprint('permissions_bp', __name__, url_prefix='/permissions')
+
+@permissions_bp.route('/', methods=['GET', 'POST'])
 def permissions():
     if request.method == 'GET':
         permissions_data = permissions_repo.findAll()
@@ -20,7 +21,7 @@ def permissions():
         return permissions_d
 
 
-@permissions_bp.route('/permissions/<string:permission_id>', methods=['GET', 'PUT', 'DELETE'])
+@permissions_bp.route('/<string:permission_id>', methods=['GET', 'PUT', 'DELETE'])
 def permission(permission_id):
     permissions_data = permissions_repo.findById(permission_id)
     if not permissions_data:
@@ -42,7 +43,7 @@ def permission(permission_id):
         return jsonify({"message": "Permission deleted"})
 
 
-@permissions_bp.route('/permissions/permissions_by_group', methods=['GET'])
+@permissions_bp.route('/permissions_by_group', methods=['GET'])
 def permissions_by_group():
     query = request.args.get('query')
     if not query:

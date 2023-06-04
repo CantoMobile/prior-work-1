@@ -3,20 +3,38 @@ from pymongo import MongoClient
 import certifi
 from .config import ProductionConfig, DevelopmentConfig
 
-ca = certifi.where()
-if os.environ.get('FLASK_ENV') == 'development':
-    uri = DevelopmentConfig.MONGO_URI
-    env = "PreProduction"
-else:
-    uri = ProductionConfig.MONGO_URI
-    env = "Production"
+class Database:
+    _instance = None
 
+    def __new__(cls):
+        if not cls._instance:
+            cls._instance = super().__new__(cls)
+        return cls._instance
 
-def connect():
-    try:
-        client = MongoClient(uri, tlsCAfile=ca)
-        db = client['test']
-        print("You successfully connected to MongoDB {}!".format(env))
-    except ConnectionError as e:
-        print(e)
-    return db
+    def __init__(self):
+        if os.environ.get('FLASK_ENV') == 'development':
+            uri = DevelopmentConfig.MONGO_URI
+            self.env = "PreProduction"
+        else:
+            uri = ProductionConfig.MONGO_URI
+            self.env = "Production"
+        self.mongo_uri = uri
+        self.client = None
+        self.db = None
+
+    def connect(self):
+        if self.client is None:
+            try:
+                ca = certifi.where()
+                self.client = MongoClient(self.mongo_uri, tlsCAfile=ca)
+                self.db = self.client['test']
+                print("You successfully connected to MongoDB {}!".format(self.env))
+            except ConnectionError as e:
+                print(e)
+        return self.db
+
+    def close(self):
+        if self.client is not None:
+            self.client.close()
+            self.client = None
+            self.db = None

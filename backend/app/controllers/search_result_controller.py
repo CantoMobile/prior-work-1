@@ -1,14 +1,14 @@
-from flask import jsonify, request, abort
+from flask import Blueprint, jsonify, request, abort
 from app.models import SearchResult, Site
-from . import search_results_bp
 from app.repositories.search_result_repository import SearchResultRepository
 from app.repositories.site_repository import SiteRepository
 
 site_repo = SiteRepository()
 search_result_repo = SearchResultRepository()
 
+search_results_bp = Blueprint('search_results_bp', __name__, url_prefix='/search_results')
 
-@search_results_bp.route('/search_results', methods=['GET', 'POST'])
+@search_results_bp.route('/', methods=['GET', 'POST'])
 def search_results():
     if request.method == 'GET':
         results_data = search_result_repo.findAll()
@@ -35,7 +35,7 @@ def search_results():
         return jsonify(result_data)
 
 
-@search_results_bp.route('/search_results/<result_id>', methods=['GET', 'PUT', 'DELETE'])
+@search_results_bp.route('/<result_id>', methods=['GET', 'PUT', 'DELETE'])
 def search_result(result_id):
     result = search_result_repo.findById(result_id)
 

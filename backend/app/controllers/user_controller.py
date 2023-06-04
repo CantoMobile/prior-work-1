@@ -1,7 +1,6 @@
-from flask import request, jsonify, abort
+from flask import Blueprint, request, jsonify, abort
 from app.models.role_model import Role
 from app.models.user_model import User
-from . import user_bp
 from app.repositories.user_repository import UserRepository
 from app.repositories.role_repository import RoleRepository
 from app.services.auth_service import AuthService
@@ -10,6 +9,7 @@ role_repo = RoleRepository()
 user_repo = UserRepository()
 auth = AuthService()
 
+user_bp = Blueprint('user_bp', __name__,  url_prefix='/users')
 
 @user_bp.route('/users', methods=['GET', 'POST'])
 @validate_token
@@ -31,7 +31,7 @@ def users():
         return jsonify(user_data)
 
 
-@user_bp.route('/users/<string:user_id>', methods=['GET', 'PUT', 'DELETE'])
+@user_bp.route('/<string:user_id>', methods=['GET', 'PUT', 'DELETE'])
 @validate_token
 def user(user_id):
     user_data = user_repo.findById(user_id)
@@ -58,7 +58,7 @@ def user(user_id):
         return jsonify({'message': 'User deleted'})
 
 
-@user_bp.route('/users/authentication', methods=['POST'])
+@user_bp.route('/authentication', methods=['POST'])
 def authentication():
     data = request.json
     print(data)
@@ -74,7 +74,7 @@ def authentication():
         return jsonify({'message': 'Password is incorrect'}), 401
 
 
-@user_bp.route('/users/<string:user_id>/set_password', methods=['PUT'])
+@user_bp.route('/<string:user_id>/set_password', methods=['PUT'])
 def set_user_password(user_id):
     data = request.json
     user_data = user_repo.findById(user_id)
@@ -92,7 +92,7 @@ def set_user_password(user_id):
         return {"error": "Failed to update password"}, 304
 
 
-@user_bp.route('/users/<user_id>/add_role/<role_id>', methods=['PUT'])
+@user_bp.route('/<user_id>/add_role/<role_id>', methods=['PUT'])
 @validate_token
 def add_user_role(user_id, role_id):
     user_data = user_repo.findById(user_id)
@@ -110,7 +110,7 @@ def add_user_role(user_id, role_id):
         return user_repo.updateArray(user_id, 'roles', role)
 
 
-@user_bp.route('/users/<user_id>/remove_role/<role_id>', methods=['PUT'])
+@user_bp.route('/<user_id>/remove_role/<role_id>', methods=['PUT'])
 @validate_token
 def remove_user_role(user_id, role_id):
     user_data = user_repo.findById(user_id)

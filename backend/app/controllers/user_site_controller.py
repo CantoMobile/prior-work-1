@@ -1,15 +1,16 @@
-from flask import jsonify, request, abort
+from flask import Blueprint, jsonify, request, abort
 from app.models import UserSite, User, Site
-from . import user_sites_bp
 from app.repositories.user_site_repository import UserSiteRepository
 from app.repositories.user_repository import UserRepository
 from app.repositories.site_repository import SiteRepository
+
+
 user_repo = UserRepository()
 user_site_repo = UserSiteRepository()
 site_repo = SiteRepository()
 
-
-@user_sites_bp.route('/user_sites', methods=['GET', 'POST'])
+user_sites_bp = Blueprint('user_sites_bp', __name__, url_prefix='/user_sites')
+@user_sites_bp.route('/', methods=['GET', 'POST'])
 def user_sites():
     if request.method == 'GET':
         user_sites_data = user_site_repo.findAll()
@@ -40,7 +41,7 @@ def user_sites():
         return jsonify(response_data)
 
 
-@user_sites_bp.route('/user_sites/<relationship_id>', methods=['GET', 'DELETE'])
+@user_sites_bp.route('/<relationship_id>', methods=['GET', 'DELETE'])
 def user_site(relationship_id):
     user_site = user_site_repo.findById(relationship_id)
 

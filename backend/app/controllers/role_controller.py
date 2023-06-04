@@ -1,14 +1,13 @@
-from flask import jsonify, request, abort
+from flask import Blueprint, jsonify, request, abort
 from app.models import Role, Permissions
-from . import role_bp
 from app.repositories.role_repository import RoleRepository
 from app.repositories.permissions_repository import PermissionsRepository
 
 permissions_repo = PermissionsRepository()
 role_repo = RoleRepository()
 
-
-@role_bp.route('/roles', methods=['GET', 'POST'])
+role_bp = Blueprint('role_bp', __name__, url_prefix='/roles')
+@role_bp.route('/', methods=['GET', 'POST'])
 def roles():
     if request.method == 'GET':
         roles_data = role_repo.findAll()
@@ -25,7 +24,7 @@ def roles():
         return jsonify(role_data)
 
 
-@role_bp.route('/roles/<role_id>', methods=['GET', 'PUT', 'DELETE'])
+@role_bp.route('/<role_id>', methods=['GET', 'PUT', 'DELETE'])
 def role(role_id):
     role = role_repo.findById(role_id)
     if not role:
@@ -49,7 +48,7 @@ def role(role_id):
         return '', 204
 
 
-@role_bp.route('/roles/<role_id>/add_permissions/<permission_id>', methods=['PUT'])
+@role_bp.route('/<role_id>/add_permissions/<permission_id>', methods=['PUT'])
 def add_role_permissions(role_id, permission_id):
     role_data = role_repo.findById(role_id)
     print(role_data)
@@ -67,7 +66,7 @@ def add_role_permissions(role_id, permission_id):
         return role_repo.updateArray(role_id, 'permissions', permission)
 
 
-@role_bp.route('/roles/<role_id>/remove_permissions/<permission_id>', methods=['PUT'])
+@role_bp.route('/<role_id>/remove_permissions/<permission_id>', methods=['PUT'])
 def remove_role_permissions(role_id, permission_id):
     role_data = role_repo.findById(role_id)
     print(role_data)
