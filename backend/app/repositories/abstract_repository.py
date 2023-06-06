@@ -7,25 +7,19 @@ T = TypeVar("T")
 
 
 class AbstractRepository(Generic[T]):
-    _db = None
-
-    def __init_subclass__(cls, **kwargs):
-        cls._db = Database()
+    _db = Database()
 
     def __init__(self):
         theClass = get_args(self.__orig_bases__[0])
         self.coleccion = theClass[0].__name__.lower()
         self.db = self._db.connect()
 
-
     def save(self, item: T):
         laColeccion = self.db[self.coleccion]
         elId = ""
         item = self.transformRefs(item)
-        print("acá estoy")
         if hasattr(item, "_id") and item._id != "":
             elId = item._id
-            print(elId)
             _id = ObjectId(elId)
             laColeccion = self.db[self.coleccion]
             delattr(item, "_id")
@@ -75,9 +69,18 @@ class AbstractRepository(Generic[T]):
             '$pull': {array: {'collection': element_class, '_id': _id_array}}})
         return {"updated_count": x.matched_count}
 
+    def deleteFromArrayMany(self, id, array, laColeccion=None):
+        if laColeccion == None:
+            laColeccion = self.db[self.coleccion]
+        else: 
+            laColeccion = self.db[laColeccion]
+        query = {array[1] + "._id": ObjectId(id)}
+        update = {"$pull": {array[1]: {"_id": ObjectId(id)}}}
+        x = laColeccion.update_many(query, update)
+
     def findById(self, id, laColeccion=None):
         if laColeccion == None:
-            laColeccion = db[self.coleccion]
+            laColeccion = self.db[self.coleccion]
         x = laColeccion.find_one({"_id": ObjectId(id)})
         if x != None:
             x = self.replaceDBRefsWithObjects(x)
@@ -115,6 +118,12 @@ class AbstractRepository(Generic[T]):
 
         return data
 
+    def existsByField(self, field, field_value):
+        laColeccion = self.db[self.coleccion]
+        query = {field: field_value}
+        count = laColeccion.count_documents(query)
+        return count > 0
+
     def query(self, theQuery):
         laColeccion = self.db[self.coleccion]
         data = []
@@ -142,7 +151,6 @@ class AbstractRepository(Generic[T]):
 
                 laColeccion = self.db[x[k].collection]
                 valor = laColeccion.find_one({"_id": ObjectId(x[k].id)})
-                print("valor cadena", x[k])
                 valor["_id"] = valor["_id"].__str__()
                 x[k] = valor
                 x[k] = self.getValuesDBRef(x[k])
@@ -211,6 +219,5 @@ class AbstractRepository(Generic[T]):
                 ref_collection = modified_obj[key]["collection"]
                 obj_id = modified_obj[key]["_id"]
                 result = self.findById(str(obj_id), self.db[ref_collection])
-                print("result", result)
                 modified_obj[key] = result
         return modified_obj

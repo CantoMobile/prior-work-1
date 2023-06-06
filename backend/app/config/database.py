@@ -1,6 +1,8 @@
 import os
 from pymongo import MongoClient
 import certifi
+
+from app.utils.logger import logger
 from .config import ProductionConfig, DevelopmentConfig
 
 class Database:
@@ -28,9 +30,9 @@ class Database:
                 ca = certifi.where()
                 self.client = MongoClient(self.mongo_uri, tlsCAfile=ca)
                 self.db = self.client['test']
-                print("You successfully connected to MongoDB {}!".format(self.env))
+                logger.info("Connect successfully to Mongo {}!".format(self.env))
             except ConnectionError as e:
-                print(e)
+                logger.error("Error connecting to Mongo ", e)
         return self.db
 
     def close(self):

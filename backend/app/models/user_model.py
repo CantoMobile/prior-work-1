@@ -3,15 +3,15 @@ from bson import ObjectId
 
 
 class User:
-    def __init__(self, name, email, password, auth_provider=None, sites=None, roles=None, created_at=None, _id=None):
+    def __init__(self, name, email, password, auth_provider=None, sites=None, role=None, created_at=None, _id=None):
         self.name = name
         self.email = email
         self.password = password
         self.auth_provider = auth_provider
         self.sites = sites or []
-        self.roles = roles or []
+        self.role = role  # or []
         if created_at is None:
-            self.created_at = datetime.now()
+            self.created_at = datetime.datetime.now()
         else:
             self.created_at = created_at
         if _id is not None:
@@ -32,20 +32,20 @@ class User:
         else:
             return False
 
-    def add_role(self, role):
-        print(len(self.roles))
-        if any(existing_role.name == role.name for existing_role in self.roles):
-            return False
-        else:
-            self.roles.append(role)
-            return True
+    # def add_role(self, role):
+    #     print(len(self.roles))
+    #     if any(existing_role.name == role.name for existing_role in self.roles):
+    #         return False
+    #     else:
+    #         self.roles.append(role)
+    #         return True
 
-    def remove_role(self, role):
-        if role._id in self.roles:
-            self.roles.remove(role._to__dict__)
+    # def remove_role(self, role):
+    #     if role._id in self.roles:
+    #         self.roles.remove(role._to__dict__)
 
-    def has_permission(self, permission):
-        for role in self.roles:
-            if permission in role.permissions:
-                return True
-        return False
+    # def has_permission(self, permission):
+    #     for role in self.roles:
+    #         if permission in role.permissions:
+    #             return True
+    #     return False

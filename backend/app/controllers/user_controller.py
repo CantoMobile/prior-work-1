@@ -5,13 +5,16 @@ from app.repositories.user_repository import UserRepository
 from app.repositories.role_repository import RoleRepository
 from app.services.auth_service import AuthService
 from app.services.middleware import validate_token
+from app.services.user_service import *
+
 role_repo = RoleRepository()
 user_repo = UserRepository()
 auth = AuthService()
 
 user_bp = Blueprint('user_bp', __name__,  url_prefix='/users')
 
-@user_bp.route('/users', methods=['GET', 'POST'])
+
+@user_bp.route('/', methods=['GET', 'POST'])
 @validate_token
 def users():
     if request.method == 'GET':
@@ -20,12 +23,14 @@ def users():
 
     elif request.method == 'POST':
         data = request.json
-        roles = data.pop('roles', [])  # extract roles from data
+        errors = validate_email_domain(data['email'])
+        if errors[0] == False:
+            return {"error": errors[1]}, 401
+        
         user = User(
             name=data['name'],
             email=data['email'],
-            password=auth.encrypt(data['password']),
-            roles=roles
+            password=auth.encrypt(data['password'])
         )
         user_data = user_repo.save(user)
         return jsonify(user_data)
@@ -49,8 +54,8 @@ def user(user_id):
             user_data['email'] = data['email']
         if 'password' in data and user_data['password'] != data['password']:
             user_data['password'] = auth.encrypt(data['password'])
-        if 'roles' in data:
-            user_data['roles'] = data['roles']
+        if 'role' in data:
+            user_data['role'] = data['roles']
         return user_repo.update(user_id, user_data)
 
     elif request.method == 'DELETE':
@@ -61,20 +66,19 @@ def user(user_id):
 @user_bp.route('/authentication', methods=['POST'])
 def authentication():
     data = request.json
-    print(data)
     user_data = user_repo.find_by_email(data['email'])
     if not user_data:
         abort(404)
-
     user = User(**user_data)
-
+    role_id = user_data['role']['_id'] 
     if user.verify_password(auth.encrypt(data['password'])):
-        return auth.generate_auth_token(data)
+        return auth.generate_auth_token(data, role_id)
     else:
         return jsonify({'message': 'Password is incorrect'}), 401
 
 
 @user_bp.route('/<string:user_id>/set_password', methods=['PUT'])
+@validate_token
 def set_user_password(user_id):
     data = request.json
     user_data = user_repo.findById(user_id)
@@ -86,7 +90,6 @@ def set_user_password(user_id):
     response = user.set_password(auth.encrypt(data['password']))
     if response != None and response == True:
         update = user_repo.update(user_id, user)
-        print("update:", update)
         return jsonify(update)
     else:
         return {"error": "Failed to update password"}, 304
@@ -100,14 +103,15 @@ def add_user_role(user_id, role_id):
     if not user_data or not role_data:
         abort(404)
 
-    user = User(**user_data)
-    role = Role(**role_data)
-
-    validation = any(role_item['_id'] == role_id for role_item in user.roles)
-    if validation:
-        return {'Error': 'The user already has the role assigned'}, 304
+    #validation = any(role_item['_id'] == role_id for role_item in user.roles)
+    if user_data['role'] != None:
+        if role_id in user_data['role']['_id']:
+            return {'Error': 'The user already has the role assigned'}, 304
     else:
-        return user_repo.updateArray(user_id, 'roles', role)
+        user_data['role'] = {'collection': 'role',
+                              '_id': role_data['_id']
+                              }
+        return user_repo.update(user_id, user_data)
 
 
 @user_bp.route('/<user_id>/remove_role/<role_id>', methods=['PUT'])
@@ -118,12 +122,11 @@ def remove_user_role(user_id, role_id):
 
     if not user_data or not role_data:
         abort(404)
-
-    user = User(**user_data)
-    role = Role(**role_data)
-
-    validation = any(role_item['_id'] == role_id for role_item in user.roles)
-    if validation:
-        return user_repo.deleteFromArray(user_id, 'roles', role)
+    #validation = any(role_item['_id'] == role_id for role_item in user.roles)
+    if user_data['role'] != None:
+        if role_id in user_data['role']['_id']:
+    #if validation:
+            user_data['role'] = None
+            return user_repo.update(user_id, user_data)
     else:
         return jsonify({"Error": "This role is not associated with this user"}), 304

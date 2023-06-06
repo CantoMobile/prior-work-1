@@ -2,12 +2,14 @@ from flask import Blueprint, jsonify, request, abort
 from app.models import Role, Permissions
 from app.repositories.role_repository import RoleRepository
 from app.repositories.permissions_repository import PermissionsRepository
+from app.services.middleware import validate_token
 
 permissions_repo = PermissionsRepository()
 role_repo = RoleRepository()
 
 role_bp = Blueprint('role_bp', __name__, url_prefix='/roles')
 @role_bp.route('/', methods=['GET', 'POST'])
+@validate_token
 def roles():
     if request.method == 'GET':
         roles_data = role_repo.findAll()
@@ -15,6 +17,8 @@ def roles():
 
     elif request.method == 'POST':
         data = request.json
+        if role_repo.existsByField('name', data['name'].title()):
+            return {"error":"This role is already exist."}, 401
         role = Role(
             name=data['name'],
             description=data['description'],
@@ -51,9 +55,7 @@ def role(role_id):
 @role_bp.route('/<role_id>/add_permissions/<permission_id>', methods=['PUT'])
 def add_role_permissions(role_id, permission_id):
     role_data = role_repo.findById(role_id)
-    print(role_data)
     permission_data = permissions_repo.findById(permission_id)
-    print(permission_data)
     if not role_data or not permission_data:
         abort(404)
     role = Role(**role_data)
@@ -69,9 +71,7 @@ def add_role_permissions(role_id, permission_id):
 @role_bp.route('/<role_id>/remove_permissions/<permission_id>', methods=['PUT'])
 def remove_role_permissions(role_id, permission_id):
     role_data = role_repo.findById(role_id)
-    print(role_data)
     permission_data = permissions_repo.findById(permission_id)
-    print(permission_data)
     if not role_data or not permission_data:
         abort(404)
     role = Role(**role_data)

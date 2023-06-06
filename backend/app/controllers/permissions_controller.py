@@ -32,15 +32,22 @@ def permission(permission_id):
 
     elif request.method == 'PUT':
         data = request.json
+        updated_permissions = permissions_data.copy()
         if 'resource' in data:
-            permissions_data['resource'] = data['resource']
+            updated_permissions['resource'] = data['resource']
         if 'actions' in data:
-            permissions_data['actions'] = data['actions']
-        return permissions_repo.update(permission_id, permissions_data)
+            updated_permissions['actions'] = data['actions']
+        return permissions_repo.update(permission_id, updated_permissions)
 
     elif request.method == 'DELETE':
-        permissions_repo.delete(permission_id)
-        return jsonify({"message": "Permission deleted"})
+        update = ["role","permissions"]
+        try:
+            permissions_repo.deleteFromArrayMany(permission_id, update, update[0])
+            permissions_repo.delete(permission_id)
+            return jsonify({"message": "Permission deleted"})
+        except Exception as e:
+            return jsonify({"message": "Failed to delete permission", "error": str(e)}), 401
+
 
 
 @permissions_bp.route('/permissions_by_group', methods=['GET'])

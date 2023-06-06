@@ -64,7 +64,6 @@ def site(site_id):
 @site_bp.route('/search', methods=['GET'])
 def search_sites():
     query = request.args.get('query')
-    print(query)
     # Get the search query from the request parameters
     if not query:
         return jsonify({'error': 'Missing search query'}), 400

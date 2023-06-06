@@ -35,7 +35,6 @@ def site_stats():
 @site_stats_bp.route('/<stat_id>', methods=['GET', 'PUT', 'DELETE'])
 def site_stat(stat_id):
     site_stats = site_stats_repo.findById(stat_id)
-    print(site_stats)
     if not site_stats:
         abort(404)
 

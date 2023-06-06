@@ -2,7 +2,7 @@ import os
 from flask import Flask, jsonify
 from app.config import ProductionConfig, DevelopmentConfig
 from app.controllers import user_bp, role_bp, permissions_bp, site_bp, search_results_bp, user_sites_bp, site_stats_bp
-
+from app.utils.logger import logger
 app = Flask(__name__)
 
 # App exception handling
@@ -12,6 +12,7 @@ def handle_error(error):
         'message': 'An unexpected error has occurred on the server.',
         'error': str(error)
     }
+    logger.error(response)
     return jsonify(response), 500
 
 # import controllers and regristation them.

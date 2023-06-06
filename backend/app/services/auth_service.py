@@ -4,6 +4,8 @@ import jwt
 from jwt import InvalidTokenError
 from app.config.config import ProductionConfig, DevelopmentConfig
 import hashlib
+from app.services.role_service import extract_permissions
+from app.utils.logger import logger
 
 
 class AuthService:
@@ -13,9 +15,12 @@ class AuthService:
         else:
             self.secret_key = ProductionConfig.SECRET_KEY
 
-    def generate_auth_token(self, user):
+    def generate_auth_token(self, user, role_id):
+        logger.info('Generating auth token for user %s', user["email"])
+        permissions = extract_permissions(role_id)
         payload = {
             'email': user['email'],
+            'permissions': list(permissions),
             'exp': datetime.utcnow() + timedelta(days=1)  # Token expires in 1 day
         }
         token = jwt.encode(payload, self.secret_key,
@@ -23,13 +28,15 @@ class AuthService:
         return {"token": token}
 
     def verify_auth_token(self, token):
+        logger.info("Verifying auth token")
         try:
             payload = jwt.decode(token, self.secret_key, algorithms=['HS256'])
-            print(payload)
             user_email = payload['email']
-            return user_email
+            permissions = payload['permissions']
+            set_list = set(tuple(permission) for permission in permissions)
+            return user_email, set_list
         except InvalidTokenError as e:
-            print("Invalid token" + e.message)
+            logger.error("Invalid token" + e.message)
             return {"error": e.message}
 
     def encrypt(self, text):
@@ -39,5 +46,3 @@ class AuthService:
         hash_result = sha256.hexdigest()
 
         return hash_result
-
-    
