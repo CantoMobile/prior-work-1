@@ -1,9 +1,14 @@
 import os
 from flask import Flask, jsonify
+from flask_cors import CORS
 from app.config import ProductionConfig, DevelopmentConfig
 from app.controllers import user_bp, role_bp, permissions_bp, site_bp, search_results_bp, user_sites_bp, site_stats_bp
 from app.utils.logger import logger
 app = Flask(__name__)
+
+#Allow cors 
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
+
 
 # App exception handling
 @app.errorhandler(Exception)
