@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request, abort
 from app.models import Site
 from app.repositories.site_repository import SiteRepository
 from app.repositories.site_stats_repository import SiteStatsRepository
+from ..utils.s3Upload import uploadFile
 
 
 site_stats_repo = SiteStatsRepository()

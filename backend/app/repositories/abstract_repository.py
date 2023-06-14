@@ -123,6 +123,16 @@ class AbstractRepository(Generic[T]):
         query = {field: field_value}
         count = laColeccion.count_documents(query)
         return count > 0
+    
+    def sort(self, field, order):
+        laColeccion = self.db[self.coleccion]
+        data = []
+        for x in laColeccion.find().sort(field, order):
+            x["_id"] = x["_id"].__str__()
+            x = self.transformObjectIds(x)
+            x = self.replaceDBRefsWithObjects(x)
+            data.append(x)
+        return data
 
     def query(self, theQuery):
         laColeccion = self.db[self.coleccion]

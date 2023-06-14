@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, request, abort
+import pymongo
 from app.models import SiteStats, Site
 from datetime import datetime
 from app.repositories.site_stats_repository import SiteStatsRepository
@@ -31,6 +32,10 @@ def site_stats():
         site_repo.update(site['_id'], site)
         return site_stats_d
 
+@site_stats_bp.route('/site_stats/top6_saved', methods=['GET'])
+def search_sites():
+    top6_sites = site_stats_repo.sort('saves', pymongo.DESCENDING)[:6]
+    return jsonify(top6_sites)
 
 @site_stats_bp.route('/<stat_id>', methods=['GET', 'PUT', 'DELETE'])
 def site_stat(stat_id):

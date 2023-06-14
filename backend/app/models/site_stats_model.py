@@ -3,10 +3,11 @@ from datetime import datetime
 
 class SiteStats:
 
-    def __init__(self, site, visits=0, unique_visitors=0, last_visit=None, _id=None):
+    def __init__(self, site, visits=0, unique_visitors=0, last_visit=None, saves=0, _id=None):
         self.site = site
         self.visits = visits
         self.unique_visitors = unique_visitors
+        self.saves = saves
         if last_visit is None:
             self.last_visit = datetime.now()
         else:
