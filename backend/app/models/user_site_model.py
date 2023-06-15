@@ -1,6 +1,14 @@
 class UserSite:
 
-    def __init__(self, user, site):
-        self.user = user
-        self.site = site
-# SITE DEBE SER UN ARRAY DE SITIOS, PORQUE UN USUARIO PUEDE GUARDAR MUCHOS SITIOS, ARREGLAR
+    def __init__(self, user_id, site=None, _id=None):
+        self.user_id = user_id
+        if site != None: 
+            self.site = site
+        else: 
+            self.site = []
+        if _id is not None:
+            if isinstance(_id, str):
+                self._id = _id
+            else:
+                self._id = _id
+

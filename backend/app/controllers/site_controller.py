@@ -3,6 +3,7 @@ import json
 from app.models import Site
 from app.repositories.site_repository import SiteRepository
 from app.repositories.site_stats_repository import SiteStatsRepository
+from app.services.user_site_service import return_not_referenced
 from ..utils.s3Upload import uploadFile
 
 
@@ -111,3 +112,8 @@ def site_stats(site_id):
     if not stats:
         abort(404)
     return stats
+
+@site_bp.route('/user/<user_id>', methods=['GET'])
+def get_sites_by_user(user_id):
+    return return_not_referenced(user_id)
+     

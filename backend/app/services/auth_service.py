@@ -1,7 +1,7 @@
 import os
 from datetime import datetime, timedelta
 import jwt
-from jwt import InvalidTokenError
+from jwt import InvalidTokenError, ExpiredSignatureError
 from app.config.config import ProductionConfig, DevelopmentConfig
 import hashlib
 from app.services.role_service import extract_permissions
@@ -18,14 +18,19 @@ class AuthService:
     def generate_auth_token(self, user, role_id):
         logger.info('Generating auth token for user %s', user["email"])
         permissions = extract_permissions(role_id)
+        if permissions != None:
+            permissions = list(permissions)
         payload = {
             'email': user['email'],
-            'permissions': list(permissions),
+            'permissions': permissions,
             'exp': datetime.utcnow() + timedelta(days=1)  # Token expires in 1 day
         }
         token = jwt.encode(payload, self.secret_key,
                            algorithm="HS256")
-        return {"token": token}
+        del user['password']
+        del user['role']
+        return { "user": user, 
+                "token": token}
 
     def verify_auth_token(self, token):
         logger.info("Verifying auth token")
@@ -35,9 +40,12 @@ class AuthService:
             permissions = payload['permissions']
             set_list = set(tuple(permission) for permission in permissions)
             return user_email, set_list
+        except ExpiredSignatureError as e:
+             logger.info("Token has expired. Error %s", str(e))
+             return {"Error": "Token has expired"}
         except InvalidTokenError as e:
-            logger.error("Invalid token" + e.message)
-            return {"error": e.message}
+            logger.error("Invalid token. Error: %s", str(e))
+            return {"error:", str(e)}
 
     def encrypt(self, text):
         sha256 = hashlib.sha256()
