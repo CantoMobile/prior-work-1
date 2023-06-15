@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, request, abort
+import json
 from app.models import Site
 from app.repositories.site_repository import SiteRepository
 from app.repositories.site_stats_repository import SiteStatsRepository
@@ -11,22 +12,37 @@ site_repo = SiteRepository()
 site_bp = Blueprint('site_bp', __name__, url_prefix='/sites')
 @site_bp.route('/', methods=['GET', 'POST'])
 def sites():
-    if request.method == 'GET':
-        sites_data = site_repo.findAll()
-        return sites_data
+    sites_data = site_repo.findAll()
+    return sites_data
 
-    elif request.method == 'POST':
-        data = request.json
+
+@site_bp.route('/add_site', methods=['POST'])
+def add_site():
+        media_links = []
+        data = json.loads(request.form['json'])
+        
+        if (request.files != None):
+            for file in request.files.getlist('media'):
+                image_name = f"{data['name']}_{file.filename}"
+                try:
+                    file_data = file.stream.read()
+                    file_link = uploadFile(file_data, image_name)
+                except Exception as e:
+                    return e
+                media_links.append(file_link)
+
         site = Site(
             url=data['url'],
             name=data['name'],
             description=data['description'],
             keywords=data['keywords'],
-            media=data['media'],
-            admin_email=data['admin_email']
+            media=media_links,
+            admin_email=data['admin_email'] if 'admin_email' in data else ""
         )
+
         site_data = site_repo.save(site)
         return jsonify(site_data)
+
 
 
 @site_bp.route('/<site_id>', methods=['GET', 'PUT', 'DELETE'])

@@ -32,7 +32,7 @@ def site_stats():
         site_repo.update(site['_id'], site)
         return site_stats_d
 
-@site_stats_bp.route('/site_stats/top6_saved', methods=['GET'])
+@site_stats_bp.route('/top6_saved', methods=['GET'])
 def search_sites():
     top6_sites = site_stats_repo.sort('saves', pymongo.DESCENDING)[:6]
     return jsonify(top6_sites)
