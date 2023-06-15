@@ -7,8 +7,8 @@ from app.utils.logger import logger
 app = Flask(__name__)
 
 #Allow cors 
-cors = CORS(app, resources={r"/*": {"origins": "*"}})
-
+cors = CORS(app, resources={r'*': {'origins': '*'}})
+app.config['CORS_HEADERS'] = 'Content-Type, Authorization'
 
 # App exception handling
 @app.errorhandler(Exception)

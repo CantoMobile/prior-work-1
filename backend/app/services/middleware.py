@@ -22,7 +22,8 @@ def validate_token(f):
         if not token:
             return jsonify({"error": "No token provided"}), 401
         result = auth.verify_auth_token(token)
-        
+        if type(result) is dict:
+            return result, 401
         validation = validate_permissions(result[0], result[1])
         if not validation:
             logger.error("This user has not permission to access this page: ", request.url)

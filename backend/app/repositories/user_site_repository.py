@@ -4,5 +4,8 @@ from bson.objectid import ObjectId
 from app.repositories.abstract_repository import AbstractRepository
 
 
+
+
 class UserSiteRepository(AbstractRepository[UserSite]):
     pass
+

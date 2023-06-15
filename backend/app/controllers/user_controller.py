@@ -1,9 +1,9 @@
 from flask import Blueprint, request, jsonify, abort
-from app.models.role_model import Role
 from app.models.user_model import User
 from app.repositories.user_repository import UserRepository
 from app.repositories.role_repository import RoleRepository
 from app.services.auth_service import AuthService
+from app.services.user_site_service import create_relationship
 from app.services.middleware import validate_token
 from app.services.user_service import *
 
@@ -14,7 +14,7 @@ auth = AuthService()
 user_bp = Blueprint('user_bp', __name__,  url_prefix='/users')
 
 
-@user_bp.route('/', methods=['GET', 'POST'])
+@user_bp.route('', methods=['GET', 'POST'])
 @validate_token
 def users():
     if request.method == 'GET':
@@ -26,14 +26,36 @@ def users():
         errors = validate_email_domain(data['email'])
         if errors[0] == False:
             return {"error": errors[1]}, 401
-        
+
         user = User(
             name=data['name'],
             email=data['email'],
             password=auth.encrypt(data['password'])
         )
         user_data = user_repo.save(user)
+        create_relationship(user_data['_id'])
         return jsonify(user_data)
+
+
+@user_bp.route('/register', methods=['POST'])
+def user_registry():
+    data = request.json
+    errors = validate_email_domain(data['email'])
+    if errors[0] == False:
+        return {"error": errors[1]}, 401
+
+    user = User(
+        name=data['name'],
+        email=data['email'],
+        password=auth.encrypt(data['password'])
+    )
+    user_data = user_repo.save(user)
+    role_id = "646c0099d72ed166e49c3890"
+    role_data = role_repo.findById(role_id)
+    user_data['role'] = {'collection': 'role', '_id': role_data['_id']}
+    user_repo.update(user_data['_id'], user_data)
+    create_relationship(user_data['_id'])
+    return auth.generate_auth_token(user_data, role_id)
 
 
 @user_bp.route('/<string:user_id>', methods=['GET', 'PUT', 'DELETE'])
@@ -70,9 +92,9 @@ def authentication():
     if not user_data:
         abort(404)
     user = User(**user_data)
-    role_id = user_data['role']['_id'] 
+    role_id = user_data['role']['_id']
     if user.verify_password(auth.encrypt(data['password'])):
-        return auth.generate_auth_token(data, role_id)
+        return auth.generate_auth_token(user_data, role_id)
     else:
         return jsonify({'message': 'Password is incorrect'}), 401
 
@@ -103,14 +125,12 @@ def add_user_role(user_id, role_id):
     if not user_data or not role_data:
         abort(404)
 
-    #validation = any(role_item['_id'] == role_id for role_item in user.roles)
+    # validation = any(role_item['_id'] == role_id for role_item in user.roles)
     if user_data['role'] != None:
         if role_id in user_data['role']['_id']:
             return {'Error': 'The user already has the role assigned'}, 304
     else:
-        user_data['role'] = {'collection': 'role',
-                              '_id': role_data['_id']
-                              }
+        user_data['role'] = {'collection': 'role', '_id': role_data['_id']}
         return user_repo.update(user_id, user_data)
 
 
@@ -122,10 +142,10 @@ def remove_user_role(user_id, role_id):
 
     if not user_data or not role_data:
         abort(404)
-    #validation = any(role_item['_id'] == role_id for role_item in user.roles)
+    # validation = any(role_item['_id'] == role_id for role_item in user.roles)
     if user_data['role'] != None:
         if role_id in user_data['role']['_id']:
-    #if validation:
+            # if validation:
             user_data['role'] = None
             return user_repo.update(user_id, user_data)
     else:
