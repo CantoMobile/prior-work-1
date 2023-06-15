@@ -11,7 +11,7 @@ site_stats_repo = SiteStatsRepository()
 site_repo = SiteRepository()
 
 site_bp = Blueprint('site_bp', __name__, url_prefix='/sites')
-@site_bp.route('/', methods=['GET', 'POST'])
+@site_bp.route('/', methods=['GET'])
 def sites():
     sites_data = site_repo.findAll()
     return sites_data
