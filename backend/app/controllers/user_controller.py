@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify, abort
 from app.models.user_model import User
 from app.repositories.user_repository import UserRepository
 from app.repositories.role_repository import RoleRepository
+from app.repositories.reviews_repository import ReviewsRepository
 from app.services.auth_service import AuthService
 from app.services.user_site_service import create_relationship
 from app.services.middleware import validate_token
@@ -9,6 +10,7 @@ from app.services.user_service import *
 
 role_repo = RoleRepository()
 user_repo = UserRepository()
+reviews_repo = ReviewsRepository()
 auth = AuthService()
 
 user_bp = Blueprint('user_bp', __name__,  url_prefix='/users')
@@ -150,3 +152,16 @@ def remove_user_role(user_id, role_id):
             return user_repo.update(user_id, user_data)
     else:
         return jsonify({"Error": "This role is not associated with this user"}), 304
+    
+
+@user_bp.route('/<user_id>/reviews', methods=['GET', 'PUT', 'DELETE'])
+@validate_token
+def site_reviews(user_id):
+    try:
+        reviews = reviews_repo.findAllByField('user_id', user_id)
+
+        return jsonify(reviews)
+    
+    except Exception as e:
+
+        return jsonify({'error': str(e)}), 500

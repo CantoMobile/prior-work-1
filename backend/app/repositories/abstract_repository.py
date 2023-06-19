@@ -104,6 +104,19 @@ class AbstractRepository(Generic[T]):
         else:
             x["_id"] = x["_id"].__str__()
         return x
+    
+    def findAllByField(self, field, field_value):
+        laColeccion = self.db[self.coleccion]
+        query = {field: field_value}
+        data = []
+        for x in laColeccion.find(query):
+            x["_id"] = x["_id"].__str__()
+            x = self.transformObjectIds(x)
+
+            x = self.replaceDBRefsWithObjects(x)
+            data.append(x)
+
+        return data
 
     def findAll(self):
         laColeccion = self.db[self.coleccion]

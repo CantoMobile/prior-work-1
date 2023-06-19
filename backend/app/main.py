@@ -2,7 +2,7 @@ import os
 from flask import Flask, jsonify
 from flask_cors import CORS
 from app.config import ProductionConfig, DevelopmentConfig
-from app.controllers import user_bp, role_bp, permissions_bp, site_bp, search_results_bp, user_sites_bp, site_stats_bp
+from app.controllers import user_bp, role_bp, permissions_bp, site_bp, search_results_bp, user_sites_bp, site_stats_bp, reviews_bp
 from app.utils.logger import logger
 app = Flask(__name__)
 
@@ -20,6 +20,8 @@ def handle_error(error):
     logger.error(response)
     return jsonify(response), 500
 
+
+
 # import controllers and regristation them.
 app.register_blueprint(user_bp)
 app.register_blueprint(role_bp)
@@ -27,7 +29,8 @@ app.register_blueprint(permissions_bp)
 app.register_blueprint(site_bp)
 app.register_blueprint(search_results_bp)
 app.register_blueprint(user_sites_bp)
-app.register_blueprint(site_stats_bp)   
+app.register_blueprint(site_stats_bp) 
+app.register_blueprint(reviews_bp)   
     
 
 # Runtime environment validation and run application.

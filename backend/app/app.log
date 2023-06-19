@@ -1,0 +1,59 @@
+2023-06-17 14:24:33,874 - INFO - Connect successfully to Mongo Production!
+2023-06-17 14:24:51,499 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-06-18 17:02:31,982 - INFO - Connect successfully to Mongo Production!
+2023-06-18 17:05:45,994 - INFO - Connect successfully to Mongo Production!
+2023-06-18 17:08:19,141 - INFO - Connect successfully to Mongo Production!
+2023-06-18 17:09:02,218 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-06-18 17:10:16,648 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-06-18 17:10:27,384 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-06-18 17:15:00,843 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-06-18 17:19:06,875 - INFO - Verifying auth token
+2023-06-18 17:19:06,875 - ERROR - Invalid token. Error: Not enough segments
+2023-06-18 17:19:06,879 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'set' object is not subscriptable"}
+2023-06-18 17:36:56,967 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-06-18 17:37:01,885 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-06-18 17:37:05,809 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-06-18 17:37:12,676 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-06-18 17:37:23,404 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-06-18 17:44:30,299 - INFO - Connect successfully to Mongo Production!
+2023-06-18 17:58:17,084 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-06-18 18:02:28,433 - INFO - Connect successfully to Mongo Production!
+2023-06-18 18:02:37,929 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-06-18 18:03:07,185 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-06-18 18:03:39,928 - INFO - Connect successfully to Mongo Production!
+2023-06-18 18:03:45,325 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-06-18 18:04:58,268 - INFO - Connect successfully to Mongo Production!
+2023-06-18 18:06:41,343 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-06-18 18:07:04,045 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-06-18 18:09:25,952 - INFO - Connect successfully to Mongo Production!
+2023-06-18 18:09:37,262 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-06-18 18:10:26,006 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-06-18 18:14:38,036 - INFO - Connect successfully to Mongo Production!
+2023-06-18 18:14:46,941 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-06-18 18:15:14,405 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-06-18 18:16:00,924 - INFO - Connect successfully to Mongo Production!
+2023-06-18 18:16:14,472 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-06-18 18:21:01,992 - INFO - Connect successfully to Mongo Production!
+2023-06-18 18:21:38,227 - INFO - Connect successfully to Mongo Production!
+2023-06-18 18:22:03,535 - INFO - Connect successfully to Mongo Production!
+2023-06-18 18:22:55,437 - INFO - Connect successfully to Mongo Production!
+2023-06-18 18:24:19,900 - INFO - Connect successfully to Mongo Production!
+2023-06-18 18:25:50,851 - INFO - Connect successfully to Mongo Production!
+2023-06-18 18:29:13,439 - INFO - Connect successfully to Mongo Production!
+2023-06-18 18:29:26,828 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-06-18 22:24:34,886 - INFO - Connect successfully to Mongo Production!
+2023-06-18 22:24:49,936 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-06-18 22:26:07,376 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-06-18 22:27:44,291 - INFO - Connect successfully to Mongo Production!
+2023-06-18 22:28:07,374 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '405 Method Not Allowed: The method is not allowed for the requested URL.'}
+2023-06-18 22:40:46,142 - INFO - Connect successfully to Mongo Production!
+2023-06-18 22:40:56,734 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-06-18 22:41:02,252 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-06-18 22:41:43,290 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-06-18 22:41:49,510 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-06-18 22:43:14,735 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-06-18 22:43:54,453 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-06-18 22:44:59,101 - INFO - Connect successfully to Mongo Production!
+2023-06-18 22:45:14,315 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-06-18 22:45:22,078 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-06-18 22:46:20,683 - INFO - Connect successfully to Mongo Production!
