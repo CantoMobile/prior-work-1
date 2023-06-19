@@ -20,3 +20,16 @@ class SiteRepository(AbstractRepository[Site]):
             x = self.replaceDBRefsWithObjects(x)
             data.append(x)
         return data
+    
+    def getReferenced(self, referenceds_id):
+        laColeccion = self.db[self.coleccion]
+        object_ids = [ObjectId(oid) for oid in referenceds_id]
+        cursor = laColeccion.find({'_id': {'$in': object_ids}})
+
+        result = []
+        for x in cursor:
+            x['_id'] = x['_id'].__str__()
+            x = self.replaceDBRefsWithObjects(x)
+            result.append(x)
+
+        return result
