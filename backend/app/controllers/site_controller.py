@@ -3,12 +3,14 @@ import json
 from app.models import Site
 from app.repositories.site_repository import SiteRepository
 from app.repositories.site_stats_repository import SiteStatsRepository
+from app.repositories.reviews_repository import ReviewsRepository
 from app.services.user_site_service import return_not_referenced, return_referenced
 from ..utils.s3Upload import uploadFile
-
+from ..utils.faviconHelper import getFaviconFromURL
 
 site_stats_repo = SiteStatsRepository()
 site_repo = SiteRepository()
+reviews_repo = ReviewsRepository()
 
 site_bp = Blueprint('site_bp', __name__, url_prefix='/sites')
 @site_bp.route('/', methods=['GET'])
@@ -36,6 +38,7 @@ def add_site():
             url=data['url'],
             name=data['name'],
             description=data['description'],
+            logo=getFaviconFromURL(data['url']),
             keywords=data['keywords'],
             media=media_links,
             admin_email=data['admin_email'] if 'admin_email' in data else ""
@@ -77,6 +80,18 @@ def site(site_id):
     elif request.method == 'DELETE':
         site_repo.delete(site_id)
         return '', 204
+
+
+@site_bp.route('/<site_id>/reviews', methods=['GET'])
+def site_reviews(site_id):
+    try:
+        reviews = reviews_repo.findAllByField('site_id', site_id)
+
+        return jsonify(reviews)
+    
+    except Exception as e:
+
+        return jsonify({'error': str(e)}), 500
 
 
 @site_bp.route('/search', methods=['GET'])

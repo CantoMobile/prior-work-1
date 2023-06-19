@@ -3,10 +3,11 @@ from .site_stats_model import SiteStats
 
 class Site:
 
-    def __init__(self, url, name, description=None, keywords=None, media=None, admin_email=None, site_stats=None, _id=None):
+    def __init__(self, url, name, description=None, logo=None, keywords=None, media=None, admin_email=None, site_stats=None, _id=None):
         self.url = url
         self.name = name
         self.description = description
+        self.logo = logo
         self.keywords = keywords or []
         self.media = media or []
         self.admin_email = admin_email
@@ -23,6 +24,7 @@ class Site:
             'url': self.url,
             'name': self.name,
             'description': self.description,
+            'logo': self.logo,
             'keywords': self.keywords,
             'media': self.media,
             'admin_email': self.admin_email,

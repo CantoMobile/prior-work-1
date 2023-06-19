@@ -4,13 +4,16 @@ from bs4 import BeautifulSoup
 import favicon
 import urllib.request
 import urllib.parse
-import os
+from dotenv import load_dotenv
 from PIL import Image
 import io
+import os
 
-ACCESS_KEY_ID = 'AKIAVC2XI5TJZHZ2FBBU'
-ACCESS_SECRET_KEY = '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'
-BUCKET_NAME = "cantonica-favicons-test"
+load_dotenv()
+
+ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+ACCESS_SECRET_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+BUCKET_NAME = os.getenv('BUCKET_NAME')
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36',
@@ -115,8 +118,10 @@ def getFaviconFromURL(url):
 
     finally:
         upload_status = uploadFile(link, image_name)
-        msg += f'Upload to s3 message: {upload_status}'
-        return msg
+        public_url = f"https://{BUCKET_NAME}.s3.amazonaws.com/{image_name}"
+        return public_url
+        # msg += f'Upload to s3 message: {upload_status}'
+        # return msg
 
 
 

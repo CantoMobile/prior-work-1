@@ -5,6 +5,7 @@ from .site_stats_controller import site_stats_bp
 from .permissions_controller import permissions_bp
 from .search_result_controller import search_results_bp
 from .user_site_controller import user_sites_bp
+from .reviews_controller import reviews_bp
 
 __all__ = [
     'user_bp',
@@ -13,5 +14,6 @@ __all__ = [
     'site_stats_bp',
     'permissions_bp',
     'search_results_bp',
-    'user_sites_bp'
+    'user_sites_bp',
+    'reviews_bp'
 ]
