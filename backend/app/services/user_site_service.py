@@ -43,3 +43,9 @@ def return_referenced(user_id):
     referenced_ids = [site['_id'] for site in sites]
     return site_repo.getReferenced(referenced_ids)
 
+def query_not_referenced(user_id, query):
+    user_site_data = user_site_repo.findByField('user_id', user_id)
+    sites = user_site_data.get('site', [])
+    referenced_ids = [site['_id'] for site in sites]
+    return site_repo.queryNotRefereced(referenced_ids, query)
+
