@@ -4,7 +4,7 @@ from app.repositories.user_repository import UserRepository
 from app.repositories.role_repository import RoleRepository
 from app.repositories.reviews_repository import ReviewsRepository
 from app.services.auth_service import AuthService
-from app.services.user_site_service import create_relationship
+from app.services.user_site_service import create_relationship, delete_relationship
 from app.services.middleware import validate_token
 from app.services.user_service import *
 
@@ -83,8 +83,8 @@ def user(user_id):
         return user_repo.update(user_id, user_data)
 
     elif request.method == 'DELETE':
-        user_repo.delete(user_id)
-        return jsonify({'message': 'User deleted'})
+        delete_relationship(user_id)
+        return user_repo.delete(user_id)
 
 
 @user_bp.route('/authentication', methods=['POST'])

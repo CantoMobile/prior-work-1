@@ -10,27 +10,6 @@ site_repo = SiteRepository()
 
 site_stats_bp = Blueprint('site_stats_bp', __name__, url_prefix='/site_stats')
 
-@site_stats_bp.route('/', methods=['GET', 'POST'])
-def site_stats():
-    if request.method == 'GET':
-        site_stats_data = site_stats_repo.findAll()
-        return site_stats_data
-
-    elif request.method == 'POST':
-        data = request.json
-        if 'site' in data:
-            site = site_repo.findByField('url', data['site'])
-            if not site:
-                abort(404)
-        site_stats = SiteStats(
-            site={'_id': site['_id']}
-        )
-        site_stats_d = site_stats_repo.save(site_stats)
-        site['site_stats'] = {'collection': 'sitestats',
-                              '_id': site_stats_d['_id']
-                              }
-        site_repo.update(site['_id'], site)
-        return site_stats_d
 
 @site_stats_bp.route('/top6_saved', methods=['GET'])
 def search_sites():

@@ -51,3 +51,20 @@ class SiteRepository(AbstractRepository[Site]):
             ]
         }
         return search
+
+    def queryRefereced(self, referenceds_id, theQuery):
+        object_ids = [ObjectId(oid) for oid in referenceds_id]
+        search = {
+            '$and': [
+                {'_id': {'$in': object_ids}},
+                {
+                    '$or': [
+                        {'url': {'$regex': theQuery, '$options': 'i'}},
+                        {'name': {'$regex': theQuery, '$options': 'i'}},
+                        {'description': {'$regex': theQuery, '$options': 'i'}},
+                        {'keywords': {'$regex': theQuery, '$options': 'i'}}
+                    ]
+                }
+            ]
+        }
+        return search
