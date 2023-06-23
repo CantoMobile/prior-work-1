@@ -8,8 +8,8 @@ reviews_repo = ReviewsRepository()
 reviews_bp = Blueprint('reviews_bp', __name__, url_prefix='/reviews')
 @reviews_bp.route('/', methods=['GET'])
 def sites():
-    sites_data = reviews_repo.findAll()
-    return sites_data
+    reviews_data = reviews_repo.findAll()
+    return reviews_data
 
 
 @reviews_bp.route('/<review_id>', methods=['GET', 'PUT', 'DELETE'])
