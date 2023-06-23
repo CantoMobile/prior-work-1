@@ -6,7 +6,7 @@ from app.repositories.reviews_repository import ReviewsRepository
 reviews_repo = ReviewsRepository()
 
 reviews_bp = Blueprint('reviews_bp', __name__, url_prefix='/reviews')
-@reviews_bp.route('/', methods=['GET'])
+@reviews_bp.route('', methods=['GET'])
 def sites():
     reviews_data = reviews_repo.findAll()
     return reviews_data
@@ -38,11 +38,18 @@ def review(review_id):
     elif request.method == 'DELETE':
         reviews_repo.delete(review_id)
         return '', 204
+    
+@reviews_bp.route('/<site_id>/average_rating', methods=['GET'])
+def site_average_rating_reviews(site_id):
+    if reviews_repo.existsByField('site_id', site_id):
+        return reviews_repo.averageRating(site_id)
+    else: 
+        return jsonify({'error': 'Site not exists'}), 400
 
 
 @reviews_bp.route('/add_review', methods=['POST'])
 def add_review():
-        data = json.loads(request.form['json']) 
+        data = request.json
 
         review = Review(
             site_id=data['site_id'],
@@ -55,10 +62,21 @@ def add_review():
         return jsonify(review_data)
 
 
-@reviews_bp.route('/user/<user_id>', methods=['GET', 'PUT', 'DELETE'])
+@reviews_bp.route('/user/<user_id>', methods=['GET'])
 def get_reviews_by_user(user_id):
     try:
         reviews = reviews_repo.findAllByField('user_id', user_id)
+
+        return jsonify(reviews)
+    
+    except Exception as e:
+
+        return jsonify({'error': str(e)}), 500
+    
+@reviews_bp.route('/site/<site_id>', methods=['GET'])
+def get_reviews_by_site(site_id):
+    try:
+        reviews = reviews_repo.findAllByField('site_id', site_id)
 
         return jsonify(reviews)
     

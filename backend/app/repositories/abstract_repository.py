@@ -146,7 +146,7 @@ class AbstractRepository(Generic[T]):
             x = self.replaceDBRefsWithObjects(x)
             data.append(x)
         return data
-
+    
     def query(self, theQuery):
         laColeccion = self.db[self.coleccion]
         data = []
