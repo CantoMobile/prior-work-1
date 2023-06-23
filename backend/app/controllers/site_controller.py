@@ -171,3 +171,21 @@ def get_sites__ref_by_user(user_id):
 def search_top_six_sites():
     top6_sites = site_repo.sort('site_stats.saves', pymongo.DESCENDING)[:6]
     return jsonify(top6_sites)
+
+@site_bp.route('/<user_id>/save_site/<site_id>', methods=['PUT'])
+def save_site(user_id, site_id):
+    user_data = user_repo.findById(user_id)
+    site_data = site_repo.findById(site_id)
+    if not user_data or not site_data:
+        abort(404)
+
+    # validation = any(role_item['_id'] == role_id for role_item in user.roles)
+    if user_data['sites'] != None and user_data['sites'] != []:
+        if site_data['_id'] in user_data['sites']:
+            return jsonify({'Error': 'The user already has this site saved'}), 304
+        else:
+            user_data['sites'].append(site_data['_id'])
+    else:
+        user_data['sites'] = [site_data['_id']]
+        
+    return user_repo.update(user_id, user_data)
