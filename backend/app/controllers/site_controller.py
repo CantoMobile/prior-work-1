@@ -8,6 +8,7 @@ from app.repositories.site_stats_repository import SiteStatsRepository
 from app.repositories.reviews_repository import ReviewsRepository
 from app.repositories.user_repository import UserRepository
 from app.services.user_site_service import query_referenced, return_not_referenced, return_referenced, query_not_referenced
+from app.services.middleware import admin_permission_required
 from ..utils.s3Upload import uploadFile
 from ..utils.faviconHelper import getFaviconFromURL
 from app.utils.logger import logger
@@ -33,6 +34,9 @@ def add_site():
 
     if site_repo.existsByField('url', data['url']):
         return jsonify({"error": "Site already exists"}), 400
+    
+    if site_repo.existsByField('admin_email', data['admin_email']):
+        return jsonify({"error": "This email is the admin for another site"}), 400
 
     if 'media' in request.files and (request.files['media']):
         for file in request.files.getlist('media'):
@@ -63,8 +67,9 @@ def add_site():
                         "message": str(e)}), 400
 
 
-@site_bp.route('/<site_id>', methods=['GET', 'PUT', 'DELETE'])
-def site(site_id):
+@site_bp.route('/<site_id>/<user_id>', methods=['GET', 'PUT', 'DELETE'])
+@admin_permission_required
+def site(site_id, user_id):
     site = site_repo.findById(site_id)
 
     if not site:
