@@ -38,17 +38,19 @@ def add_site():
     if site_repo.existsByField('admin_email', data['admin_email']):
         return jsonify({"error": "This email is the admin for another site"}), 400
 
-    if 'media' in request.files and (request.files['media']):
-        for file in request.files.getlist('media'):
-            image_name = f"{data['name']}_{file.filename}"
-            try:
-                file_data = file.stream.read()
-                file_link = uploadFile(file_data, image_name)
-                media_links.append(file_link)
-            except Exception as e:
-                logger.error("Error uploading file " + str(e))
-                return jsonify({"error": "Error processing file",
-                                "message": str(e)}), 400
+    if 'media' in request.files:
+        data_media = request.files.getlist('media')
+        if len(data_media) > 0:
+            for file in data_media:
+                image_name = f"{data['name']}_{file.filename}"
+                try:
+                    file_data = file.stream.read()
+                    file_link = uploadFile(file_data, image_name)
+                    media_links.append(file_link)
+                except Exception as e:
+                    logger.error("Error uploading file " + str(e))
+                    return jsonify({"error": "Error processing file",
+                                    "message": str(e)}), 400
     site = Site(
         url=data['url'],
         name=data['name'],
@@ -60,7 +62,6 @@ def add_site():
     )
     try:
         site_data = site_repo.save(site)
-        print(site_data)
         return jsonify(site_data)
     except Exception as e:
         return jsonify({"error": "Error saving site",
@@ -112,6 +113,7 @@ def site_reviews(site_id):
 
         return jsonify({'error': str(e)}), 500
 
+
 @site_bp.route('/<user_id>/search', methods=['GET'])
 def search_sites(user_id):
     query = request.args.get('query')
@@ -119,6 +121,7 @@ def search_sites(user_id):
     if not query:
         return jsonify({'error': 'Missing search query'}), 400
     return site_repo.query(query_not_referenced(user_id, query))
+
 
 @site_bp.route('/<user_id>/search_saves', methods=['GET'])
 def search_sites_saves(user_id):
@@ -171,6 +174,7 @@ def get_sites_not_ref_by_user(user_id):
 @site_bp.route('/user/<user_id>', methods=['GET'])
 def get_sites__ref_by_user(user_id):
     return return_referenced(user_id)
+
 
 @site_bp.route('/top6_saved', methods=['GET'])
 def search_top_six_sites():
