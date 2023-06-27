@@ -27,7 +27,6 @@ def uploadFile(file, image_name):
             bucket_name,
             image_name
         )
-
     public_url = f"https://{BUCKET_NAME}.s3.amazonaws.com/{image_name}"
     return public_url
 

@@ -6,9 +6,11 @@ from functools import wraps
 from app.utils.logger import logger
 from .auth_service import AuthService
 from app.repositories.user_repository import UserRepository
+from app.repositories.site_repository import SiteRepository
 from urllib.parse import urlsplit
 
 user_repo = UserRepository()
+site_repo = SiteRepository()
 
 auth = AuthService()
 
@@ -70,3 +72,29 @@ def delete_url(url):
     segments = [segment for segment in complete_route.split('/') if segment]
     segments = ["?" if re.match(r'^[0-9a-fA-F]{24}$', segment) else segment for segment in segments]
     return segments
+
+
+def verify_admin(user_id, site_id):
+    site = site_repo.findById(site_id)
+    user = user_repo.findById(user_id)
+
+    if (site):
+        admin_email = site['admin_email']
+        user_email = user['email']
+
+        return admin_email == user_email
+    
+    return False
+
+
+def admin_permission_required(f):
+    def decorator(*args, **kwargs):
+        user_id = kwargs.get('user_id') # get_user_id_from_token()  # Replace with your implementation to get the user ID from the token
+        site_id = kwargs.get('site_id')  # Modify this based on the actual parameter name in your route
+
+        if not verify_admin(user_id, site_id):
+            return jsonify({"error": "You do not have permission to perform this action"}), 401
+
+        return f(*args, **kwargs)
+
+    return decorator

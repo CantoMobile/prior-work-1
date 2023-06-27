@@ -3,6 +3,7 @@ from app.models.user_model import User
 from app.repositories.user_repository import UserRepository
 from app.repositories.role_repository import RoleRepository
 from app.repositories.reviews_repository import ReviewsRepository
+from app.repositories.site_repository import SiteRepository
 from app.services.auth_service import AuthService
 from app.services.user_site_service import create_relationship, delete_relationship
 from app.services.middleware import validate_token
@@ -11,6 +12,7 @@ from app.services.user_service import *
 role_repo = RoleRepository()
 user_repo = UserRepository()
 reviews_repo = ReviewsRepository()
+site_repo = SiteRepository()
 auth = AuthService()
 
 user_bp = Blueprint('user_bp', __name__,  url_prefix='/users')
@@ -57,6 +59,7 @@ def user_registry():
     user_data['role'] = {'collection': 'role', '_id': role_data['_id']}
     user_repo.update(user_data['_id'], user_data)
     create_relationship(user_data['_id'])
+    print(user_data['_id'])
     return auth.generate_auth_token(user_data, role_id)
 
 
@@ -165,3 +168,23 @@ def site_reviews(user_id):
     except Exception as e:
 
         return jsonify({'error': str(e)}), 500
+    
+@user_bp.route('/<user_id>/save_site/<site_id>', methods=['PUT'])
+@validate_token
+def save_site(user_id, site_id):
+    user_data = user_repo.findById(user_id)
+    site_data = site_repo.findById(site_id)
+    if not user_data or not site_data:
+        abort(404)
+
+    # validation = any(role_item['_id'] == role_id for role_item in user.roles)
+    if user_data['sites'] != None and user_data['sites'] != []:
+        if site_data in user_data['sites']['_id']:
+            return {'Error': 'The user already has this site saved'}, 304
+        else:
+            user_data['sites'].append(site_data)
+    else:
+        user_data['sites'] = {'collection': 'sites', '_id': site_data['_id']}
+        
+    return user_repo.update(user_id, user_data)
+

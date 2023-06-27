@@ -6,7 +6,9 @@ from app.models import Site
 from app.repositories.site_repository import SiteRepository
 from app.repositories.site_stats_repository import SiteStatsRepository
 from app.repositories.reviews_repository import ReviewsRepository
+from app.repositories.user_repository import UserRepository
 from app.services.user_site_service import query_referenced, return_not_referenced, return_referenced, query_not_referenced
+from app.services.middleware import admin_permission_required
 from ..utils.s3Upload import uploadFile
 from ..utils.faviconHelper import getFaviconFromURL
 from app.utils.logger import logger
@@ -14,6 +16,7 @@ from app.utils.logger import logger
 site_stats_repo = SiteStatsRepository()
 site_repo = SiteRepository()
 reviews_repo = ReviewsRepository()
+user_repo = UserRepository()
 
 site_bp = Blueprint('site_bp', __name__, url_prefix='/sites')
 
@@ -31,6 +34,9 @@ def add_site():
 
     if site_repo.existsByField('url', data['url']):
         return jsonify({"error": "Site already exists"}), 400
+    
+    if site_repo.existsByField('admin_email', data['admin_email']):
+        return jsonify({"error": "This email is the admin for another site"}), 400
 
     if 'media' in request.files:
         data_media = request.files.getlist('media')
@@ -62,8 +68,9 @@ def add_site():
                         "message": str(e)}), 400
 
 
-@site_bp.route('/<site_id>', methods=['GET', 'PUT', 'DELETE'])
-def site(site_id):
+@site_bp.route('/<site_id>/<user_id>', methods=['GET', 'PUT', 'DELETE'])
+@admin_permission_required
+def site(site_id, user_id):
     site = site_repo.findById(site_id)
 
     if not site:
@@ -99,7 +106,7 @@ def site(site_id):
 def site_reviews(site_id):
     try:
         reviews = reviews_repo.findAllByField('site_id', site_id)
-
+        
         return jsonify(reviews)
 
     except Exception as e:
@@ -173,3 +180,21 @@ def get_sites__ref_by_user(user_id):
 def search_top_six_sites():
     top6_sites = site_repo.sort('site_stats.saves', pymongo.DESCENDING)[:6]
     return jsonify(top6_sites)
+
+@site_bp.route('/<user_id>/save_site/<site_id>', methods=['PUT'])
+def save_site(user_id, site_id):
+    user_data = user_repo.findById(user_id)
+    site_data = site_repo.findById(site_id)
+    if not user_data or not site_data:
+        abort(404)
+
+    # validation = any(role_item['_id'] == role_id for role_item in user.roles)
+    if user_data['sites'] != None and user_data['sites'] != []:
+        if site_data['_id'] in user_data['sites']:
+            return jsonify({'Error': 'The user already has this site saved'}), 304
+        else:
+            user_data['sites'].append(site_data['_id'])
+    else:
+        user_data['sites'] = [site_data['_id']]
+        
+    return user_repo.update(user_id, user_data)
