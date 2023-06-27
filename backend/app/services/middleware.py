@@ -89,7 +89,7 @@ def verify_admin(user_id, site_id):
 
 def admin_permission_required(f):
     def decorator(*args, **kwargs):
-        user_id = kwargs.get('user_id') # get_user_id_from_token()  # Replace with your implementation to get the user ID from the token
+        user_id = kwargs.get('user_id')# get_user_id_from_token()  # Replace with your implementation to get the user ID from the token
         site_id = kwargs.get('site_id')  # Modify this based on the actual parameter name in your route
 
         if not verify_admin(user_id, site_id):
