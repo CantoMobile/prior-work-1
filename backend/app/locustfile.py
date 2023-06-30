@@ -26,3 +26,8 @@ class WebsiteTestUser(HttpUser):
     def test_adding_sites(self):
         self.client.post("http://127.0.0.1:5000/sites/add_site",
                         json={"url": "https://www.samsung.com", "name": "samsung",  "description": "technology manufacturer and distributor", "keywords": ["technology", "devices", "software"], "admin_email": "admin@samsung.com"})
+        
+    @task(5)
+    def test_adding_reviews(self):
+        self.client.post("http://127.0.0.1:5000/sites/add_site",
+                        json={"url": "https://www.samsung.com", "name": "samsung",  "description": "technology manufacturer and distributor", "keywords": ["technology", "devices", "software"], "admin_email": "admin@samsung.com"})

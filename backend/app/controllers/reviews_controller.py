@@ -51,6 +51,12 @@ def site_average_rating_reviews(site_id):
 def add_review():
         data = request.json
 
+        if reviews_repo.query({
+            'user_id': data['user_id'], 
+            'site_id': data['site_id']
+        }):
+            return jsonify({'error': 'User already submitted a review'}), 400
+        
         review = Review(
             site_id=data['site_id'],
             user_id=data['user_id'],
