@@ -28,7 +28,7 @@ def validate_token(f):
             return result, 401
         validation = validate_permissions(result[0], result[1])
         if not validation:
-            logger.error("This user has not permission to access this page: ", request.url)
+            logger.error("This user has not permission to access this page: " + request.url)
             return jsonify({"error": "You not have permission to make this request"}), 401
         return f(*args, **kwargs)
     return decorator

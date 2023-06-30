@@ -68,3 +68,4 @@ class SiteRepository(AbstractRepository[Site]):
             ]
         }
         return search
+    

@@ -2,7 +2,7 @@ from bson import ObjectId
 
 
 class Role:
-    def __init__(self, name, description, permissions, _id=None):
+    def __init__(self, name, description, permissions=None, _id=None):
         self.name = name
         self.description = description
         self.permissions = permissions or []
