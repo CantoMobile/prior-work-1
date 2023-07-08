@@ -7,7 +7,7 @@ from app.services.user_site_service import query_referenced, query_not_reference
 from app.models.site_model import Site
 from bson.objectid import ObjectId
 from ..utils.s3Upload import uploadFile
-from ..utils.faviconHelper import getFaviconFromURL
+from ..utils.faviconHelper import getFavicon
 from app.utils.logger import logger
 import json
 
@@ -52,7 +52,7 @@ def create_site():
         url=data['url'],
         name=data['name'],
         description=data['description'],
-        logo=getFaviconFromURL(data['url']),
+        logo=getFavicon(data['url']),
         keywords=data['keywords'],
         media=media_links,
         admin_email=data['admin_email'] if 'admin_email' in data else ""

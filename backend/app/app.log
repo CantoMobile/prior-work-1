@@ -14,3 +14,15 @@
 2023-07-08 18:32:23,975 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '405 Method Not Allowed: The method is not allowed for the requested URL.'}
 2023-07-08 18:32:56,578 - INFO - Connect successfully to Mongo Production!
 2023-07-08 18:32:59,674 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '405 Method Not Allowed: The method is not allowed for the requested URL.'}
+2023-07-08 18:52:05,578 - INFO - Connect successfully to Mongo Production!
+2023-07-08 18:54:31,825 - INFO - Uploading files to AWS
+2023-07-08 18:54:31,827 - INFO -  ACCESS ID AKIAYZMI7AZSNPFQGQXH KEY EFDboDm0dx85y2k1Me8f486Xn5fvf5SX0GWa4FVs BUCKET cantonica-media-files
+2023-07-08 18:54:33,335 - INFO - Uploading files to AWS
+2023-07-08 18:54:33,336 - INFO -  ACCESS ID AKIAYZMI7AZSNPFQGQXH KEY EFDboDm0dx85y2k1Me8f486Xn5fvf5SX0GWa4FVs BUCKET cantonica-media-files
+2023-07-08 18:54:34,026 - INFO - Uploading files to AWS
+2023-07-08 18:54:34,026 - INFO -  ACCESS ID AKIAYZMI7AZSNPFQGQXH KEY EFDboDm0dx85y2k1Me8f486Xn5fvf5SX0GWa4FVs BUCKET cantonica-media-files
+2023-07-08 18:54:34,547 - INFO - Uploading files to AWS
+2023-07-08 18:54:34,549 - INFO -  ACCESS ID AKIAYZMI7AZSNPFQGQXH KEY EFDboDm0dx85y2k1Me8f486Xn5fvf5SX0GWa4FVs BUCKET cantonica-media-files
+2023-07-08 18:54:35,033 - INFO - Uploading files to AWS
+2023-07-08 18:54:35,036 - INFO -  ACCESS ID AKIAYZMI7AZSNPFQGQXH KEY EFDboDm0dx85y2k1Me8f486Xn5fvf5SX0GWa4FVs BUCKET cantonica-media-files
+2023-07-08 18:54:35,700 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'function' object is not subscriptable"}
