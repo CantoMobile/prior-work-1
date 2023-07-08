@@ -4,16 +4,16 @@ from bs4 import BeautifulSoup
 import favicon
 import urllib.request
 import urllib.parse
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 from PIL import Image
 import io
 import os
 
-load_dotenv()
+#load_dotenv()
 
-ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
-ACCESS_SECRET_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
-BUCKET_NAME = os.getenv('BUCKET_NAME')
+ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+ACCESS_SECRET_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+BUCKET_NAME = os.environ.get('BUCKET_NAME')
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36',

@@ -1,11 +1,9 @@
 import boto3
 from PIL import Image
 import io
-from dotenv import load_dotenv
 import os
 from app.utils.logger import logger
 
-load_dotenv()
 
 ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 ACCESS_SECRET_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')

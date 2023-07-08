@@ -32,7 +32,7 @@ class Database:
                 self.db = self.client['test']
                 logger.info("Connect successfully to Mongo {}!".format(self.env))
             except ConnectionError as e:
-                logger.error("Error connecting to Mongo ", e)
+                logger.error("Error connecting to Mongo ", str(e))
         return self.db
 
     def close(self):

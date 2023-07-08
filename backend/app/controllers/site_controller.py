@@ -1,170 +1,72 @@
-from flask import Blueprint, jsonify, request, abort
-import json
-
-import pymongo
-from app.models import Site
-from app.repositories.site_repository import SiteRepository
-from app.repositories.site_stats_repository import SiteStatsRepository
-from app.repositories.reviews_repository import ReviewsRepository
-from app.repositories.user_repository import UserRepository
-from app.services.user_site_service import query_referenced, return_not_referenced, return_referenced, query_not_referenced
+from flask import Blueprint
+from app.services.user_site_service import return_not_referenced, return_referenced
 from app.services.middleware import admin_permission_required
-from ..utils.s3Upload import uploadFile
-from ..utils.faviconHelper import getFaviconFromURL
-from app.utils.logger import logger
+from app.services.site_service import *
+from app.services.user_service import add_created_site_user
 
 
-site_stats_repo = SiteStatsRepository()
-site_repo = SiteRepository()
-reviews_repo = ReviewsRepository()
-user_repo = UserRepository()
 
 site_bp = Blueprint('site_bp', __name__, url_prefix='/sites')
 
 
-@site_bp.route('/', methods=['GET'])
+@site_bp.route('', methods=['GET'])
 def sites():
-    sites_data = site_repo.findAll()
-    return sites_data
+    if request.method == 'POST':
+        data = request.json
+        return get_all_sites(data['page'])
+    elif request.method == 'GET':
+        return get_all_sites()
 
 
 @site_bp.route('/add_site', methods=['POST'])
 def add_site():
-    media_links = []
-    data = json.loads(request.form['json'])
-
-    if site_repo.existsByField('url', data['url']):
-        return jsonify({"error": "Site already exists"}), 400
-    
-    if site_repo.existsByField('admin_email', data['admin_email']):
-        return jsonify({"error": "This email is the admin for another site"}), 400
-
-    if 'media' in request.files:
-        data_media = request.files.getlist('media')
-        if len(data_media) > 0:
-            for file in data_media:
-                image_name = f"{data['name']}_{file.filename}"
-                try:
-                    file_data = file.stream.read()
-                    file_link = uploadFile(file_data, image_name)
-                    media_links.append(file_link)
-                except Exception as e:
-                    logger.error("Error uploading file " + str(e))
-                    return jsonify({"error": "Error processing file",
-                                    "message": str(e)}), 400
-    site = Site(
-        url=data['url'],
-        name=data['name'],
-        description=data['description'],
-        logo=getFaviconFromURL(data['url']),
-        keywords=data['keywords'],
-        media=media_links,
-        admin_email=data['admin_email'] if 'admin_email' in data else ""
-    )
-    try:
-        site_data = site_repo.save(site)
-        return jsonify(site_data)
-    except Exception as e:
-        return jsonify({"error": "Error saving site",
-                        "message": str(e)}), 400
+    return create_site()
 
 
-@site_bp.route('/<site_id>/<user_id>', methods=['GET', 'PUT', 'DELETE'])
-@admin_permission_required
-def site(site_id, user_id):
-    site = site_repo.findById(site_id)
-
-    if not site:
-        abort(404)
-
+@site_bp.route('/<site_id>', methods=['GET', 'PUT', 'DELETE'])
+# @admin_permission_required
+def site(site_id):
     if request.method == 'GET':
-        return site
+        return get_one_site(site_id)
 
     elif request.method == 'PUT':
-        data = request.json
-
-        if 'url' in data:
-            site['url'] = data['url']
-        if 'name' in data:
-            site['name'] = data['name']
-        if 'description' in data:
-            site['description'] = data['description']
-        if 'keywords' in data:
-            site['keywords'] = data['keywords']
-        if 'media' in data:
-            site['media'] = data['media']
-        if 'admin_email' in data:
-            site['admin_email'] = data['admin_email']
-
-        return site_repo.update(site_id, site)
+        return update_one_site(site_id)
 
     elif request.method == 'DELETE':
-        site_repo.delete(site_id)
-        return '', 204
+        return delete_one_site(site_id)
 
 
-@site_bp.route('/<site_id>/reviews', methods=['GET'])
-def site_reviews(site_id):
-    try:
-        reviews = reviews_repo.findAllByField('site_id', site_id)
-        
-        return jsonify(reviews)
-
-    except Exception as e:
-
-        return jsonify({'error': str(e)}), 500
-
-
-@site_bp.route('/<user_id>/search', methods=['GET'])
+@site_bp.route('/<user_id>/search', methods=['GET', 'POST'])
 def search_sites(user_id):
-    query = request.args.get('query')
-    # Get the search query from the request parameters
-    if not query:
-        return jsonify({'error': 'Missing search query'}), 400
-    return site_repo.query(query_not_referenced(user_id, query))
+    if request.method == 'GET':
+        return search_sites_logged(user_id)
+    elif request.method == 'POST':
+        data = request.json
+        return search_sites_logged(user_id, data['page'])
 
 
-@site_bp.route('/<user_id>/search_saves', methods=['GET'])
+@site_bp.route('/<user_id>/search_saves', methods=['GET', 'POST'])
 def search_sites_saves(user_id):
-    query = request.args.get('query')
-    # Get the search query from the request parameters
-    if not query:
-        return jsonify({'error': 'Missing search query'}), 400
-    return site_repo.query(query_referenced(user_id, query))
+    if request.method == 'GET':
+        return search_sites_saves_logged(user_id)
+    elif request.method == 'POST':
+        data = request.json
+        return search_sites_saves_logged(user_id, data['page'])
 
 
 @site_bp.route('/search', methods=['GET'])
 def search_sites_logout():
-    query = request.args.get('query')
-    # Get the search query from the request parameters
-    if not query:
-        return jsonify({'error': 'Missing search query'}), 400
-    sites = site_repo.query({
-        '$or': [
-            {'url': {'$regex': query, '$options': 'i'}},
-            {'name': {'$regex': query, '$options': 'i'}},
-            {'description': {'$regex': query, '$options': 'i'}},
-            {'keywords': {'$regex': query, '$options': 'i'}}
-        ]
-    })
-    return sites
+    return search_sites_not_logged()
+
+
+@site_bp.route('/search_suggested', methods=['GET'])
+def search_sites_suggested():
+    return search_sites_name_suggested()
 
 
 @site_bp.route('/<site_id>/stats', methods=['GET'])
 def site_stats(site_id):
-    site = site_repo.findById(site_id)
-
-    if not site:
-        abort(404)
-
-    if not site['site_stats']:
-        abort(404)
-
-    stats = site_stats_repo.findById(site['site_stats'])
-
-    if not stats:
-        abort(404)
-    return stats
+    return stats_by_site(site_id)
 
 
 @site_bp.route('/not_user/<user_id>', methods=['GET'])
@@ -179,23 +81,9 @@ def get_sites__ref_by_user(user_id):
 
 @site_bp.route('/top6_saved', methods=['GET'])
 def search_top_six_sites():
-    top6_sites = site_repo.sort('site_stats.saves', pymongo.DESCENDING)[:6]
-    return jsonify(top6_sites)
+    return get_top_six_saved()
+
 
 @site_bp.route('/<user_id>/save_site/<site_id>', methods=['PUT'])
 def save_site(user_id, site_id):
-    user_data = user_repo.findById(user_id)
-    site_data = site_repo.findById(site_id)
-    if not user_data or not site_data:
-        abort(404)
-
-    # validation = any(role_item['_id'] == role_id for role_item in user.roles)
-    if user_data['sites'] != None and user_data['sites'] != []:
-        if site_data['_id'] in user_data['sites']:
-            return jsonify({'Error': 'The user already has this site saved'}), 304
-        else:
-            user_data['sites'].append(site_data['_id'])
-    else:
-        user_data['sites'] = [site_data['_id']]
-        
-    return user_repo.update(user_id, user_data)
+    return add_created_site_user(site_id, user_id)

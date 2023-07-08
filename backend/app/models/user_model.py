@@ -31,21 +31,3 @@ class User:
             return True
         else:
             return False
-
-    # def add_role(self, role):
-    #     print(len(self.roles))
-    #     if any(existing_role.name == role.name for existing_role in self.roles):
-    #         return False
-    #     else:
-    #         self.roles.append(role)
-    #         return True
-
-    # def remove_role(self, role):
-    #     if role._id in self.roles:
-    #         self.roles.remove(role._to__dict__)
-
-    # def has_permission(self, permission):
-    #     for role in self.roles:
-    #         if permission in role.permissions:
-    #             return True
-    #     return False
