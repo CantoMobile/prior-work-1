@@ -1,12 +1,7 @@
-from flask import Blueprint, jsonify, request, abort
-from app.models import Role, Permissions
-from app.repositories.role_repository import RoleRepository
-from app.repositories.permissions_repository import PermissionsRepository
+from flask import Blueprint, request
+
 from app.services.middleware import validate_token
 from app.services.role_service import *
-
-permissions_repo = PermissionsRepository()
-role_repo = RoleRepository()
 
 role_bp = Blueprint('role_bp', __name__, url_prefix='/roles')
 

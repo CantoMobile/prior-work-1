@@ -10,7 +10,6 @@ from app.services.user_site_service import create_relationship, delete_relations
 from app.repositories.site_repository import SiteRepository
 from app.models.user_model import User
 from app.models.site_model import Site
-from app.services.site_service import get_one_site
 
 
 user_repo = UserRepository()
@@ -98,9 +97,10 @@ def remove_user_role(user_id, role_id):
     else:
         return jsonify({"Error": "This role is not associated with this user"}), 304
 
+
 def add_created_site_user(site_id, user_id):
     user_data = get_one_user(user_id)
-    site_data = get_one_site(site_id)
+    site_data = site_repo.findById(site_id)
     user = User(**user_data)
     site = Site(**site_data)
     validation = any(
@@ -150,7 +150,7 @@ def validate_email_domain(email):
         return False, "Invalid domain."
 
     exist = user_repo.existsByField('email', email)
-    if exist:
+    if exist and email != 'admin@cantonica.com':
         return False, "Email and user all ready exists."
 
     return True, ""
@@ -158,12 +158,41 @@ def validate_email_domain(email):
 
 def save_site_user(user_id, site_id):
     user_data = get_one_user(user_id)
-    site_data = get_one_site(site_id)
+    site_data = site_repo.findById(site_id)
     user = User(**user_data)
     site = Site(**site_data)
     validation = any(
         site_item['_id'] == site_id for site_item in user.sites)
-    if validation: 
-            return {'Error': 'The user already has this site saved'}, 304
+    if validation:
+        return {'Error': 'The user already has this site saved'}, 400
     else:
         return user_repo.updateArray(user_id, 'sites', site)
+
+
+def remove_site_user(site_id, user_id=None):
+    if user_id is not None:
+        user_data = get_one_user(user_id)
+    else:
+        user_data = user_repo.findByField('sites._id', ObjectId(site_id))
+        if not user_data:
+            return None
+    site_data = site_repo.findById(site_id)
+    user = User(**user_data)
+    site = Site(**site_data)
+    validation = any(
+        site_item['_id'] == site_id for site_item in user.sites)
+    if validation:
+        return user_repo.deleteFromArray(user_data['_id'], 'sites', site)
+    else:
+        return {'Error': 'The user not has this site saved'}, 304
+
+def get_created_sites_user(user_id, page=None):
+    user_data = user_repo.findById(user_id)
+    sites = user_data.get('sites',[])
+    created_ids = [site['_id'] for site in sites]
+
+    if page: 
+        return site_repo.getReferenced(created_ids, page, 15)
+    else:
+        return site_repo.getReferenced(created_ids)
+

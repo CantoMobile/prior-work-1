@@ -104,17 +104,23 @@ def getFaviconFromURL(url):
 
     try:
         icons = favicon.get(url)
-        icon = icons[0]
-        for icon in icons:
-            if icon.url.endswith("favicon.ico"):
-                link = icon.url
-        urllib.request.urlretrieve(icon.url, filename)
+        icon = None
+        for ico in icons:
+            if ico.url.endswith("favicon.ico"):
+                icon = ico
+                break
 
-        msg += "Saving file - success \n"
+        if icon is not None:
+            urllib.request.urlretrieve(icon.url, filename)
+            msg += "Saving file - success\n"
+            link = icon.url
+        else:
+            raise ValueError("No favicon.ico found in icons")
+
     except Exception as e:
         link = DEFAULT_FAVICON_LINK
         urllib.request.urlretrieve(link, filename)
-        msg += f'Saving file - \n Failure: \n Site - {url} \n Error message - {e} \n'
+        msg += f'Saving file -\nFailure:\nSite - {url}\nError message - {e}\n'
 
     finally:
         upload_status = uploadFile(link, image_name)

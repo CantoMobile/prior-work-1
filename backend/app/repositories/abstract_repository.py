@@ -3,6 +3,8 @@ from bson import DBRef
 from bson.objectid import ObjectId
 from typing import Generic, TypeVar, get_args
 from app.config.database import Database
+from typing import List
+
 
 T = TypeVar("T")
 
@@ -144,7 +146,7 @@ class AbstractRepository(Generic[T]):
             x = self.replaceDBRefsWithObjects(x)
             data.append(x)
         if total_pages != None:
-            return {"data": data, "total pages": total_pages}
+            return {"data": data, "totalPages": total_pages}
         else: return data 
 
     def existsByField(self, field, field_value):
@@ -181,7 +183,7 @@ class AbstractRepository(Generic[T]):
             x = self.replaceDBRefsWithObjects(x)
             data.append(x)
         if total_pages != None:
-            return {"data": data, "total pages": total_pages}
+            return {"data": data, "totalPages": total_pages}
         else: return data 
 
     def queryAggregation(self, theQuery):
@@ -272,3 +274,9 @@ class AbstractRepository(Generic[T]):
                 result = self.findById(str(obj_id), self.db[ref_collection])
                 modified_obj[key] = result
         return modified_obj
+        
+    def insertMany(self, items: List[T]) -> None:
+        laColeccion = self.db[self.coleccion]
+        documents = [item.__dict__ for item in items]
+        result = laColeccion.insert_many(documents)
+        return result.acknowledged
