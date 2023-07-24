@@ -6,6 +6,7 @@ from app.services.user_service import add_created_site_user, get_created_sites_u
 from app.utils.UploadMasiveSites import upload_masive_sites
 
 
+
 site_bp = Blueprint('site_bp', __name__, url_prefix='/sites')
 
 

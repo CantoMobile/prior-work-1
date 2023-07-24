@@ -100,7 +100,7 @@ def getFaviconFromURL(url):
     folder_path = FOLDER_PATH
     image_name = f'{getSiteName(url)}.png'
     filename = os.path.join(folder_path, image_name)
-    msg, link = "", ""
+    msg, link, status = "", "", ""
 
     try:
         icons = favicon.get(url)
@@ -119,16 +119,24 @@ def getFaviconFromURL(url):
 
     except Exception as e:
         link = DEFAULT_FAVICON_LINK
+        status = "DEFAULT"
         urllib.request.urlretrieve(link, filename)
         msg += f'Saving file -\nFailure:\nSite - {url}\nError message - {e}\n'
 
     finally:
         upload_status = uploadFile(link, image_name)
         public_url = f"https://{BUCKET_NAME}.s3.amazonaws.com/{image_name}"
-        return public_url
+        return public_url, status
         # msg += f'Upload to s3 message: {upload_status}'
         # return msg
 
+
+def getFavicon(url):
+    url, status = getFaviconFromURL(url)[0], getFaviconFromURL(url)[1]
+    if status == "DEFAULT":
+        return scrapeFavicon(url)
+    else:
+        return url
 
 
 
