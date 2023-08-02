@@ -74,3 +74,13 @@ def site_reviews(user_id):
 @validate_token
 def save_site(user_id, site_id):
     return save_site_user(user_id, site_id)
+
+
+@user_bp.route('/<user_id>/information', methods=['PUT'])
+def update_information(user_id):
+    return update_user_information(user_id)
+
+
+@user_bp.route('/validate_otp', methods=['POST'])
+def validate_otp():
+    return validate_user_otp()

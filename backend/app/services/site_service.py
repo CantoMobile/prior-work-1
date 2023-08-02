@@ -11,6 +11,7 @@ from bson.objectid import ObjectId
 from app.services.user_service import save_site_user, validate_email_domain, remove_site_user
 from app.services.otp_service import add_one_otp, validate_otp_code
 from ..utils.s3Upload import uploadFile, uploadFileUrl
+from app.services.reviews_service import exists_by_field, delete_review_by_site
 from ..utils.faviconHelper import getFaviconFromURL
 from app.utils.logger import logger
 import json
@@ -37,10 +38,10 @@ def create_site():
     url = data.get('url')
     admin_email = data.get('admin_email', 'admin@cantonica.com')
     actual_site = site_repo.findByField('url', url)
-    print(actual_site['admin_email'])
+    print(actual_site)
     if actual_site:
         if actual_site['admin_email'] != 'admin@cantonica.com':
-            return jsonify({"error":"This site has already been claimed."}), 400
+            return jsonify({"error": "This site has already been claimed."}), 400
         if admin_email != 'admin@cantonica.com':
             change_owner = real_site(url, admin_email)
         if not change_owner:
@@ -86,7 +87,7 @@ def create_site_admin_relationship(user_id, site_id, create=None):
     if create is None:
         remove = remove_site_user(site_id)
         update = save_site_user(user_id, site_id)
-        if update['updated_count'] > 0 and (remove !=None and remove['updated_count'] > 0):
+        if update['updated_count'] > 0 and (remove != None and remove['updated_count'] > 0):
             return jsonify({"message": "The administration of this site has been successfully changed."})
         else:
             return get_one_site(site_id)
@@ -178,9 +179,15 @@ def update_one_site(site_id):
     if 'keywords' in data:
         site['keywords'] = data['keywords']
     if len(media_links) > 0:
-        site['media'] = media_links
+        if data['old_media']:
+            site['media'] = data['old_media']
+            site['media'].extend(media for media in media_links)
+        else:
+            site['media'] = media_links
     response = site_repo.update(site_id, site)
-    if response['updated_count'] > 0 and data['admin_email'] != site['admin_email']:
+    if response['updated_count'] > 0 and 'email_admin' not in data:
+        return response
+    elif response['updated_count'] > 0 and data['admin_email'] != site['admin_email']:
         change_owner = real_site(site['url'], data['admin_email'])
         if not change_owner:
             return jsonify({"error": "Updated information, admin email no."}), 400
@@ -193,14 +200,15 @@ def update_one_site(site_id):
             else:
                 return jsonify({"error":
                                 "There was an error sending the confirmation code, please try again later."}), 401
-    elif  response['updated_count'] > 0 and 'email_admin' not in data:
-        return response
 
 
 def delete_one_site(site_id):
     get_one_site(site_id)
+    remove_site_user(site_id)
     if user_site_repo.existsByField('site._id', ObjectId(site_id)):
         user_site_repo.deleteAllSitesReferenceds(site_id)
+    if exists_by_field('site_id', site_id):
+        delete_review_by_site(site_id)
     return site_repo.delete(site_id)
 
 
@@ -287,6 +295,7 @@ def stats_by_site(site_id):
         abort(404)
     return stats
 
+
 def validate_site_otp():
     data = request.json
     code = validate_otp_code(data['user_id'], data['code'])
@@ -330,6 +339,7 @@ def create_masive_sites(sites):
 
     print("Sites created successfully")
     return "Sites created successfully"
+
 
 def process_batch(batch_sites, media, admin_email):
     site_list = []
@@ -384,3 +394,48 @@ def process_batch(batch_sites, media, admin_email):
         raise Exception({"error": "Error saving sites", "message": str(e)})
 
     return True
+
+
+def delete_site_ownership(site_id):
+    response = remove_site_user(site_id)
+    if 'updated_count' in response and response['updated_count'] > 0:
+        if update_admin_email(site_id, 'admin@cantonica.com'):
+            return jsonify({"message": "ownership removed successfully."})
+    else:
+        return jsonify({"error": "Error deleting site ownership."}), 401
+
+
+def actualizar_lista_media(media, nuevas_urls):
+    if len(nuevas_urls) == 1:
+        media.append(nuevas_urls[0])
+    elif len(nuevas_urls) >= 2:
+        media = media[2:]
+        media.extend(nuevas_urls[:2])
+        if len(nuevas_urls) > 2:
+            media.append(nuevas_urls[2])
+    media = media[:4]
+
+    return media
+
+
+def get_count(query=None):
+    if query:
+        return site_repo.count(query)
+    else:
+        return site_repo.count({})
+
+
+def get_more_saved(limit=None):
+    if limit:
+        top = site_repo.sort('site_stats.saves', pymongo.DESCENDING)[:limit]
+    else:
+        top = site_repo.sort('site_stats.saves', pymongo.DESCENDING)[:6]
+    top_sites = [
+        {
+            "name": dic["name"],
+            "url": dic["url"],
+            "saves": dic["site_stats"]["saves"]
+        }
+        for dic in top
+    ]
+    return top_sites

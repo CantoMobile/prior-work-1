@@ -121,3 +121,7 @@ def validate_otp():
 @site_bp.route('/create_otp', methods=['POST'])
 def create_otp():
     return add_one_otp()
+
+@site_bp.route('/<site_id>/delete_ownership', methods=['DELETE'])
+def delete_ownership(site_id):
+    return delete_site_ownership(site_id)

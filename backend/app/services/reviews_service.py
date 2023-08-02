@@ -79,3 +79,10 @@ def average_rating_by_site(site_id):
         return reviews_repo.averageRating(site_id)
     else:
         return jsonify({'error': 'Site not exists'}), 400
+
+def delete_review_by_site(site_id):
+    return reviews_repo.deleteAllByField('site_id', site_id)
+
+def exists_by_field(field, field_value):
+    return reviews_repo.existsByField(field, field_value)
+

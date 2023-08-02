@@ -26,6 +26,7 @@ def validate_token(f):
         result = auth.verify_auth_token(token)
         if type(result) is dict:
             return result, 401
+        print(result[1])
         validation = validate_permissions(result[0], result[1])
         if not validation:
             logger.error("This user has not permission to access this page: " + request.url)
@@ -40,6 +41,7 @@ def validate_permissions(email, permissions):
 
     if permissions != None:
         if (resource, method) in permissions:
+            print(permissions)
             return True
         else: 
             return False
