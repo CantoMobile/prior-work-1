@@ -7,6 +7,7 @@ from .search_result_model import SearchResult
 from .user_site_model import UserSite
 from .site_stats_model import SiteStats
 from .permissions_model import Permissions
+from .recommendations_model import Recommendation
 
 __all__ = [
     'User',
@@ -17,5 +18,6 @@ __all__ = [
     'SearchResult',
     'UserSite',
     'SiteStats',
-    'Permissions'
+    'Permissions',
+    'Recommendation'
 ]

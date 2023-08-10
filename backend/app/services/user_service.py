@@ -8,8 +8,10 @@ from app.services.auth_service import AuthService
 from app.repositories.user_site_repository import UserSiteRepository
 from app.services.user_site_service import create_relationship, delete_relationship
 from app.repositories.site_repository import SiteRepository
+from app.repositories.category_repository import CategoryRepository
 from app.models.user_model import User
 from app.models.site_model import Site
+from app.models.category_model import Category
 from app.services.site_service import get_one_site
 
 
@@ -18,6 +20,7 @@ auth = AuthService()
 role_repo = RoleRepository()
 site_repo = SiteRepository()
 user_site_repo = UserSiteRepository()
+category_repo = CategoryRepository()
 
 
 def get_all_users(page=None):
@@ -164,6 +167,12 @@ def save_site_user(user_id, site_id):
     validation = any(
         site_item['_id'] == site_id for site_item in user.sites)
     if validation: 
-            return {'Error': 'The user already has this site saved'}, 304
+        return {'Error': 'The user already has this site saved'}, 304
     else:
         return user_repo.updateArray(user_id, 'sites', site)
+
+def remove_site_user(user_id, site_id):
+    user_data = get_one_user(user_id)
+
+
+

@@ -8,12 +8,13 @@ class User:
         self.email = email
         self.password = password
         self.auth_provider = auth_provider
-        self.sites = sites or []
+        self.sites = sites or {}
         self.role = role  # or []
         if created_at is None:
             self.created_at = datetime.datetime.now()
         else:
             self.created_at = created_at
+            
         if _id is not None:
             if isinstance(_id, str):
                 self._id = _id
@@ -31,3 +32,13 @@ class User:
             return True
         else:
             return False
+
+    # def serialize(self):
+    #     return {
+    #         'name': self.name,
+    #         'email': self.email,
+    #         'password': self.password,
+    #         'sites': self.sites,
+    #         'created_at': self.created_at
+    # }
+
