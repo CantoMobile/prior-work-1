@@ -13,7 +13,6 @@ def get_all_metrics():
 def get_all_sites_admin():
     data = request.json
     return get_all_sites(data['page'])
-
 @admin_bp.route('/<site_id>/delete', methods=['DELETE'])
 def delete_site_admin(site_id):
     return delete_one_site(site_id)

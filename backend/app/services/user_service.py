@@ -12,6 +12,7 @@ from app.models.user_model import User
 from app.models.site_model import Site
 from app.services.otp_service import add_one_otp, validate_otp_code
 from app.services.general_service import extract_objects_dict, extract_object_dict
+from app.repositories.reviews_repository import ReviewsRepository
 
 
 user_repo = UserRepository()
@@ -19,6 +20,7 @@ auth = AuthService()
 role_repo = RoleRepository()
 site_repo = SiteRepository()
 user_site_repo = UserSiteRepository()
+review_repo = ReviewsRepository()
 
 
 def get_all_users(page=None):
@@ -42,11 +44,19 @@ def create_user(register=False):
     if errors[0] == False:
         return {"error": errors[1]}, 401
 
-    user = User(
-        name=data['name'],
-        email=data['email'],
-        password=auth.encrypt(data['password'])
-    )
+    if 'isAdmin' in data:
+        user = User(
+            name=data['name'],
+            email=data['email'],
+            password=auth.encrypt(data['password']),
+            isAdmin=data['isAdmin']
+        )
+    else:
+        user = User(
+            name=data['name'],
+            email=data['email'],
+            password=auth.encrypt(data['password'])
+        )
 
     user_data = user_repo.save(user)
     create_relationship(user_data['_id'])
@@ -59,6 +69,8 @@ def create_user(register=False):
 
 def update_one_user(user_id):
     user_data = get_one_user(user_id)
+    user_data['sites'] = extract_objects_dict(user_data, 'sites', 'site')
+    user_data['role'] = extract_object_dict(user_data, 'role', 'role')
     data = request.json
     if 'name' in data:
         user_data['name'] = data['name']
@@ -95,6 +107,7 @@ def update_user_information(user_id):
 def delete_one_user(user_id):
     if user_repo.existsByField('_id', ObjectId(user_id)):
         delete_relationship(user_id)
+        review_repo.deleteAllByField('user_id', user_id)
         return user_repo.delete(user_id)
     else:
         return jsonify({'message': 'This user not exists'}), 304

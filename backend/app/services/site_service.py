@@ -222,6 +222,16 @@ def search_sites_logged(user_id, page=None):
         return site_repo.query(query_not_referenced(user_id, query))
 
 
+def search_sites_claimed(page):
+    query = request.args.get('query')
+    if not query:
+        return jsonify({'error': 'Missing search query'}), 400
+    if query == 'claimed':
+        return site_repo.findAllByField('admin_email', {'$ne': 'admin@cantonica.com'}, page, 15)
+    else:
+        return site_repo.findAllByField('admin_email', 'admin@cantonica.com', page, 15)
+
+
 def search_sites_saves_logged(user_id, page=None):
     query = request.args.get('query')
     if not query:

@@ -125,23 +125,25 @@ class AbstractRepository(Generic[T]):
     def findAllByField(self, field, field_value, page=None, limit=None):
         laColeccion = self.db[self.coleccion]
         query = {field: field_value}
+        total_documents = laColeccion.count_documents(query)
+        total_pages = None
         data = []
 
         if page is not None and limit is not None:
             skip = (page - 1) * limit
-            for x in laColeccion.find(query).skip(skip).limit(limit):
-                x["_id"] = x["_id"].__str__()
-                x = self.transformObjectIds(x)
-                x = self.replaceDBRefsWithObjects(x)
-                data.append(x)
+            cursor = laColeccion.find(query).skip(skip).limit(limit)
+            total_pages = int(math.ceil(total_documents / limit))
         else:
-            for x in laColeccion.find(query):
-                x["_id"] = x["_id"].__str__()
-                x = self.transformObjectIds(x)
-                x = self.replaceDBRefsWithObjects(x)
-                data.append(x)
-
-        return data
+            cursor = laColeccion.find(query)
+        for x in cursor:
+            x["_id"] = x["_id"].__str__()
+            x = self.transformObjectIds(x)
+            x = self.replaceDBRefsWithObjects(x)
+            data.append(x)
+        if total_pages != None:
+            return {"data": data, "totalPages": total_pages}
+        else:
+            return data
 
     def findAll(self, page=None, limit=None):
         laColeccion = self.db[self.coleccion]

@@ -1,15 +1,23 @@
+import re
 from bson import ObjectId
 from flask import jsonify,  request, abort
 from app.repositories.reviews_repository import ReviewsRepository
 from app.models.reviews_model import Review
+from app.services.user_service import get_one_user
 reviews_repo = ReviewsRepository()
+
+pattern = re.compile(r'^[0-9a-fA-F]{24}$')
 
 
 def get_all_reviews(page=None):
-    if page is not None:
-        return reviews_repo.findAll(page, 15)
-    else:
-        return reviews_repo.findAll()
+    reviews = reviews_repo.findAll(
+        page, 15) if page is not None else reviews_repo.findAll()
+    for review in reviews['data']:
+        if pattern.match(review['user_id']):
+            user = get_one_user(review['user_id'])
+            if user:
+                review['user_name'] = user['name']
+    return reviews
 
 
 def get_one_review(review_id):
@@ -21,20 +29,24 @@ def get_one_review(review_id):
 
 def add_one_review():
     data = request.json
+    if 'user_id' not in data or 'site_id' not in data:
+        return jsonify({"error": "Not user_id or site_id provided"}), 400
     if reviews_repo.query({
         'user_id': data['user_id'],
         'site_id': data['site_id']
     }):
         return jsonify({'error': 'User already submitted a review'}), 400
-
-    review = Review(
-        site_id=data['site_id'],
-        user_id=data['user_id'],
-        rating=data['rating'],
-        comment=data['comment']
-    )
-    review_data = reviews_repo.save(review)
-    return jsonify(review_data)
+    if pattern.match(data['user_id']) and pattern.match(data['site_id']):
+        review = Review(
+            site_id=data['site_id'],
+            user_id=data['user_id'],
+            rating=data['rating'],
+            comment=data['comment']
+        )
+        review_data = reviews_repo.save(review)
+        return jsonify(review_data)
+    else:
+        return jsonify({"error": "invalid user_id or site_id"}), 400
 
 
 def update_one_review(review_id):
@@ -80,9 +92,13 @@ def average_rating_by_site(site_id):
     else:
         return jsonify({'error': 'Site not exists'}), 400
 
+
 def delete_review_by_site(site_id):
     return reviews_repo.deleteAllByField('site_id', site_id)
 
+def delete_review_by_user(user_id):
+    return reviews_repo.deleteAllByField('user_id', user_id)
+
+
 def exists_by_field(field, field_value):
     return reviews_repo.existsByField(field, field_value)
-

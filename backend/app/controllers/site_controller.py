@@ -6,7 +6,6 @@ from app.services.user_service import add_created_site_user, get_created_sites_u
 from app.utils.UploadMasiveSites import upload_masive_sites
 
 
-
 site_bp = Blueprint('site_bp', __name__, url_prefix='/sites')
 
 
@@ -44,6 +43,12 @@ def search_sites(user_id):
     elif request.method == 'POST':
         data = request.json
         return search_sites_logged(user_id, data['page'])
+
+
+@site_bp.route('/search_admin', methods=['POST'])
+def search_admin():
+    data = request.json
+    return search_sites_claimed(data['page'])
 
 
 @site_bp.route('/<user_id>/search_saves', methods=['GET', 'POST'])
@@ -121,6 +126,7 @@ def validate_otp():
 @site_bp.route('/create_otp', methods=['POST'])
 def create_otp():
     return add_one_otp()
+
 
 @site_bp.route('/<site_id>/delete_ownership', methods=['DELETE'])
 def delete_ownership(site_id):
