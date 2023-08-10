@@ -10,7 +10,7 @@ class UserSiteRepository(AbstractRepository[UserSite]):
 
     def deleteAllSitesReferenceds(self, site_id):
         laColeccion = self.db[self.coleccion]
-        query = {'site_id': ObjectId(site_id)}
+        query = {'site._id': ObjectId(site_id)}
         update_query = {'$pull': {'site': {'_id': ObjectId(site_id)}}}
         result = laColeccion.update_many(query, update_query)
         print(result)

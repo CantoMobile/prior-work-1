@@ -12,7 +12,9 @@ from app.repositories.category_repository import CategoryRepository
 from app.models.user_model import User
 from app.models.site_model import Site
 from app.models.category_model import Category
-from app.services.site_service import get_one_site
+from app.services.otp_service import add_one_otp, validate_otp_code
+from app.services.general_service import extract_objects_dict, extract_object_dict
+from app.repositories.reviews_repository import ReviewsRepository
 
 
 user_repo = UserRepository()
@@ -20,6 +22,7 @@ auth = AuthService()
 role_repo = RoleRepository()
 site_repo = SiteRepository()
 user_site_repo = UserSiteRepository()
+review_repo = ReviewsRepository()
 category_repo = CategoryRepository()
 
 
@@ -44,11 +47,19 @@ def create_user(register=False):
     if errors[0] == False:
         return {"error": errors[1]}, 401
 
-    user = User(
-        name=data['name'],
-        email=data['email'],
-        password=auth.encrypt(data['password'])
-    )
+    if 'isAdmin' in data:
+        user = User(
+            name=data['name'],
+            email=data['email'],
+            password=auth.encrypt(data['password']),
+            isAdmin=data['isAdmin']
+        )
+    else:
+        user = User(
+            name=data['name'],
+            email=data['email'],
+            password=auth.encrypt(data['password'])
+        )
 
     user_data = user_repo.save(user)
     create_relationship(user_data['_id'])
@@ -61,6 +72,8 @@ def create_user(register=False):
 
 def update_one_user(user_id):
     user_data = get_one_user(user_id)
+    user_data['sites'] = extract_objects_dict(user_data, 'sites', 'site')
+    user_data['role'] = extract_object_dict(user_data, 'role', 'role')
     data = request.json
     if 'name' in data:
         user_data['name'] = data['name']
@@ -70,12 +83,34 @@ def update_one_user(user_id):
         user_data['password'] = auth.encrypt(data['password'])
     if 'role' in data and role_repo.existsByField('_id', ObjectId(data['role'])):
         user_data['role'] = {'collection': 'role', '_id': data['role']}
+    if 'isAdmin' in data:
+        user_data['isAdmin'] = data['isAdmin']
     return user_repo.update(user_id, user_data)
+
+
+def update_user_information(user_id):
+    user_data = get_one_user(user_id)
+    data = request.json
+    user_data['sites'] = extract_objects_dict(user_data, 'sites', 'site')
+    user_data['role'] = extract_object_dict(user_data, 'role', 'role')
+    if 'name' in data:
+        user_data['name'] = data['name']
+    if 'password' in data and user_data['password'] != auth.encrypt(data['password']):
+        data_otp = {'user_id': user_data['_id'], 'email': user_data['email'],
+                    'site_url': auth.encrypt(data['password'])}
+        response = user_repo.update(user_id, user_data)
+        if add_one_otp(data_otp) and response['updated_count'] > 0:
+            return jsonify({"message": "code sended"})
+        else:
+            return jsonify({"error": "Could not send email to update password or update name."}), 401
+    else:
+        return user_repo.update(user_id, user_data)
 
 
 def delete_one_user(user_id):
     if user_repo.existsByField('_id', ObjectId(user_id)):
         delete_relationship(user_id)
+        review_repo.deleteAllByField('user_id', user_id)
         return user_repo.delete(user_id)
     else:
         return jsonify({'message': 'This user not exists'}), 304
@@ -101,9 +136,23 @@ def remove_user_role(user_id, role_id):
     else:
         return jsonify({"Error": "This role is not associated with this user"}), 304
 
+
+def validate_user_otp():
+    data = request.json
+    code = validate_otp_code(data['user_id'], data['code'])
+    if code:
+        user_data = user_repo.findById(data['user_id'])
+        user_data['sites'] = extract_objects_dict(user_data, 'sites', 'site')
+        user_data['role'] = extract_object_dict(user_data, 'role', 'role')
+        user_data['password'] = auth.encrypt(data['password'])
+        return user_repo.update(user_data['_id'], user_data)
+    else:
+        return jsonify({"error": "an error occurred while trying to update the password, please try again later."}), 401
+
+
 def add_created_site_user(site_id, user_id):
     user_data = get_one_user(user_id)
-    site_data = get_one_site(site_id)
+    site_data = site_repo.findById(site_id)
     user = User(**user_data)
     site = Site(**site_data)
     validation = any(
@@ -153,7 +202,7 @@ def validate_email_domain(email):
         return False, "Invalid domain."
 
     exist = user_repo.existsByField('email', email)
-    if exist:
+    if exist and email != 'admin@cantonica.com':
         return False, "Email and user all ready exists."
 
     return True, ""
@@ -161,18 +210,48 @@ def validate_email_domain(email):
 
 def save_site_user(user_id, site_id):
     user_data = get_one_user(user_id)
-    site_data = get_one_site(site_id)
+    site_data = site_repo.findById(site_id)
     user = User(**user_data)
     site = Site(**site_data)
     validation = any(
         site_item['_id'] == site_id for site_item in user.sites)
-    if validation: 
-        return {'Error': 'The user already has this site saved'}, 304
+    if validation:
+        return {'Error': 'The user already has this site saved'}, 400
     else:
         return user_repo.updateArray(user_id, 'sites', site)
 
-def remove_site_user(user_id, site_id):
-    user_data = get_one_user(user_id)
+
+def remove_site_user(site_id, user_id=None):
+    if user_id is not None:
+        user_data = get_one_user(user_id)
+    else:
+        user_data = user_repo.findByField('sites._id', ObjectId(site_id))
+        if not user_data:
+            return None
+    site_data = site_repo.findById(site_id)
+    user = User(**user_data)
+    site = Site(**site_data)
+    validation = any(
+        site_item['_id'] == site_id for site_item in user.sites)
+    if validation:
+        return user_repo.deleteFromArray(user_data['_id'], 'sites', site)
+    else:
+        return {'Error': 'The user not has this site saved'}, 304
 
 
+def get_created_sites_user(user_id, page=None):
+    user_data = user_repo.findById(user_id)
+    sites = user_data.get('sites', [])
+    created_ids = [site['_id'] for site in sites]
 
+    if page:
+        return site_repo.getReferenced(created_ids, page, 15)
+    else:
+        return site_repo.getReferenced(created_ids)
+
+
+def get_count(query=None):
+    if query:
+        return user_repo.count(query)
+    else:
+        return user_repo.count({})

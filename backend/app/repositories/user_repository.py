@@ -54,4 +54,3 @@ class UserRepository(AbstractRepository[User]):
         ]
         result = laColeccion.aggregate(pipeline)
         return bool(next(result, False))
-

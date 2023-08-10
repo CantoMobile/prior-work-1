@@ -3,6 +3,8 @@ from bson import DBRef
 from bson.objectid import ObjectId
 from typing import Generic, TypeVar, get_args
 from app.config.database import Database
+from typing import List
+
 
 T = TypeVar("T")
 
@@ -39,6 +41,20 @@ class AbstractRepository(Generic[T]):
         laColeccion = self.db[self.coleccion]
         cuenta = laColeccion.delete_one({"_id": ObjectId(id)}).deleted_count
         return {"deleted_count": cuenta}
+
+    def deleteByField(self, field_name, field_value):
+        laColeccion = self.db[self.coleccion]
+        query = {field_name: field_value}
+        result = laColeccion.delete_one(query)
+        deleted_count = result.deleted_count
+        return {"deleted_count": deleted_count}
+
+    def deleteAllByField(self, field_name, field_value):
+        laColeccion = self.db[self.coleccion]
+        query = {field_name: field_value}
+        result = laColeccion.delete_many(query)
+        deleted_count = result.deleted_count
+        return {"deleted_count": deleted_count}
 
     def update(self, id, item: T):
         _id = ObjectId(id)
@@ -109,23 +125,25 @@ class AbstractRepository(Generic[T]):
     def findAllByField(self, field, field_value, page=None, limit=None):
         laColeccion = self.db[self.coleccion]
         query = {field: field_value}
+        total_documents = laColeccion.count_documents(query)
+        total_pages = None
         data = []
 
         if page is not None and limit is not None:
             skip = (page - 1) * limit
-            for x in laColeccion.find(query).skip(skip).limit(limit):
-                x["_id"] = x["_id"].__str__()
-                x = self.transformObjectIds(x)
-                x = self.replaceDBRefsWithObjects(x)
-                data.append(x)
+            cursor = laColeccion.find(query).skip(skip).limit(limit)
+            total_pages = int(math.ceil(total_documents / limit))
         else:
-            for x in laColeccion.find(query):
-                x["_id"] = x["_id"].__str__()
-                x = self.transformObjectIds(x)
-                x = self.replaceDBRefsWithObjects(x)
-                data.append(x)
-
-        return data
+            cursor = laColeccion.find(query)
+        for x in cursor:
+            x["_id"] = x["_id"].__str__()
+            x = self.transformObjectIds(x)
+            x = self.replaceDBRefsWithObjects(x)
+            data.append(x)
+        if total_pages != None:
+            return {"data": data, "totalPages": total_pages}
+        else:
+            return data
 
     def findAll(self, page=None, limit=None):
         laColeccion = self.db[self.coleccion]
@@ -144,8 +162,9 @@ class AbstractRepository(Generic[T]):
             x = self.replaceDBRefsWithObjects(x)
             data.append(x)
         if total_pages != None:
-            return {"data": data, "total pages": total_pages}
-        else: return data 
+            return {"data": data, "totalPages": total_pages}
+        else:
+            return data
 
     def existsByField(self, field, field_value):
         laColeccion = self.db[self.coleccion]
@@ -172,7 +191,7 @@ class AbstractRepository(Generic[T]):
             skip = (page - 1) * limit
             cursor = laColeccion.find(theQuery).skip(skip).limit(limit)
             total_pages = int(math.ceil(total_documents / limit))
-        else: 
+        else:
             cursor = laColeccion.find(theQuery)
 
         for x in cursor:
@@ -181,8 +200,9 @@ class AbstractRepository(Generic[T]):
             x = self.replaceDBRefsWithObjects(x)
             data.append(x)
         if total_pages != None:
-            return {"data": data, "total pages": total_pages}
-        else: return data 
+            return {"data": data, "totalPages": total_pages}
+        else:
+            return data
 
     def queryAggregation(self, theQuery):
         laColeccion = self.db[self.coleccion]
@@ -272,3 +292,16 @@ class AbstractRepository(Generic[T]):
                 result = self.findById(str(obj_id), self.db[ref_collection])
                 modified_obj[key] = result
         return modified_obj
+
+    def insertMany(self, items: List[T]) -> None:
+        laColeccion = self.db[self.coleccion]
+        documents = [item.__dict__ for item in items]
+        result = laColeccion.insert_many(documents)
+        return result.acknowledged
+
+    def count(self, query=None):
+        laColeccion = self.db[self.coleccion]
+        if query:
+            return laColeccion.count_documents(query)
+        else:
+            return laColeccion.count_documents({})
