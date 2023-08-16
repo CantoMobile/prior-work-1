@@ -1,9 +1,11 @@
-from flask import Blueprint
+from flask import Blueprint, Response
 from app.services.user_site_service import return_not_referenced, return_referenced
 from app.services.middleware import admin_permission_required
 from app.services.site_service import *
 from app.services.user_service import add_created_site_user, get_created_sites_user
 from app.utils.UploadMasiveSites import upload_masive_sites
+from app.config.database import Database
+import numpy as np
 
 
 site_bp = Blueprint('site_bp', __name__, url_prefix='/sites')
@@ -95,11 +97,12 @@ def get_sites_not_ref_by_user(user_id):
 
 @site_bp.route('/user/<user_id>', methods=['GET', 'POST'])
 def get_sites__ref_by_user(user_id):
-    if request.method == 'GET':
-        return return_referenced(user_id)
-    elif request.method == 'POST':
-        data = request.json
-        return return_referenced(user_id, data['page'])
+    response_data = jsonify(return_referenced(user_id))
+
+    response = Response(response_data, content_type='application/json')
+    response.headers['Cache-Control'] = 'public, max-age=86400'  # Cache for 1 day
+
+    return response
 
 
 @site_bp.route('/top6_saved', methods=['GET'])

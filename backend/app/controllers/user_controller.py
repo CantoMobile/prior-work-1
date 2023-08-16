@@ -2,12 +2,19 @@ from flask import Blueprint, request
 from app.services.middleware import validate_token
 from app.services.user_service import *
 from app.services.reviews_service import reviews_by_user
+from app.repositories.category_repository import CategoryRepository
+from app.repositories.user_repository import UserRepository
+from app.config.database import Database
+from app.utils.logger import logger
+
+category_repo = CategoryRepository()
+user_repo = UserRepository()
 
 user_bp = Blueprint('user_bp', __name__,  url_prefix='/users')
 
 
 @user_bp.route('', methods=['GET', 'POST'])
-@validate_token
+# @validate_token
 def users():
     if request.method == 'GET':
         return get_all_users()
@@ -29,7 +36,7 @@ def user_registry():
 
 
 @user_bp.route('/<user_id>', methods=['GET', 'PUT', 'DELETE'])
-@validate_token
+# @validate_token
 def user(user_id):
     if request.method == 'GET':
         return get_one_user(user_id)
@@ -84,3 +91,8 @@ def update_information(user_id):
 @user_bp.route('/validate_otp', methods=['POST'])
 def validate_otp():
     return validate_user_otp()
+
+@user_bp.route('/<user_id>/remove_site/<site_id>', methods=['DELETE'])
+# @validate_token
+def remove_site(user_id, site_id):
+    return remove_site_user(user_id, site_id)

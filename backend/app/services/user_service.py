@@ -8,8 +8,10 @@ from app.services.auth_service import AuthService
 from app.repositories.user_site_repository import UserSiteRepository
 from app.services.user_site_service import create_relationship, delete_relationship
 from app.repositories.site_repository import SiteRepository
+from app.repositories.category_repository import CategoryRepository
 from app.models.user_model import User
 from app.models.site_model import Site
+from app.models.category_model import Category
 from app.services.otp_service import add_one_otp, validate_otp_code
 from app.services.general_service import extract_objects_dict, extract_object_dict
 from app.repositories.reviews_repository import ReviewsRepository
@@ -21,6 +23,7 @@ role_repo = RoleRepository()
 site_repo = SiteRepository()
 user_site_repo = UserSiteRepository()
 review_repo = ReviewsRepository()
+category_repo = CategoryRepository()
 
 
 def get_all_users(page=None):
