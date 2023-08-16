@@ -106,6 +106,9 @@ def get_sites__ref_by_user(user_id):
 def search_top_six_sites():
     return get_top_six_saved()
 
+@site_bp.route('/top6_saved_logged/<user_id>', methods=['GET'])
+def search_top_six_saved_logged(user_id):
+    return get_top_six_saved_logged(user_id)
 
 @site_bp.route('/<user_id>/save_site/<site_id>', methods=['PUT'])
 def save_site(user_id, site_id):

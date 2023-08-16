@@ -11,12 +11,19 @@ pattern = re.compile(r'^[0-9a-fA-F]{24}$')
 
 def get_all_reviews(page=None):
     reviews = reviews_repo.findAll(
-        page, 15) if page is not None else reviews_repo.findAll()
-    for review in reviews['data']:
-        if pattern.match(review['user_id']):
-            user = get_one_user(review['user_id'])
-            if user:
-                review['user_name'] = user['name']
+        page, 15) if page else reviews_repo.findAll()
+    if page:
+        for review in reviews['data']:
+            if pattern.match(review['user_id']):
+                user = get_one_user(review['user_id'])
+                if user:
+                    review['user_name'] = user['name']
+    else:
+        for review in reviews:
+            if pattern.match(review['user_id']):
+                user = get_one_user(review['user_id'])
+                if user:
+                    review['user_name'] = user['name']
     return reviews
 
 
@@ -74,6 +81,12 @@ def delete_one_review(review_id):
 def reviews_by_site(site_id):
     try:
         reviews = reviews_repo.findAllByField('site_id', site_id)
+
+        for review in reviews:
+            if pattern.match(review['user_id']):
+                user = get_one_user(review['user_id'])
+                if user:
+                    review['user_name'] = user['name']
         return reviews
     except Exception as e:
         return jsonify({"error": str(e)}), 401
@@ -95,6 +108,7 @@ def average_rating_by_site(site_id):
 
 def delete_review_by_site(site_id):
     return reviews_repo.deleteAllByField('site_id', site_id)
+
 
 def delete_review_by_user(user_id):
     return reviews_repo.deleteAllByField('user_id', user_id)

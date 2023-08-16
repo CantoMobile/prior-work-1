@@ -5,7 +5,7 @@ import pymongo
 from app.repositories.site_repository import SiteRepository
 from app.repositories.user_site_repository import UserSiteRepository
 from app.repositories.site_stats_repository import SiteStatsRepository
-from app.services.user_site_service import query_referenced, query_not_referenced
+from app.services.user_site_service import query_referenced, query_not_referenced, get_refereced_ids
 from app.models.site_model import Site
 from bson.objectid import ObjectId
 from app.services.user_service import save_site_user, validate_email_domain, remove_site_user
@@ -170,7 +170,8 @@ def update_one_site(site_id):
 
     if 'media' in request.files:
         data_media = request.files.getlist('media')
-        media_links = save_data_media(data['name'], data_media)
+        media_links = save_data_media(
+            data['name'], data_media) if 'name' in data else save_data_media(site['name'], data_media)
 
     if 'name' in data:
         site['name'] = data['name']
@@ -179,7 +180,7 @@ def update_one_site(site_id):
     if 'keywords' in data:
         site['keywords'] = data['keywords']
     if len(media_links) > 0:
-        if data['old_media']:
+        if 'old_media' in data:
             site['media'] = data['old_media']
             site['media'].extend(media for media in media_links)
         else:
@@ -288,6 +289,10 @@ def search_sites_name_suggested():
 def get_top_six_saved():
     top6_sites = site_repo.sort('site_stats.saves', pymongo.DESCENDING)[:6]
     return jsonify(top6_sites)
+
+
+def get_top_six_saved_logged(user_id):
+    return site_repo.queryTopSixLogged(get_refereced_ids(user_id))
 
 
 def stats_by_site(site_id):

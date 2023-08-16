@@ -98,7 +98,7 @@ def return_referenced(user_id, page=None):
     sites = user_site_data.get('site', [])
     referenced_ids = [site['_id'] for site in sites]
     if page is not None:
-        return  site_repo.getReferenced(referenced_ids, page, 15)
+        return site_repo.getReferenced(referenced_ids, page, 15)
     else:
         return site_repo.getReferenced(referenced_ids)
 
@@ -115,3 +115,10 @@ def query_referenced(user_id, query):
     sites = user_site_data.get('site', [])
     referenced_ids = [site['_id'] for site in sites]
     return site_repo.queryRefereced(referenced_ids, query)
+
+
+def get_refereced_ids(user_id):
+    user_site_data = user_site_repo.findByField('user_id', user_id)
+    sites = user_site_data.get('site', [])
+    referenced_ids = [site['_id'] for site in sites]
+    return referenced_ids
