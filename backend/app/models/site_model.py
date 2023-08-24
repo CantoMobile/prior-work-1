@@ -1,9 +1,9 @@
-from .site_stats_model import SiteStats
+import datetime
 
 
 class Site:
 
-    def __init__(self, url, name, description=None, logo=None, keywords=None, media=None, admin_email=None, site_stats=None, _id=None):
+    def __init__(self, url, name, description=None, logo=None, keywords=None, media=None, admin_email=None, site_stats=None, created_at=None, _id=None):
         self.url = url
         self.name = name
         self.description = description
@@ -12,6 +12,10 @@ class Site:
         self.media = media or []
         self.admin_email = admin_email
         self.site_stats = site_stats if site_stats is not None else {"saves": 0}
+        if created_at is None:
+            self.created_at = datetime.datetime.now()
+        else:
+            self.created_at = created_at
         if _id is not None:
             if isinstance(_id, str):
                 self._id = _id

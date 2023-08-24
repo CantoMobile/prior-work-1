@@ -69,6 +69,10 @@ def search_created_sites(user_id):
     elif request.method == 'POST':
         data = request.json
         return get_created_sites_user(user_id, data['page'])
+    
+@site_bp.route('/get_lastest_added', methods=['GET'])
+def get_lastest_added():
+    return get_lastest_added_sites()
 
 
 @site_bp.route('/search', methods=['GET'])
@@ -97,25 +101,35 @@ def get_sites_not_ref_by_user(user_id):
 
 @site_bp.route('/user/<user_id>', methods=['GET', 'POST'])
 def get_sites__ref_by_user(user_id):
-    response_data = jsonify(return_referenced(user_id))
+    # response_data = jsonify(return_referenced(user_id))
 
-    response = Response(response_data, content_type='application/json')
-    response.headers['Cache-Control'] = 'public, max-age=86400'  # Cache for 1 day
-
-    return response
+    # response = Response(response_data, content_type='application/json')
+    # response.headers['Cache-Control'] = 'public, max-age=86400'  # Cache for 1 day
+    if request.method == 'GET':
+        return return_referenced(user_id)
+    elif request.method == 'POST':
+        data = request.json
+        return return_referenced(user_id, data['page'])
 
 
 @site_bp.route('/top6_saved', methods=['GET'])
 def search_top_six_sites():
     return get_top_six_saved()
 
+
 @site_bp.route('/top6_saved_logged/<user_id>', methods=['GET'])
 def search_top_six_saved_logged(user_id):
     return get_top_six_saved_logged(user_id)
 
+
 @site_bp.route('/<user_id>/save_site/<site_id>', methods=['PUT'])
 def save_site(user_id, site_id):
     return add_created_site_user(site_id, user_id)
+
+
+@site_bp.route('/update_icon/<site_id>', methods=['PUT'])
+def update_icon_site(site_id):
+    return update_site_icon(site_id)
 
 
 @site_bp.route('/initialize', methods=['POST'])

@@ -8,7 +8,7 @@ class User:
         self.email = email
         self.password = password
         self.auth_provider = auth_provider
-        self.sites = sites or {}
+        self.sites = sites or []
         self.role = role  # or []
         self.isAdmin = isAdmin if isAdmin else False
         if created_at is None:

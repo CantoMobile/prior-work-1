@@ -4,12 +4,13 @@ from bs4 import BeautifulSoup
 import favicon
 import urllib.request
 import urllib.parse
-#from dotenv import load_dotenv
+from io import BytesIO
+# from dotenv import load_dotenv
 from PIL import Image
 import io
 import os
 
-#load_dotenv()
+# load_dotenv()
 
 ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 ACCESS_SECRET_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
@@ -24,7 +25,8 @@ headers = {
 }
 
 DEFAULT_FAVICON_LINK = "https://cdn-icons-png.flaticon.com/512/44/44386.png"
-FOLDER_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'favicons'))
+FOLDER_PATH = os.path.abspath(os.path.join(
+    os.path.dirname(__file__), '..', '..', 'favicons'))
 
 
 def getSiteName(url):
@@ -39,9 +41,9 @@ def getSiteName(url):
 
 def uploadFile(link, image_name):
     s3 = boto3.client('s3',
-        aws_access_key_id= ACCESS_KEY_ID,
-        aws_secret_access_key= ACCESS_SECRET_KEY
-    )
+                      aws_access_key_id=ACCESS_KEY_ID,
+                      aws_secret_access_key=ACCESS_SECRET_KEY
+                      )
 
     image_data = requests.get(link).content
     image = (io.BytesIO(image_data))
@@ -61,12 +63,13 @@ def scrapeFavicon(url):
     filename = os.path.join(folder_path, image_name)
     msg, link = "", ""
 
-    try: 
+    try:
         page = requests.get(url)
 
         soup = BeautifulSoup(page.content, 'html.parser')
 
-        favicon_link = soup.find("link", rel="shortcut icon") or soup.find("link", rel="icon")
+        favicon_link = soup.find(
+            "link", rel="shortcut icon") or soup.find("link", rel="icon")
 
         if favicon_link:
             link = favicon_link.get("href")
@@ -87,7 +90,7 @@ def scrapeFavicon(url):
             link = DEFAULT_FAVICON_LINK
             urllib.request.urlretrieve(link, filename)
             msg += f"Saving file - \n Failure: Couldn't get favicon \n"
-    
+
     except Exception as e:
         msg += f'Error saving file: {e} \n'
     finally:
@@ -126,7 +129,7 @@ def getFaviconFromURL(url):
     finally:
         upload_status = uploadFile(link, image_name)
         public_url = f"https://{BUCKET_NAME}.s3.amazonaws.com/{image_name}"
-        return public_url, status
+        return public_url
         # msg += f'Upload to s3 message: {upload_status}'
         # return msg
 
@@ -139,15 +142,31 @@ def getFavicon(url):
         return url
 
 
+def getUrlFavicon(url, file):
+    image_name = f'{getSiteName(url)}.png'
+    s3 = boto3.client('s3',
+                      aws_access_key_id=ACCESS_KEY_ID,
+                      aws_secret_access_key=ACCESS_SECRET_KEY
+                      )
+    bucket_name = BUCKET_NAME
+    with BytesIO(file) as file_stream:
+        response = s3.upload_fileobj(
+            file_stream,
+            bucket_name,
+            image_name
+        )
+    public_url = f"https://{BUCKET_NAME}.s3.amazonaws.com/{image_name}"
+    return public_url
+
 
 # TEST_SITES = [
-    # "https://www.eventbrite.com", 
-    # "https://www.amazon.com", 
-    # "https://www.stackoverflow.com", 
-    # "https://www.google.com", 
-    # "https://www.atlassian.com", 
-    # "https://www.heroku.com", 
-    # "https://www.railway.com", 
+    # "https://www.eventbrite.com",
+    # "https://www.amazon.com",
+    # "https://www.stackoverflow.com",
+    # "https://www.google.com",
+    # "https://www.atlassian.com",
+    # "https://www.heroku.com",
+    # "https://www.railway.com",
     # "https://www.reddit.com",
     # "https://www.mongodb.com",
     # "https://stackoverflow.com/questions/857653/get-a-list-of-urls-from-a-site",
@@ -177,14 +196,12 @@ def getFavicon(url):
 # try:
 #     for site in TEST_SITES:
 #         print(getFaviconFromURL(site))
-# except Exception as e: 
+# except Exception as e:
 #     print(e)
 
 # try:
 #     for site in TEST_SITES:
 #         print(scrapeFavicon(site))
-# except Exception as e: 
+# except Exception as e:
 #     print(e)
 # print(scrapeFavicon("https://www.twitter.com"))
-
-
