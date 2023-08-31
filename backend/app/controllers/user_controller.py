@@ -53,10 +53,9 @@ def authentication():
     return user_authentication()
 
 
-@user_bp.route('/<string:user_id>/set_password', methods=['PUT'])
-@validate_token
-def set_password(user_id):
-    return set_user_password(user_id)
+@user_bp.route('/set_password', methods=['POST'])
+def set_password():
+    return set_user_password()
 
 
 @user_bp.route('/<user_id>/add_role/<role_id>', methods=['PUT'])

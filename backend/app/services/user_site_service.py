@@ -79,7 +79,8 @@ def create_relationship(id):
 
 
 def delete_relationship(id):
-    user_site = user_site_repo.findAllByField('user_id', id)
+    user_site = user_site_repo.findByField('user_id', id)
+    print(user_site['user_id'])
     user_site_repo.delete(user_site['_id'])
 
 

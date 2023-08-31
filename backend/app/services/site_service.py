@@ -8,11 +8,11 @@ from app.repositories.site_stats_repository import SiteStatsRepository
 from app.services.user_site_service import query_referenced, query_not_referenced, get_refereced_ids
 from app.models.site_model import Site
 from bson.objectid import ObjectId
-from app.services.user_service import save_site_user, validate_email_domain, remove_site_user
-from app.services.otp_service import add_one_otp, validate_otp_code
+from app.services.user_service import save_site_user, validate_email_domain, remove_site_user, exists_relation_site
+from app.services.otp_service import add_one_otp, validate_otp_code, get_one_otp
 from ..utils.s3Upload import uploadFile, uploadFileUrl
 from app.services.reviews_service import exists_by_field, delete_review_by_site
-from ..utils.faviconHelper import getFaviconFromURL
+from ..utils.faviconHelper import getFaviconFromURL, getUrlFavicon
 from app.utils.logger import logger
 import json
 import concurrent.futures
@@ -36,51 +36,70 @@ def create_site():
     change_owner = False
 
     url = data.get('url')
-    admin_email = data.get('admin_email', 'admin@cantonica.com')
+    # admin_email = data.get('admin_email', 'admin@cantonica.com')
     actual_site = site_repo.findByField('url', url)
     print(actual_site)
     if actual_site:
         if actual_site['admin_email'] != 'admin@cantonica.com':
-            return jsonify({"error": "This site has already been claimed."}), 400
-        if admin_email != 'admin@cantonica.com':
-            change_owner = real_site(url, admin_email)
+            return jsonify({"error": "This site has already been claimed."}), 401
+        if 'admin_email' in data and data['admin_email'] != 'admin@cantonica.com':
+            change_owner = real_site(url, data['admin_email'])
         if not change_owner:
-            return jsonify({"error": "Site already exists"}), 400
+            return jsonify({"error": "Site already exists"}), 401
         else:
-            data = {"user_id": data['user_id'],
-                    "site_url": data['url'], "email": data["admin_email"]}
-            if add_one_otp(data):
-                return jsonify({"message": "code sended"})
+            if 'user_id' in data:
+                data = {"user_id": data['user_id'],
+                        "site_url": data['url'], "email": data["admin_email"]}
+                if add_one_otp(data):
+                    return jsonify({"message": "code sended"})
+                else:
+                    return jsonify({"error":
+                                    "There was an error sending the confirmation code, please try again later."}), 401
             else:
-                return jsonify({"error":
-                                "There was an error sending the confirmation code, please try again later."}), 401
+                return jsonify({"error": "Site already exists"}), 401
 
-    if admin_email != 'admin@cantonica.com':
-        if site_repo.existsByField('admin_email', admin_email):
-            return jsonify({"error": "This email is the admin for another site"}), 400
+    if 'admin_email' in data and data['admin_email'] != 'admin@cantonica.com':
+        if site_repo.existsByField('admin_email', data['admin_email']):
+            return jsonify({"error": "This email is the admin for another site"}), 401
 
     if 'media' in request.files:
         data_media = request.files.getlist('media')
         media_links = save_data_media(data['name'], data_media)
 
+    if 'icon' in request.files:
+        data_icon = request.files.get('icon')
+        icon = save_favicon(url, data_icon)
+    else:
+        icon = getFaviconFromURL(url)
+
     site = Site(
         url=url,
         name=data['name'],
         description=data['description'],
-        logo=getFaviconFromURL(url),
+        logo=icon,
         keywords=data['keywords'],
         media=media_links,
-        admin_email=admin_email
+        admin_email='admin@cantonica.com'
     )
 
     try:
         site_data = site_repo.save(site)
-        if 'user_id' in data:
-            return create_site_admin_relationship(data['user_id'], site_data['_id'], True)
+        if 'admin_email' in data and data['admin_email'] != 'admin@cantoncia.com':
+            data = {"user_id": data['user_id'],
+                    "site_url": data['url'], "email": data["admin_email"]}
+            if add_one_otp(data):
+                return jsonify({"message": "code sended. Site indexed successfully."})
+            else:
+                return jsonify({"error":
+                                "There was an error sending the confirmation code, please try again later. Sucessfully",
+                                "site": site_data}), 401
+
+        # if 'user_id' in data:
+        #     return create_site_admin_relationship(data['user_id'], site_data['_id'], True)
         else:
             return site_data
     except Exception as e:
-        return jsonify({"error": "Error saving site", "message": str(e)}), 400
+        return jsonify({"error": "Error saving site", "message": str(e)}), 401
 
 
 def create_site_admin_relationship(user_id, site_id, create=None):
@@ -168,6 +187,11 @@ def update_one_site(site_id):
     data = json.loads(request.form['json'])
     site = get_one_site(site_id)
 
+    if 'icon' in request.files:
+        data_icon = request.files.get('icon')
+        icon = save_favicon(site['url'], data_icon)
+        site['logo'] = icon
+
     if 'media' in request.files:
         data_media = request.files.getlist('media')
         media_links = save_data_media(
@@ -185,6 +209,9 @@ def update_one_site(site_id):
             site['media'].extend(media for media in media_links)
         else:
             site['media'] = media_links
+    if 'logoChanged' in data:
+        site['logoChanged'] = data['logoChanged']
+
     response = site_repo.update(site_id, site)
     if response['updated_count'] > 0 and 'email_admin' not in data:
         return response
@@ -317,8 +344,11 @@ def validate_site_otp():
     if code:
         site_data = site_repo.findByField('url', data['site_url'])
         print(site_data)
-        update_admin_email(site_data['_id'], data['admin_email'])
-        return create_site_admin_relationship(data['user_id'], site_data['_id'])
+        if exists_relation_site:
+            update_admin_email(site_data['_id'], data['admin_email'])
+            return create_site_admin_relationship(data['user_id'], site_data['_id'])
+        else:
+            return create_site_admin_relationship(data['user_id'], site_data['_id'], True)
     else:
         return jsonify({"error":
                         "An error occurred while trying to claim the site, please try again later."}), 401
@@ -454,3 +484,32 @@ def get_more_saved(limit=None):
         for dic in top
     ]
     return top_sites
+
+
+def save_favicon(url, file):
+    try:
+        file_data = file.stream.read()
+        file_link = getUrlFavicon(url, file_data)
+    except Exception as e:
+        logger.error("Error saving favicon " + str(e))
+        file_link = getFaviconFromURL(url)
+    finally:
+        return file_link
+
+
+def update_site_icon(site_id):
+    data_icon = request.files.get('icon')
+    data = json.loads(request.form['json'])
+
+    site_data = get_one_site(site_id)
+    if not data_icon:
+        abort(404)
+    if data and 'logoChanged' in data:
+        site_data['logoChanged'] = data['logoChanged']
+    site_data['logo'] = save_favicon(site_data['url'], data_icon)
+    response = site_repo.update(site_id, site_data)
+    return response
+
+
+def get_lastest_added_sites():
+    return site_repo.sort("created_at", -1)[:10]

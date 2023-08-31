@@ -4,9 +4,11 @@ from bs4 import BeautifulSoup
 import favicon
 import urllib.request
 import urllib.parse
+import requests
 from io import BytesIO
 # from dotenv import load_dotenv
 from PIL import Image
+from app.utils.logger import logger
 import io
 import os
 
@@ -48,13 +50,14 @@ def uploadFile(link, image_name):
     image_data = requests.get(link).content
     image = (io.BytesIO(image_data))
     bucket_name = BUCKET_NAME
-    response = s3.upload_fileobj(
-        image,
-        bucket_name,
-        image_name
-    )
-
-    return response
+    try:
+        s3.upload_fileobj(
+            image,
+            bucket_name,
+            image_name
+        )
+    except Exception as e:
+        logger.error("Has error uploading icon ", (str(e)))
 
 
 def scrapeFavicon(url):
@@ -106,31 +109,40 @@ def getFaviconFromURL(url):
     msg, link, status = "", "", ""
 
     try:
-        icons = favicon.get(url)
+        user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
+        headers = {'User-Agent': user_agent}
+        icons = favicon.get(url, headers=headers)
         icon = None
         for ico in icons:
             if ico.url.endswith("favicon.ico"):
                 icon = ico
                 break
-
         if icon is not None:
-            urllib.request.urlretrieve(icon.url, filename)
+            # urllib.request.urlretrieve(icon.url, filename)
+            r = requests.get(icon.url, headers=headers)
+            with open(filename, "wb") as f:
+                f.write(r.content)
             msg += "Saving file - success\n"
             link = icon.url
         else:
             raise ValueError("No favicon.ico found in icons")
 
     except Exception as e:
+        print(e)
         link = DEFAULT_FAVICON_LINK
         status = "DEFAULT"
-        urllib.request.urlretrieve(link, filename)
-        msg += f'Saving file -\nFailure:\nSite - {url}\nError message - {e}\n'
+        # urllib.request.urlretrieve(link, filename)
+        r = requests.get(icon.url, headers=headers)
+        with open(filename, "wb") as f:
+            f.write(r.content)
+        logger.error(
+            f'Saving file -\nFailure:\nSite - {url}\nError message - {e}\n')
 
     finally:
-        upload_status = uploadFile(link, image_name)
+        uploadFile(link, image_name)
         public_url = f"https://{BUCKET_NAME}.s3.amazonaws.com/{image_name}"
+        logger.info(f' Upload icon to s3 sucessfull.')
         return public_url
-        # msg += f'Upload to s3 message: {upload_status}'
         # return msg
 
 

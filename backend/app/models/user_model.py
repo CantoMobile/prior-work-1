@@ -25,14 +25,6 @@ class User:
     def verify_password(self, password):
         return self.password == password
 
-    def set_password(self, password):
-        if self.password == password:
-            return None
-        elif len(password) > 10:
-            self.password = password
-            return True
-        else:
-            return False
 
     # def serialize(self):
     #     return {
