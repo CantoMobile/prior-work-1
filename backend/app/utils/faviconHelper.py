@@ -31,13 +31,25 @@ FOLDER_PATH = os.path.abspath(os.path.join(
     os.path.dirname(__file__), '..', '..', 'favicons'))
 
 
+# def getSiteName(url):
+#     parsed_url = urllib.parse.urlparse(url)
+
+#     domain_name = parsed_url.netloc
+#     split_domain = domain_name.split('.')
+#     extracted_domain = split_domain[-2]
+
+#     return extracted_domain
+
+import urllib.parse
+
 def getSiteName(url):
     parsed_url = urllib.parse.urlparse(url)
-
     domain_name = parsed_url.netloc
     split_domain = domain_name.split('.')
-    extracted_domain = split_domain[-2]
-
+    if len(split_domain) > 1:
+        extracted_domain = split_domain[-2]
+    else:
+        extracted_domain = split_domain[0]
     return extracted_domain
 
 
@@ -111,6 +123,8 @@ def getFaviconFromURL(url):
     try:
         user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
         headers = {'User-Agent': user_agent}
+        if not url.startswith('http://www.') or not url.startswith('https://www.'):
+            url = "https://www." + url            
         icons = favicon.get(url, headers=headers)
         icon = None
         for ico in icons:

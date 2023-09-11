@@ -1,3 +1,4 @@
+import math
 import socket
 from urllib.parse import urlparse
 from flask import jsonify,  request, abort
@@ -37,8 +38,10 @@ def create_site():
 
     url = data.get('url')
     # admin_email = data.get('admin_email', 'admin@cantonica.com')
+    # if real_site(url) == False:
+    #     return {"error":"The url is not valid or the site does not exist."}, 401
     actual_site = site_repo.findByField('url', url)
-    print(actual_site)
+    print("actual site: ", actual_site)
     if actual_site:
         if actual_site['admin_email'] != 'admin@cantonica.com':
             return jsonify({"error": "This site has already been claimed."}), 401
@@ -58,7 +61,7 @@ def create_site():
             else:
                 return jsonify({"error": "Site already exists"}), 401
 
-    if 'admin_email' in data and data['admin_email'] != 'admin@cantonica.com':
+    if ('admin_email' in data) and (data['admin_email'] != 'admin@cantonica.com'):
         if site_repo.existsByField('admin_email', data['admin_email']):
             return jsonify({"error": "This email is the admin for another site"}), 401
 
@@ -70,6 +73,7 @@ def create_site():
         data_icon = request.files.get('icon')
         icon = save_favicon(url, data_icon)
     else:
+        print("llegué a el else icono")
         icon = getFaviconFromURL(url)
 
     site = Site(
@@ -84,7 +88,7 @@ def create_site():
 
     try:
         site_data = site_repo.save(site)
-        if 'admin_email' in data and data['admin_email'] != 'admin@cantoncia.com':
+        if ('admin_email' in data) and (data['admin_email'] != 'admin@cantoncia.com'):
             data = {"user_id": data['user_id'],
                     "site_url": data['url'], "email": data["admin_email"]}
             if add_one_otp(data):
@@ -119,7 +123,10 @@ def create_site_admin_relationship(user_id, site_id, create=None):
             return jsonify({"Error": "The site could not be successfully created and assigned your ownership."}), 400
 
 
-def real_site(url, admin_site):
+def real_site(url, admin_site=None):
+    if admin_site is None:
+        domain = validate_domain(url)
+        return True if domain is not None else False
     domain = validate_domain(url)
     if domain:
         errors = validate_email_domain(admin_site)
@@ -182,6 +189,39 @@ def get_one_site(site_id):
     return site
 
 
+def get_one_site_discrimined(site_id):
+    user_id = request.json.get('user_id') or None
+    if user_id is None:
+        abort(401)
+    pipeline = [
+        {"$match": {
+            "_id": ObjectId(site_id)
+        }
+        },
+        {
+            "$lookup": {
+                "from": "usersite",
+                "localField": "_id",
+                "foreignField": "site._id",
+                "as": "user_sites"
+            }
+        },
+        {
+            "$addFields": {
+                "saved": {
+                    "$in": [user_id, "$user_sites.user_id"]
+                }
+            }
+        },
+        {
+            "$project": {
+                "user_sites": 0
+            }
+        }
+    ]
+    return site_repo.queryAggregation(pipeline)
+
+
 def update_one_site(site_id):
     media_links = []
     data = json.loads(request.form['json'])
@@ -213,7 +253,7 @@ def update_one_site(site_id):
         site['logoChanged'] = data['logoChanged']
 
     response = site_repo.update(site_id, site)
-    if response['updated_count'] > 0 and 'email_admin' not in data:
+    if response['updated_count'] > 0 and 'admin_email' not in data:
         return response
     elif response['updated_count'] > 0 and data['admin_email'] != site['admin_email']:
         change_owner = real_site(site['url'], data['admin_email'])
@@ -228,6 +268,8 @@ def update_one_site(site_id):
             else:
                 return jsonify({"error":
                                 "There was an error sending the confirmation code, please try again later."}), 401
+    else: 
+        return response
 
 
 def delete_one_site(site_id):
@@ -344,7 +386,7 @@ def validate_site_otp():
     if code:
         site_data = site_repo.findByField('url', data['site_url'])
         print(site_data)
-        if exists_relation_site:
+        if exists_relation_site(site_data['_id']):
             update_admin_email(site_data['_id'], data['admin_email'])
             return create_site_admin_relationship(data['user_id'], site_data['_id'])
         else:
@@ -499,13 +541,15 @@ def save_favicon(url, file):
 
 def update_site_icon(site_id):
     data_icon = request.files.get('icon')
-    data = json.loads(request.form['json'])
 
     site_data = get_one_site(site_id)
     if not data_icon:
         abort(404)
-    if data and 'logoChanged' in data:
-        site_data['logoChanged'] = data['logoChanged']
+    if 'json' in request.form:
+        data = json.loads(request.form['json'])
+        if 'logoChanged' in data:
+            site_data['logoChanged'] = data['logoChanged']
+
     site_data['logo'] = save_favicon(site_data['url'], data_icon)
     response = site_repo.update(site_id, site_data)
     return response
@@ -513,3 +557,117 @@ def update_site_icon(site_id):
 
 def get_lastest_added_sites():
     return site_repo.sort("created_at", -1)[:10]
+
+
+def get_all_sites_discrimined(user_id):
+    pagination = False
+    if 'page' in request.args:
+        page = int(request.args.get('page'))
+        pagination = True
+    else:
+        page = 1
+    skip = (page - 1) * 15
+    pipeline = [
+        {
+            "$skip": skip
+        },
+        {
+            "$limit": 15
+        },
+        {
+            "$lookup": {
+                "from": "usersite",
+                "localField": "_id",
+                "foreignField": "site._id",
+                "as": "user_sites"
+            }
+        },
+        {
+            "$addFields": {
+                "saved": {
+                    "$in": [user_id, "$user_sites.user_id"]
+                }
+            }
+        },
+        {
+            "$project": {
+                "user_sites": 0
+            }
+        }
+    ]
+    data = site_repo.queryAggregation(pipeline)
+    if pagination != True:
+        return data
+    else:
+        total_documents = get_count()
+        total_pages = int(math.ceil(total_documents / 15))
+        return {"data": data,
+                "totalPages": total_pages}
+
+
+def search_all_sites_discrimied(user_id):
+    query = request.args.get('query')
+    pagination = False
+    if 'page' in request.args:
+        page = int(request.args.get('page'))
+        pagination = True
+    else:
+        page = 1
+    skip = (page - 1) * 15
+    pipeline = [
+        {
+            "$match": {
+                '$or': [
+                    {'url': {'$regex': query, '$options': 'i'}},
+                    {'name': {'$regex': query, '$options': 'i'}},
+                    {'keywords': {'$regex': query, '$options': 'i'}}
+                ]
+            }
+        },
+        {
+            "$skip": skip
+        },
+        {
+            "$limit": 15
+        },
+        {
+            "$lookup": {
+                "from": "usersite",
+                "localField": "_id",
+                "foreignField": "site._id",
+                "as": "user_sites"
+            }
+        },
+        {
+            "$addFields": {
+                "saved": {
+                    "$in": [user_id, "$user_sites.user_id"]
+                }
+            }
+        },
+        {
+            "$project": {
+                "user_sites": 0
+            }
+        }
+    ]
+
+    data = site_repo.queryAggregation(pipeline)
+    if pagination != True:
+        return data
+    else:
+        pipeline_data = {
+            '$and': [
+                {
+                    '$or': [
+                        {'url': {'$regex': query, '$options': 'i'}},
+                        {'name': {'$regex': query, '$options': 'i'}},
+                        {'keywords': {'$regex': query, '$options': 'i'}}
+                    ]
+                }
+            ]
+        }
+        total_documents = get_count(pipeline_data)
+        total_pages = int(math.ceil(total_documents / 15))
+        return {"data": data,
+                "totalPages": total_pages}

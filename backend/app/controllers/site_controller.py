@@ -1,4 +1,5 @@
 from flask import Blueprint, Response
+from flask_cors import cross_origin
 from app.services.user_site_service import return_not_referenced, return_referenced
 from app.services.middleware import admin_permission_required
 from app.services.site_service import *
@@ -25,11 +26,13 @@ def add_site():
     return create_site()
 
 
-@site_bp.route('/<site_id>', methods=['GET', 'PUT', 'DELETE'])
+@site_bp.route('/<site_id>', methods=['POST','GET', 'PUT', 'DELETE'])
 # @admin_permission_required
 def site(site_id):
     if request.method == 'GET':
         return get_one_site(site_id)
+    elif request.method == 'POST':
+        return get_one_site_discrimined(site_id)
 
     elif request.method == 'PUT':
         return update_one_site(site_id)
@@ -38,13 +41,15 @@ def site(site_id):
         return delete_one_site(site_id)
 
 
-@site_bp.route('/<user_id>/search', methods=['GET', 'POST'])
+@site_bp.route('/<user_id>/search', methods=['GET'])
 def search_sites(user_id):
+    # if request.method == 'GET':
+    #     return search_sites_logged(user_id)
+    # elif request.method == 'POST':
+    #     data = request.json
+    #     return search_sites_logged(user_id, data['page'])
     if request.method == 'GET':
-        return search_sites_logged(user_id)
-    elif request.method == 'POST':
-        data = request.json
-        return search_sites_logged(user_id, data['page'])
+        return search_all_sites_discrimied(user_id)
 
 
 @site_bp.route('/search_admin', methods=['POST'])
@@ -101,10 +106,6 @@ def get_sites_not_ref_by_user(user_id):
 
 @site_bp.route('/user/<user_id>', methods=['GET', 'POST'])
 def get_sites__ref_by_user(user_id):
-    # response_data = jsonify(return_referenced(user_id))
-
-    # response = Response(response_data, content_type='application/json')
-    # response.headers['Cache-Control'] = 'public, max-age=86400'  # Cache for 1 day
     if request.method == 'GET':
         return return_referenced(user_id)
     elif request.method == 'POST':
@@ -120,6 +121,10 @@ def search_top_six_sites():
 @site_bp.route('/top6_saved_logged/<user_id>', methods=['GET'])
 def search_top_six_saved_logged(user_id):
     return get_top_six_saved_logged(user_id)
+
+@site_bp.route('/user_id/<user_id>', methods=['GET'])
+def search_discrimined_sites(user_id):
+    return get_all_sites_discrimined(user_id)
 
 
 @site_bp.route('/<user_id>/save_site/<site_id>', methods=['PUT'])
@@ -139,6 +144,7 @@ def initialize_app():
 
 
 @site_bp.route('/validate_otp', methods=['POST'])
+@cross_origin()
 def validate_otp():
     return validate_site_otp()
 

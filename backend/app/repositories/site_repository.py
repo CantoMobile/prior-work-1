@@ -42,7 +42,7 @@ class SiteRepository(AbstractRepository[Site]):
         result = []
         if page is not None and limit is not None:
             skip = (page - 1) * limit
-            laColeccion.find({'_id': {'$in': object_ids}}
+            cursor = laColeccion.find({'_id': {'$in': object_ids}}
                              ).skip(skip).limit(limit)
             total_pages = int(math.ceil(total_documents / limit))
         else:
