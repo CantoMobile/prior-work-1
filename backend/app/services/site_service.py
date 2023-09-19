@@ -397,13 +397,10 @@ def validate_site_otp():
 
 
 def create_masive_sites(sites):
-    media = [
-        "https://cantonica-favicons-test.s3.amazonaws.com/default_notfountimagecant (1).png",
-        "https://cantonica-favicons-test.s3.amazonaws.com/default_notfountimagecant (2).png",
-        "https://cantonica-favicons-test.s3.amazonaws.com/default_notfountimagecant.png"]
     admin_email = "admin@cantonica.com"
+    media = []
     total_sites = len(sites)
-    batch_size = 10
+    batch_size = 20
     total_batches = total_sites // batch_size + 1
 
     with concurrent.futures.ThreadPoolExecutor() as executor:
@@ -462,8 +459,7 @@ def process_batch(batch_sites, media, admin_email):
             logo=getFaviconFromURL(url),
             keywords=site_data['keywords'],
             media=media_links,
-            admin_email=[
-                'admin_email'] if 'admin_email' in site_data else admin_email
+            admin_email=site_data['admin_email'] if 'admin_email' in site_data else admin_email
         )
 
         site_list.append(site)
@@ -471,16 +467,13 @@ def process_batch(batch_sites, media, admin_email):
     try:
         site_data = site_repo.insertMany(site_list)
         if site_data:
-            for i, data in enumerate(site_data):
-                if 'user_id' in batch_sites[i]:
-                    create_site_admin_relationship(
-                        batch_sites[i]['user_id'], data['_id'], True)
+            print("UPLOADED SITES")
+            return {"message":"SITES UPLOADED SUCESSFULLY"}
+        else: return {"message":"AN ERROR HAS OCCURRED ON THE SERVER WHILE UPLOAD SITES"}
 
     except Exception as e:
         print({"error": "Error saving sites", "message": str(e)})
         raise Exception({"error": "Error saving sites", "message": str(e)})
-
-    return True
 
 
 def delete_site_ownership(site_id):

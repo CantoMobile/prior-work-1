@@ -7,6 +7,7 @@ import urllib.parse
 import requests
 from io import BytesIO
 # from dotenv import load_dotenv
+from urllib.parse import urlparse, urlunparse
 from PIL import Image
 from app.utils.logger import logger
 import io
@@ -100,14 +101,14 @@ def scrapeFavicon(url):
             image_data = requests.get(link).content
             image = Image.open(io.BytesIO(image_data))
             image.save(filename, "PNG")
-            msg += "Saving file - success \n"
+            msg += "Saving file - success"
         else:
             link = DEFAULT_FAVICON_LINK
             urllib.request.urlretrieve(link, filename)
-            msg += f"Saving file - \n Failure: Couldn't get favicon \n"
+            msg += f"Saving file - Failure: Couldn't get favicon"
 
     except Exception as e:
-        msg += f'Error saving file: {e} \n'
+        msg += f'Error saving file: {e}'
     finally:
         upload_status = uploadFile(link, image_name)
         msg += f'Upload to s3 message: {upload_status}'
@@ -123,8 +124,10 @@ def getFaviconFromURL(url):
     try:
         user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
         headers = {'User-Agent': user_agent}
-        if not url.startswith('http://www.') or not url.startswith('https://www.'):
-            url = "https://www." + url            
+
+        url = normalize_url(url)
+        print("url icon: " + url)
+        
         icons = favicon.get(url, headers=headers)
         icon = None
         for ico in icons:
@@ -132,11 +135,10 @@ def getFaviconFromURL(url):
                 icon = ico
                 break
         if icon is not None:
-            # urllib.request.urlretrieve(icon.url, filename)
             r = requests.get(icon.url, headers=headers)
             with open(filename, "wb") as f:
                 f.write(r.content)
-            msg += "Saving file - success\n"
+            msg += "Saving file - success"
             link = icon.url
         else:
             raise ValueError("No favicon.ico found in icons")
@@ -145,19 +147,26 @@ def getFaviconFromURL(url):
         print(e)
         link = DEFAULT_FAVICON_LINK
         status = "DEFAULT"
-        # urllib.request.urlretrieve(link, filename)
-        r = requests.get(icon.url, headers=headers)
+        # Recupera el favicon por defecto usando link
+        r = requests.get(link, headers=headers)
         with open(filename, "wb") as f:
             f.write(r.content)
         logger.error(
-            f'Saving file -\nFailure:\nSite - {url}\nError message - {e}\n')
+            f'Saving file - Failure:Site - {url}Error message - {e}')
 
     finally:
         uploadFile(link, image_name)
         public_url = f"https://{BUCKET_NAME}.s3.amazonaws.com/{image_name}"
-        logger.info(f' Upload icon to s3 sucessfull.')
+        logger.info(f' Upload icon to s3 successful.')
         return public_url
         # return msg
+
+
+def normalize_url(url):
+    parts = urlparse(url)
+    if not parts.scheme:
+        parts = parts._replace(scheme='https')
+    return urlunparse(parts)
 
 
 def getFavicon(url):

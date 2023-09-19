@@ -115,9 +115,9 @@ def update_user_information(user_id):
             else:
                 return {"error": "Same passwords"}, 401
         else:
-            return result 
+            return result
     else:
-        return {"error":"User information not actualised correctly"}, 401
+        return {"error": "User information not actualised correctly"}, 401
 
 
 def delete_one_user(user_id):
@@ -157,8 +157,8 @@ def validate_user_otp():
     if code:
         user_data = user_repo.findById(data['user_id'])
         if user_data['email'] == otp_data['site_url']:
-            return {"message":"Code validation successfull"}
-        
+            return {"message": "Code validation successfull"}
+
         user_data['sites'] = extract_objects_dict(user_data, 'sites', 'site')
         user_data['role'] = extract_object_dict(user_data, 'role', 'role')
         user_data['email'] = otp_data['site_url']
@@ -182,28 +182,66 @@ def add_created_site_user(site_id, user_id):
 
 def user_authentication():
     data = request.json
-    user_data = user_repo.find_by_email(data['email'])
-    if not user_data:
-        abort(404)
-    user = User(**user_data)
-    role_id = user_data['role']['_id']
-    if user.verify_password(auth.encrypt(data['password'])):
-        return auth.generate_auth_token(user_data, role_id)
+    if 'isGoogle' in data and 'uidGoogle' in data:
+        if user_repo.existsByField('email', data['email']):
+            user_data = user_repo.find_by_email(data['email'])
+            user_data['isGoogle'] = True
+            if data['uidGoogle'] != None:
+                if 'uidGoogle' not in user_data:
+                    user_data['uidGoogle'] = data['uidGoogle']
+                else:
+                    if data['uidGoogle'] == user_data['uidGoogle']:
+                        role_id = user_data['role']['_id']
+                        print(type(user_data['_id']))
+                        return auth.generate_auth_token(user_data, role_id)
+                    else:
+                        return jsonify({"error":
+                                        "The uidGoogle sent does not match the one stored in the database."}), 400
+            else:
+                return jsonify({"error": "uidGoogle no provided"}), 400
+            user_data['sites'] = extract_objects_dict(user_data, 'sites', 'site')
+            user_data['role'] = extract_object_dict(user_data, 'role', 'role')
+            update_data = user_repo.update(user_data['_id'], user_data)
+            if update_data['updated_count'] > 0:
+                role_id = user_data['role']['_id']
+                user_data = user_repo.findById(user_data['_id'])
+                return auth.generate_auth_token(user_data, role_id)
+        else:
+            user_data = {
+                'name': data['name'],
+                'email': data['email'],
+                'password': auth.random_password(),
+                'isGoogle': True,
+                'uidGoogle': data['uidGoogle']
+            }
+
+            user_data = user_repo.save(User(**user_data))
+            create_relationship(user_data['_id'])
+            add_user_role(user_data['_id'], "646c0099d72ed166e49c3890")
+            return auth.generate_auth_token(user_data, "646c0099d72ed166e49c3890")
     else:
-        return jsonify({'message': 'Password is incorrect'}), 401
+        user_data = user_repo.find_by_email(data['email'])
+        if not user_data:
+            abort(404)
+        user = User(**user_data)
+        role_id = user_data['role']['_id']
+        if user.verify_password(auth.encrypt(data['password'])):
+            return auth.generate_auth_token(user_data, role_id)
+        else:
+            return jsonify({'message': 'Password is incorrect'}), 401
 
 
 def set_user_password():
     data = request.json
     user_data = user_repo.findByField('email', data['email'])
-    if not user_data: 
+    if not user_data:
         abort(404)
     else:
         data = {"user_id": user_data['_id'],
-                        "site_url": user_data['email'], "email": user_data['email']}
+                "site_url": user_data['email'], "email": user_data['email']}
         if add_one_otp(data):
             return jsonify({"message": "code sended",
-                            "user_id":user_data['_id']})
+                            "user_id": user_data['_id']})
 
 
 def validate_email_domain(email):
@@ -273,6 +311,7 @@ def get_count(query=None):
         return user_repo.count(query)
     else:
         return user_repo.count({})
+
 
 def exists_relation_site(site_id):
     find_user = user_repo.findAllByField('sites._id', ObjectId(site_id))

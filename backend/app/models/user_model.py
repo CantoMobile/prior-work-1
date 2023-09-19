@@ -3,14 +3,15 @@ from bson import ObjectId
 
 
 class User:
-    def __init__(self, name, email, password, auth_provider=None, sites=None, role=None, isAdmin=None,created_at=None, _id=None):
+    def __init__(self, name, email, password, sites=None, role=None, isAdmin=None, isGoogle=None,  uidGoogle=None, created_at=None, _id=None):
         self.name = name
         self.email = email
         self.password = password
-        self.auth_provider = auth_provider
         self.sites = sites or []
         self.role = role  # or []
         self.isAdmin = isAdmin if isAdmin else False
+        self.isGoogle = isGoogle if isGoogle else False
+        self.uidGoogle = uidGoogle if uidGoogle else None
         if created_at is None:
             self.created_at = datetime.datetime.now()
         else:

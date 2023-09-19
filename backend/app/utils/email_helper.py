@@ -3,7 +3,7 @@ from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 
 def send_otp_email(email, otp):
-    sender_email = 'correos@coally.com'  
+    sender_email = 'support@cantonica.com'  
     subject = 'Cantonica verification code'
     message = f'Your verification code is:{otp}'
 
