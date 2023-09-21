@@ -42,7 +42,7 @@ class SiteRepository(AbstractRepository[Site]):
         result = []
         if page is not None and limit is not None:
             skip = (page - 1) * limit
-            laColeccion.find({'_id': {'$in': object_ids}}
+            cursor = laColeccion.find({'_id': {'$in': object_ids}}
                              ).skip(skip).limit(limit)
             total_pages = int(math.ceil(total_documents / limit))
         else:
@@ -90,3 +90,17 @@ class SiteRepository(AbstractRepository[Site]):
             ]
         }
         return search
+
+    def queryTopSixLogged(self, referenced_ids):
+        laColeccion = self.db[self.coleccion]
+        object_ids = [ObjectId(oid) for oid in referenced_ids]
+        query = {"_id": {"$nin": object_ids}}
+        cursor = laColeccion.find(query).limit(6)
+        data = []
+        for x in cursor:
+            x["_id"] = x["_id"].__str__()
+            x = self.transformObjectIds(x)
+
+            x = self.replaceDBRefsWithObjects(x)
+            data.append(x)
+        return data

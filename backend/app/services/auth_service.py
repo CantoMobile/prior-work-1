@@ -6,6 +6,8 @@ from app.config.config import ProductionConfig, DevelopmentConfig
 import hashlib
 from app.services.role_service import extract_permissions
 from app.utils.logger import logger
+import random
+import string
 
 
 class AuthService:
@@ -54,3 +56,10 @@ class AuthService:
         hash_result = sha256.hexdigest()
 
         return hash_result
+    
+
+    def random_password(self):
+        length = random.randint(10,16)
+        characters = string.ascii_letters + string.digits + string.punctuation
+        password = ''.join(random.choice(characters) for _ in range(length))
+        return password

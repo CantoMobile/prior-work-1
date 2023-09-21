@@ -1,3 +1,4 @@
+import math
 import socket
 from urllib.parse import urlparse
 from flask import jsonify,  request, abort
@@ -5,14 +6,14 @@ import pymongo
 from app.repositories.site_repository import SiteRepository
 from app.repositories.user_site_repository import UserSiteRepository
 from app.repositories.site_stats_repository import SiteStatsRepository
-from app.services.user_site_service import query_referenced, query_not_referenced
+from app.services.user_site_service import query_referenced, query_not_referenced, get_refereced_ids
 from app.models.site_model import Site
 from bson.objectid import ObjectId
-from app.services.user_service import save_site_user, validate_email_domain, remove_site_user
-from app.services.otp_service import add_one_otp, validate_otp_code
+from app.services.user_service import save_site_user, validate_email_domain, remove_site_user, exists_relation_site
+from app.services.otp_service import add_one_otp, validate_otp_code, get_one_otp
 from ..utils.s3Upload import uploadFile, uploadFileUrl
 from app.services.reviews_service import exists_by_field, delete_review_by_site
-from ..utils.faviconHelper import getFaviconFromURL
+from ..utils.faviconHelper import getFaviconFromURL, getUrlFavicon
 from app.utils.logger import logger
 import json
 import concurrent.futures
@@ -36,51 +37,73 @@ def create_site():
     change_owner = False
 
     url = data.get('url')
-    admin_email = data.get('admin_email', 'admin@cantonica.com')
+    # admin_email = data.get('admin_email', 'admin@cantonica.com')
+    # if real_site(url) == False:
+    #     return {"error":"The url is not valid or the site does not exist."}, 401
     actual_site = site_repo.findByField('url', url)
-    print(actual_site)
+    print("actual site: ", actual_site)
     if actual_site:
         if actual_site['admin_email'] != 'admin@cantonica.com':
-            return jsonify({"error": "This site has already been claimed."}), 400
-        if admin_email != 'admin@cantonica.com':
-            change_owner = real_site(url, admin_email)
+            return jsonify({"error": "This site has already been claimed."}), 401
+        if 'admin_email' in data and data['admin_email'] != 'admin@cantonica.com':
+            change_owner = real_site(url, data['admin_email'])
         if not change_owner:
-            return jsonify({"error": "Site already exists"}), 400
+            return jsonify({"error": "Site already exists"}), 401
         else:
-            data = {"user_id": data['user_id'],
-                    "site_url": data['url'], "email": data["admin_email"]}
-            if add_one_otp(data):
-                return jsonify({"message": "code sended"})
+            if 'user_id' in data:
+                data = {"user_id": data['user_id'],
+                        "site_url": data['url'], "email": data["admin_email"]}
+                if add_one_otp(data):
+                    return jsonify({"message": "code sended"})
+                else:
+                    return jsonify({"error":
+                                    "There was an error sending the confirmation code, please try again later."}), 401
             else:
-                return jsonify({"error":
-                                "There was an error sending the confirmation code, please try again later."}), 401
+                return jsonify({"error": "Site already exists"}), 401
 
-    if admin_email != 'admin@cantonica.com':
-        if site_repo.existsByField('admin_email', admin_email):
-            return jsonify({"error": "This email is the admin for another site"}), 400
+    if ('admin_email' in data) and (data['admin_email'] != 'admin@cantonica.com'):
+        if site_repo.existsByField('admin_email', data['admin_email']):
+            return jsonify({"error": "This email is the admin for another site"}), 401
 
     if 'media' in request.files:
         data_media = request.files.getlist('media')
         media_links = save_data_media(data['name'], data_media)
 
+    if 'icon' in request.files:
+        data_icon = request.files.get('icon')
+        icon = save_favicon(url, data_icon)
+    else:
+        print("llegué a el else icono")
+        icon = getFaviconFromURL(url)
+
     site = Site(
         url=url,
         name=data['name'],
         description=data['description'],
-        logo=getFaviconFromURL(url),
+        logo=icon,
         keywords=data['keywords'],
         media=media_links,
-        admin_email=admin_email
+        admin_email='admin@cantonica.com'
     )
 
     try:
         site_data = site_repo.save(site)
-        if 'user_id' in data:
-            return create_site_admin_relationship(data['user_id'], site_data['_id'], True)
+        if ('admin_email' in data) and (data['admin_email'] != 'admin@cantoncia.com'):
+            data = {"user_id": data['user_id'],
+                    "site_url": data['url'], "email": data["admin_email"]}
+            if add_one_otp(data):
+                return jsonify({"message": "code sended. Site indexed successfully."})
+            else:
+                return jsonify({"error":
+                                "There was an error sending the confirmation code, please try again later. Sucessfully",
+                                "site": site_data}), 401
+
+        # if 'user_id' in data:
+        #     return create_site_admin_relationship(data['user_id'], site_data['_id'], True)
         else:
             return site_data
     except Exception as e:
-        return jsonify({"error": "Error saving site", "message": str(e)}), 400
+        return jsonify({"error": "Error saving site", "message": str(e)}), 401
 
 
 def create_site_admin_relationship(user_id, site_id, create=None):
@@ -100,7 +123,10 @@ def create_site_admin_relationship(user_id, site_id, create=None):
             return jsonify({"Error": "The site could not be successfully created and assigned your ownership."}), 400
 
 
-def real_site(url, admin_site):
+def real_site(url, admin_site=None):
+    if admin_site is None:
+        domain = validate_domain(url)
+        return True if domain is not None else False
     domain = validate_domain(url)
     if domain:
         errors = validate_email_domain(admin_site)
@@ -163,14 +189,53 @@ def get_one_site(site_id):
     return site
 
 
+def get_one_site_discrimined(site_id):
+    user_id = request.json.get('user_id') or None
+    if user_id is None:
+        abort(401)
+    pipeline = [
+        {"$match": {
+            "_id": ObjectId(site_id)
+        }
+        },
+        {
+            "$lookup": {
+                "from": "usersite",
+                "localField": "_id",
+                "foreignField": "site._id",
+                "as": "user_sites"
+            }
+        },
+        {
+            "$addFields": {
+                "saved": {
+                    "$in": [user_id, "$user_sites.user_id"]
+                }
+            }
+        },
+        {
+            "$project": {
+                "user_sites": 0
+            }
+        }
+    ]
+    return site_repo.queryAggregation(pipeline)
+
+
 def update_one_site(site_id):
     media_links = []
     data = json.loads(request.form['json'])
     site = get_one_site(site_id)
 
+    if 'icon' in request.files:
+        data_icon = request.files.get('icon')
+        icon = save_favicon(site['url'], data_icon)
+        site['logo'] = icon
+
     if 'media' in request.files:
         data_media = request.files.getlist('media')
-        media_links = save_data_media(data['name'], data_media)
+        media_links = save_data_media(
+            data['name'], data_media) if 'name' in data else save_data_media(site['name'], data_media)
 
     if 'name' in data:
         site['name'] = data['name']
@@ -179,13 +244,16 @@ def update_one_site(site_id):
     if 'keywords' in data:
         site['keywords'] = data['keywords']
     if len(media_links) > 0:
-        if data['old_media']:
+        if 'old_media' in data:
             site['media'] = data['old_media']
             site['media'].extend(media for media in media_links)
         else:
             site['media'] = media_links
+    if 'logoChanged' in data:
+        site['logoChanged'] = data['logoChanged']
+
     response = site_repo.update(site_id, site)
-    if response['updated_count'] > 0 and 'email_admin' not in data:
+    if response['updated_count'] > 0 and 'admin_email' not in data:
         return response
     elif response['updated_count'] > 0 and data['admin_email'] != site['admin_email']:
         change_owner = real_site(site['url'], data['admin_email'])
@@ -200,6 +268,8 @@ def update_one_site(site_id):
             else:
                 return jsonify({"error":
                                 "There was an error sending the confirmation code, please try again later."}), 401
+    else: 
+        return response
 
 
 def delete_one_site(site_id):
@@ -290,6 +360,10 @@ def get_top_six_saved():
     return jsonify(top6_sites)
 
 
+def get_top_six_saved_logged(user_id):
+    return site_repo.queryTopSixLogged(get_refereced_ids(user_id))
+
+
 def stats_by_site(site_id):
     site = site_repo.findById(site_id)
 
@@ -312,21 +386,21 @@ def validate_site_otp():
     if code:
         site_data = site_repo.findByField('url', data['site_url'])
         print(site_data)
-        update_admin_email(site_data['_id'], data['admin_email'])
-        return create_site_admin_relationship(data['user_id'], site_data['_id'])
+        if exists_relation_site(site_data['_id']):
+            update_admin_email(site_data['_id'], data['admin_email'])
+            return create_site_admin_relationship(data['user_id'], site_data['_id'])
+        else:
+            return create_site_admin_relationship(data['user_id'], site_data['_id'], True)
     else:
         return jsonify({"error":
                         "An error occurred while trying to claim the site, please try again later."}), 401
 
 
 def create_masive_sites(sites):
-    media = [
-        "https://cantonica-favicons-test.s3.amazonaws.com/default_notfountimagecant (1).png",
-        "https://cantonica-favicons-test.s3.amazonaws.com/default_notfountimagecant (2).png",
-        "https://cantonica-favicons-test.s3.amazonaws.com/default_notfountimagecant.png"]
     admin_email = "admin@cantonica.com"
+    media = []
     total_sites = len(sites)
-    batch_size = 10
+    batch_size = 20
     total_batches = total_sites // batch_size + 1
 
     with concurrent.futures.ThreadPoolExecutor() as executor:
@@ -385,8 +459,7 @@ def process_batch(batch_sites, media, admin_email):
             logo=getFaviconFromURL(url),
             keywords=site_data['keywords'],
             media=media_links,
-            admin_email=[
-                'admin_email'] if 'admin_email' in site_data else admin_email
+            admin_email=site_data['admin_email'] if 'admin_email' in site_data else admin_email
         )
 
         site_list.append(site)
@@ -394,16 +467,13 @@ def process_batch(batch_sites, media, admin_email):
     try:
         site_data = site_repo.insertMany(site_list)
         if site_data:
-            for i, data in enumerate(site_data):
-                if 'user_id' in batch_sites[i]:
-                    create_site_admin_relationship(
-                        batch_sites[i]['user_id'], data['_id'], True)
+            print("UPLOADED SITES")
+            return {"message":"SITES UPLOADED SUCESSFULLY"}
+        else: return {"message":"AN ERROR HAS OCCURRED ON THE SERVER WHILE UPLOAD SITES"}
 
     except Exception as e:
         print({"error": "Error saving sites", "message": str(e)})
         raise Exception({"error": "Error saving sites", "message": str(e)})
-
-    return True
 
 
 def delete_site_ownership(site_id):
@@ -449,3 +519,148 @@ def get_more_saved(limit=None):
         for dic in top
     ]
     return top_sites
+
+
+def save_favicon(url, file):
+    try:
+        file_data = file.stream.read()
+        file_link = getUrlFavicon(url, file_data)
+    except Exception as e:
+        logger.error("Error saving favicon " + str(e))
+        file_link = getFaviconFromURL(url)
+    finally:
+        return file_link
+
+
+def update_site_icon(site_id):
+    data_icon = request.files.get('icon')
+
+    site_data = get_one_site(site_id)
+    if not data_icon:
+        abort(404)
+    if 'json' in request.form:
+        data = json.loads(request.form['json'])
+        if 'logoChanged' in data:
+            site_data['logoChanged'] = data['logoChanged']
+
+    site_data['logo'] = save_favicon(site_data['url'], data_icon)
+    response = site_repo.update(site_id, site_data)
+    return response
+
+
+def get_lastest_added_sites():
+    return site_repo.sort("created_at", -1)[:10]
+
+
+def get_all_sites_discrimined(user_id):
+    pagination = False
+    if 'page' in request.args:
+        page = int(request.args.get('page'))
+        pagination = True
+    else:
+        page = 1
+    skip = (page - 1) * 15
+    pipeline = [
+        {
+            "$skip": skip
+        },
+        {
+            "$limit": 15
+        },
+        {
+            "$lookup": {
+                "from": "usersite",
+                "localField": "_id",
+                "foreignField": "site._id",
+                "as": "user_sites"
+            }
+        },
+        {
+            "$addFields": {
+                "saved": {
+                    "$in": [user_id, "$user_sites.user_id"]
+                }
+            }
+        },
+        {
+            "$project": {
+                "user_sites": 0
+            }
+        }
+    ]
+    data = site_repo.queryAggregation(pipeline)
+    if pagination != True:
+        return data
+    else:
+        total_documents = get_count()
+        total_pages = int(math.ceil(total_documents / 15))
+        return {"data": data,
+                "totalPages": total_pages}
+
+
+def search_all_sites_discrimied(user_id):
+    query = request.args.get('query')
+    pagination = False
+    if 'page' in request.args:
+        page = int(request.args.get('page'))
+        pagination = True
+    else:
+        page = 1
+    skip = (page - 1) * 15
+    pipeline = [
+        {
+            "$match": {
+                '$or': [
+                    {'url': {'$regex': query, '$options': 'i'}},
+                    {'name': {'$regex': query, '$options': 'i'}},
+                    {'keywords': {'$regex': query, '$options': 'i'}}
+                ]
+            }
+        },
+        {
+            "$skip": skip
+        },
+        {
+            "$limit": 15
+        },
+        {
+            "$lookup": {
+                "from": "usersite",
+                "localField": "_id",
+                "foreignField": "site._id",
+                "as": "user_sites"
+            }
+        },
+        {
+            "$addFields": {
+                "saved": {
+                    "$in": [user_id, "$user_sites.user_id"]
+                }
+            }
+        },
+        {
+            "$project": {
+                "user_sites": 0
+            }
+        }
+    ]
+
+    data = site_repo.queryAggregation(pipeline)
+    if pagination != True:
+        return data
+    else:
+        pipeline_data = {
+            '$and': [
+                {
+                    '$or': [
+                        {'url': {'$regex': query, '$options': 'i'}},
+                        {'name': {'$regex': query, '$options': 'i'}},
+                        {'keywords': {'$regex': query, '$options': 'i'}}
+                    ]
+                }
+            ]
+        }
+        total_documents = get_count(pipeline_data)
+        total_pages = int(math.ceil(total_documents / 15))
+        return {"data": data,
+                "totalPages": total_pages}

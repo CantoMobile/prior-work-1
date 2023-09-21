@@ -211,7 +211,7 @@ class AbstractRepository(Generic[T]):
             if '_id' in x:
                 x["_id"] = x["_id"].__str__()
             x = self.transformObjectIds(x)
-            x = self.getValuesDBRef(x)
+            x = self.replaceDBRefsWithObjects(x)
             data.append(x)
         return data
 

@@ -14,7 +14,7 @@ from app.repositories.category_repository import CategoryRepository
 from app.models.user_model import User
 from app.models.site_model import Site
 from app.models.category_model import Category
-from app.services.otp_service import add_one_otp, validate_otp_code
+from app.services.otp_service import add_one_otp, validate_otp_code, get_one_otp
 from app.services.general_service import extract_objects_dict, extract_object_dict
 from app.repositories.reviews_repository import ReviewsRepository
 from app.utils.logger import logger
@@ -100,7 +100,8 @@ def create_user(register=False):
 def update_one_user(user_id):
     user_data = get_one_user(user_id)
     user_data['sites'] = extract_objects_dict(user_data, 'sites', 'site')
-    user_data['role'] = extract_object_dict(user_data, 'role', 'role')
+    if user_data['role'] != None:
+        user_data['role'] = extract_object_dict(user_data, 'role', 'role')
     data = request.json
     if 'name' in data:
         user_data['name'] = data['name']
@@ -122,16 +123,28 @@ def update_user_information(user_id):
     user_data['role'] = extract_object_dict(user_data, 'role', 'role')
     if 'name' in data:
         user_data['name'] = data['name']
-    if 'password' in data and user_data['password'] != auth.encrypt(data['password']):
-        data_otp = {'user_id': user_data['_id'], 'email': user_data['email'],
-                    'site_url': auth.encrypt(data['password'])}
-        response = user_repo.update(user_id, user_data)
-        if add_one_otp(data_otp) and response['updated_count'] > 0:
-            return jsonify({"message": "code sended"})
+    if 'password' in data:
+        if user_data['password'] != auth.encrypt(data['password']):
+            user_data['password'] = auth.encrypt(data['password'])
         else:
-            return jsonify({"error": "Could not send email to update password or update name."}), 401
+            return {"error": "Same passwords"}, 401
+    result = user_repo.update(user_id, user_data)
+    if result['updated_count'] > 0:
+        if 'email' in data:
+            if data['email'] != user_data['email']:
+                data = {"user_id": user_data['_id'],
+                        "site_url": data['email'], "email": data['email']}
+                if add_one_otp(data):
+                    return jsonify({"message": "code sended"})
+                else:
+                    return jsonify({"error":
+                                    "There was an error sending the confirmation code, please try again later."}), 401
+            else:
+                return {"error": "Same passwords"}, 401
+        else:
+            return result
     else:
-        return user_repo.update(user_id, user_data)
+        return {"error": "User information not actualised correctly"}, 401
 
 
 def delete_one_user(user_id):
@@ -166,15 +179,19 @@ def remove_user_role(user_id, role_id):
 
 def validate_user_otp():
     data = request.json
+    otp_data = get_one_otp(data['user_id'], data['code'])
     code = validate_otp_code(data['user_id'], data['code'])
     if code:
         user_data = user_repo.findById(data['user_id'])
+        if user_data['email'] == otp_data['site_url']:
+            return {"message": "Code validation successfull"}
+
         user_data['sites'] = extract_objects_dict(user_data, 'sites', 'site')
         user_data['role'] = extract_object_dict(user_data, 'role', 'role')
-        user_data['password'] = auth.encrypt(data['password'])
+        user_data['email'] = otp_data['site_url']
         return user_repo.update(user_data['_id'], user_data)
     else:
-        return jsonify({"error": "an error occurred while trying to update the password, please try again later."}), 401
+        return jsonify({"error": "an error occurred while trying to update the email, please try again later."}), 401
 
 
 def add_created_site_user(site_id, user_id):
@@ -192,27 +209,66 @@ def add_created_site_user(site_id, user_id):
 
 def user_authentication():
     data = request.json
-    user_data = user_repo.find_by_email(data['email'])
+    if 'isGoogle' in data and 'uidGoogle' in data:
+        if user_repo.existsByField('email', data['email']):
+            user_data = user_repo.find_by_email(data['email'])
+            user_data['isGoogle'] = True
+            if data['uidGoogle'] != None:
+                if 'uidGoogle' not in user_data:
+                    user_data['uidGoogle'] = data['uidGoogle']
+                else:
+                    if data['uidGoogle'] == user_data['uidGoogle']:
+                        role_id = user_data['role']['_id']
+                        print(type(user_data['_id']))
+                        return auth.generate_auth_token(user_data, role_id)
+                    else:
+                        return jsonify({"error":
+                                        "The uidGoogle sent does not match the one stored in the database."}), 400
+            else:
+                return jsonify({"error": "uidGoogle no provided"}), 400
+            user_data['sites'] = extract_objects_dict(user_data, 'sites', 'site')
+            user_data['role'] = extract_object_dict(user_data, 'role', 'role')
+            update_data = user_repo.update(user_data['_id'], user_data)
+            if update_data['updated_count'] > 0:
+                role_id = user_data['role']['_id']
+                user_data = user_repo.findById(user_data['_id'])
+                return auth.generate_auth_token(user_data, role_id)
+        else:
+            user_data = {
+                'name': data['name'],
+                'email': data['email'],
+                'password': auth.random_password(),
+                'isGoogle': True,
+                'uidGoogle': data['uidGoogle']
+            }
+
+            user_data = user_repo.save(User(**user_data))
+            create_relationship(user_data['_id'])
+            add_user_role(user_data['_id'], "646c0099d72ed166e49c3890")
+            return auth.generate_auth_token(user_data, "646c0099d72ed166e49c3890")
+    else:
+        user_data = user_repo.find_by_email(data['email'])
+        if not user_data:
+            abort(404)
+        user = User(**user_data)
+        role_id = user_data['role']['_id']
+        if user.verify_password(auth.encrypt(data['password'])):
+            return auth.generate_auth_token(user_data, role_id)
+        else:
+            return jsonify({'message': 'Password is incorrect'}), 401
+
+
+def set_user_password():
+    data = request.json
+    user_data = user_repo.findByField('email', data['email'])
     if not user_data:
         abort(404)
-    user = User(**user_data)
-    role_id = user_data['role']['_id']
-    if user.verify_password(auth.encrypt(data['password'])):
-        return auth.generate_auth_token(user_data, role_id)
     else:
-        return jsonify({'message': 'Password is incorrect'}), 401
-
-
-def set_user_password(user_id):
-    data = request.json
-    user_data = get_one_user(user_id)
-    user = User(**user_data)
-    response = user.set_password(auth.encrypt(data['password']))
-    if response != None and response == True:
-        update = user_repo.update(user_id, user)
-        return jsonify(update)
-    else:
-        return {"error": "Failed to update password"}, 304
+        data = {"user_id": user_data['_id'],
+                "site_url": user_data['email'], "email": user_data['email']}
+        if add_one_otp(data):
+            return jsonify({"message": "code sended",
+                            "user_id": user_data['_id']})
 
 
 def validate_email_domain(email):
@@ -283,3 +339,10 @@ def get_count(query=None):
     else:
         return user_repo.count({})
 
+
+def exists_relation_site(site_id):
+    find_user = user_repo.findAllByField('sites._id', ObjectId(site_id))
+    if not find_user:
+        return None
+    else:
+        return True
