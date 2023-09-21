@@ -7,7 +7,7 @@ from app.models import User
 from app.repositories.referrals_repository import ReferralsRepository
 from app.repositories.user_repository import UserRepository
 from app.services.auth_service import AuthService
-from app.services.user_service import create_user, add_user_role, get_one_user
+from app.services.user_service import create_user, add_user_role, remove_user_role
 from app.utils.logger import logger
 
 
@@ -47,28 +47,33 @@ def find_referal_by_refeferred(user_id):
 
 def initiate_referral(referring_user_id, referred_user_data):
     new_user = create_user()
-    logger.info(new_user.data)
-    json_data = json.loads(new_user.get_data(as_text=True))
-    
-    _id = json_data.get('_id')
-    logger.info(_id)
-    add_user_role(_id, "6509e07e309e42bea36ffcc7") # Pending role
-    referral = Referral(
-        referred_by = referring_user_id,
-        referred_user_id = _id,
-        referral_date = datetime.datetime.now(),
-        referral_status = 'Pending'
-    )
-    try:
-        referral_data = referrals_repo.save(referral)
-    except Exception as e:
-        return jsonify({"error": "Error initiating referral", "message": str(e)}), 400
-    return jsonify(referral_data)
+    if type(new_user) is tuple:
+        return {'Error': 'Email and user already exist.'}, 400
+    else:  
+        json_data = json.loads(new_user.get_data(as_text=True))
+        
+        _id = json_data.get('_id')
+        add_user_role(_id, "6509e07e309e42bea36ffcc7") # Pending role
+        referral = Referral(
+            referred_by = referring_user_id,
+            referred_user_id = _id,
+            referral_date = datetime.datetime.now(),
+            referral_status = 'Pending'
+        )
+        try:
+            referral_data = referrals_repo.save(referral)
+        except Exception as e:
+            return jsonify({"error": "Error initiating referral", "message": str(e)}), 400
+        return jsonify(referral_data)
 
 
 def complete_referral(referral_id):
     referral_data = get_one_referral(referral_id)
     referral_data['referral_status'] = 'Complete'
+    user_id = referral_data['referred_user_id']
+    
+    remove_user_role(user_id, "6509e07e309e42bea36ffcc7") # Remove Pending role
+    add_user_role(user_id, "646c0099d72ed166e49c3890") # Add User role
 
     return referrals_repo.update(referral_id, referral_data)
 

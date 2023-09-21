@@ -3,7 +3,7 @@ from bson import ObjectId
 
 
 class User:
-    def __init__(self, name, email, password, referral_code, referrals=None, sites=None, role=None, isAdmin=None, isGoogle=None,  uidGoogle=None,  created_at=None, _id=None):
+    def __init__(self, name, email, password, referral_code, auth_provider=None, referrals=None, sites=None, role=None, isAdmin=None, isGoogle=None,  uidGoogle=None,  created_at=None, _id=None):
         self.name = name
         self.email = email
         self.password = password

@@ -172,6 +172,7 @@ def remove_user_role(user_id, role_id):
     role_repo.existsByField('_id', ObjectId(role_id))
     if role_repo.existsByField('_id', ObjectId(role_id)) and user_data['role'] != None:
         if role_id in user_data['role']['_id']:
+            user_data['role'] = None
             return user_repo.update(user_id, user_data)
     else:
         return jsonify({"Error": "This role is not associated with this user"}), 304
