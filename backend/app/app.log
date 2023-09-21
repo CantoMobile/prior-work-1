@@ -1,0 +1,240 @@
+2023-08-12 17:06:32,863 - INFO - Connect successfully to Mongo Production!
+2023-08-12 17:06:56,661 - INFO - Connect successfully to Mongo Production!
+2023-08-12 17:07:14,625 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-08-12 17:07:25,013 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-08-12 17:18:42,415 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-08-12 17:18:53,228 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-08-12 17:19:53,804 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-08-12 17:21:11,241 - INFO - Connect successfully to Mongo Production!
+2023-08-12 17:21:19,798 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-08-12 17:21:34,602 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-08-12 17:23:34,075 - INFO - Connect successfully to Mongo Production!
+2023-08-12 17:23:41,097 - INFO - 100
+2023-08-12 17:23:43,569 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-08-12 17:25:14,417 - INFO - Connect successfully to Mongo Production!
+2023-08-12 17:25:47,579 - INFO - 100
+2023-08-12 17:25:48,860 - INFO - here
+2023-08-12 17:25:48,862 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-08-12 17:25:52,918 - INFO - 100
+2023-08-12 17:26:03,020 - INFO - here
+2023-08-12 17:26:03,022 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-08-12 17:26:54,707 - INFO - Connect successfully to Mongo Production!
+2023-08-12 17:27:06,519 - INFO - 100
+2023-08-12 17:28:10,008 - INFO - Connect successfully to Mongo Production!
+2023-08-12 17:28:14,237 - INFO - 100
+2023-08-12 17:50:01,067 - INFO - 100
+2023-08-12 17:50:02,209 - INFO - here
+2023-08-12 17:50:02,211 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-08-12 17:50:14,099 - INFO - 100
+2023-08-12 17:50:14,323 - INFO - here
+2023-08-12 17:50:14,324 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-08-12 17:50:22,217 - INFO - Connect successfully to Mongo Production!
+2023-08-12 17:50:23,833 - INFO - 100
+2023-09-19 11:44:59,703 - INFO - Connect successfully to Mongo Production!
+2023-09-19 11:45:37,170 - INFO - Connect successfully to Mongo Production!
+2023-09-19 11:46:25,302 - INFO - Connect successfully to Mongo Production!
+2023-09-19 11:51:00,891 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-09-19 11:51:35,676 - INFO - Connect successfully to Mongo Production!
+2023-09-19 11:51:43,566 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.'}
+2023-09-19 11:51:50,268 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.'}
+2023-09-19 11:53:16,941 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.'}
+2023-09-19 11:55:03,783 - INFO - Connect successfully to Mongo Production!
+2023-09-19 11:55:11,127 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.'}
+2023-09-19 11:55:14,532 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.'}
+2023-09-19 11:56:15,876 - INFO - Connect successfully to Mongo Production!
+2023-09-19 11:56:20,283 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.'}
+2023-09-19 11:56:22,083 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.'}
+2023-09-19 11:56:58,187 - INFO - <app.models.category_model.Category object at 0x0000028378ECE950>
+2023-09-19 11:56:58,190 - INFO - True
+2023-09-19 11:57:55,911 - INFO - Connect successfully to Mongo Production!
+2023-09-19 11:58:02,455 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.'}
+2023-09-19 11:59:39,429 - INFO - Connect successfully to Mongo Production!
+2023-09-19 13:54:56,312 - INFO - Connect successfully to Mongo Production!
+2023-09-20 01:05:56,801 - INFO - Connect successfully to Mongo Production!
+2023-09-20 01:11:02,522 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-09-20 01:12:32,675 - INFO - Connect successfully to Mongo Production!
+2023-09-20 01:12:42,668 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-09-20 01:13:16,922 - INFO - Connect successfully to Mongo Production!
+2023-09-20 01:13:22,953 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-09-20 01:13:29,059 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-09-20 01:14:25,819 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-09-20 01:14:37,363 - INFO - Connect successfully to Mongo Production!
+2023-09-20 01:14:43,777 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-09-20 01:15:56,521 - INFO - Connect successfully to Mongo Production!
+2023-09-20 01:15:59,798 - INFO - {'name': 'referralTest', 'email': 'referral@test.com', 'password': 'testreferral123ab'}
+2023-09-20 01:15:59,841 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': 'The DNS response does not contain an answer to the question: test.com. IN MX'}
+2023-09-20 01:16:13,562 - INFO - {'name': 'referralTest', 'email': 'referral@test.com', 'password': 'testreferral123ab'}
+2023-09-20 01:16:13,646 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': 'The DNS response does not contain an answer to the question: test.com. IN MX'}
+2023-09-20 01:19:26,554 - INFO - {'name': 'referralTest', 'email': 'referraltest@gmail.com', 'password': 'testreferral123ab'}
+2023-09-20 01:19:27,807 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "cannot access local variable 'referral_code' where it is not associated with a value"}
+2023-09-20 01:21:19,174 - INFO - Connect successfully to Mongo Production!
+2023-09-20 01:21:23,652 - INFO - {'name': 'referralTest', 'email': 'referraltest@gmail.com', 'password': 'testreferral123ab'}
+2023-09-20 01:21:24,842 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "cannot access local variable 'referral_code' where it is not associated with a value"}
+2023-09-20 01:22:19,582 - INFO - Connect successfully to Mongo Production!
+2023-09-20 01:22:21,882 - INFO - {'name': 'referralTest', 'email': 'referraltest@gmail.com', 'password': 'testreferral123ab'}
+2023-09-20 01:22:22,896 - INFO - errors: (True, '')
+2023-09-20 01:22:23,063 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "cannot access local variable 'referral_code' where it is not associated with a value"}
+2023-09-20 01:24:26,646 - INFO - Connect successfully to Mongo Production!
+2023-09-20 01:24:31,425 - INFO - {'name': 'referralTest', 'email': 'referraltest@gmail.com', 'password': 'testreferral123ab'}
+2023-09-20 01:24:32,502 - INFO - errors: (True, '')
+2023-09-20 01:24:32,512 - INFO - 1
+2023-09-20 01:24:32,515 - INFO - 3
+2023-09-20 01:24:32,678 - INFO - 2
+2023-09-20 01:24:32,688 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "cannot access local variable 'referral_code' where it is not associated with a value"}
+2023-09-20 01:26:05,055 - INFO - Connect successfully to Mongo Production!
+2023-09-20 01:26:08,738 - INFO - {'name': 'referralTest', 'email': 'referraltest@gmail.com', 'password': 'testreferral123ab'}
+2023-09-20 01:26:09,732 - INFO - errors: (True, '')
+2023-09-20 01:26:09,890 - INFO - 2
+2023-09-20 01:26:09,892 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "cannot access local variable 'referral_code' where it is not associated with a value"}
+2023-09-20 01:26:59,569 - INFO - Connect successfully to Mongo Production!
+2023-09-20 01:27:03,572 - INFO - {'name': 'referralTest', 'email': 'referraltest@gmail.com', 'password': 'testreferral123ab'}
+2023-09-20 01:27:04,786 - INFO - errors: (True, '')
+2023-09-20 01:27:04,945 - INFO - 2
+2023-09-20 01:27:04,948 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "cannot access local variable 'referral_code' where it is not associated with a value"}
+2023-09-20 01:27:56,694 - INFO - Connect successfully to Mongo Production!
+2023-09-20 01:27:59,763 - INFO - {'name': 'referralTest', 'email': 'referraltest@gmail.com', 'password': 'testreferral123ab'}
+2023-09-20 01:28:00,758 - INFO - errors: (True, '')
+2023-09-20 01:28:00,762 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "cannot access local variable 'referral_code' where it is not associated with a value"}
+2023-09-20 01:29:10,310 - INFO - Connect successfully to Mongo Production!
+2023-09-20 01:29:15,234 - INFO - {'name': 'referralTest', 'email': 'referraltest@gmail.com', 'password': 'testreferral123ab'}
+2023-09-20 01:29:16,215 - INFO - errors: (True, '')
+2023-09-20 01:29:16,218 - INFO - KUrKfz0Ky7
+2023-09-20 01:29:16,376 - INFO - 2
+2023-09-20 01:29:16,380 - INFO - KUrKfz0Ky7
+2023-09-20 01:29:16,383 - INFO - 4
+2023-09-20 01:29:16,855 - INFO - user data: {'_id': '650a832c60e0683f7da57c3f', 'name': 'referralTest', 'email': 'referraltest@gmail.com', 'password': '78c8b609a1ede0270065b6dfbc8937218edd32ae1f3ce907b43995f408e52c8f', 'referral_code': 'KUrKfz0Ky7', 'referrals': [], 'auth_provider': None, 'sites': {}, 'role': None, 'isAdmin': False, 'created_at': datetime.datetime(2023, 9, 20, 1, 29, 16, 383000)}
+2023-09-20 01:29:17,321 - INFO - <Response 317 bytes [200 OK]>
+2023-09-20 01:29:17,326 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'Response' object is not subscriptable"}
+2023-09-20 01:31:37,238 - INFO - Connect successfully to Mongo Production!
+2023-09-20 01:31:44,356 - INFO - {'name': 'referralTest', 'email': 'referraltest@gmail.com', 'password': 'testreferral123ab'}
+2023-09-20 01:31:45,435 - INFO - errors: (False, 'Email and user already exists.')
+2023-09-20 01:31:45,437 - INFO - ({'error': 'Email and user already exists.'}, 401)
+2023-09-20 01:31:45,442 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': 'tuple indices must be integers or slices, not str'}
+2023-09-20 01:32:19,682 - INFO - {'name': 'referralTest2', 'email': 'referraltest2@gmail.com', 'password': 'testreferral123ab'}
+2023-09-20 01:32:19,860 - INFO - errors: (True, '')
+2023-09-20 01:32:20,477 - INFO - user data: {'_id': '650a83e4ba0d6e9cd35869d8', 'name': 'referralTest2', 'email': 'referraltest2@gmail.com', 'password': '78c8b609a1ede0270065b6dfbc8937218edd32ae1f3ce907b43995f408e52c8f', 'referral_code': '57cH1y25mF', 'referrals': [], 'auth_provider': None, 'sites': {}, 'role': None, 'isAdmin': False, 'created_at': datetime.datetime(2023, 9, 20, 1, 32, 20, 15000)}
+2023-09-20 01:32:20,952 - INFO - here
+2023-09-20 01:32:20,958 - INFO - <Response 319 bytes [200 OK]>
+2023-09-20 01:32:20,960 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'Response' object is not subscriptable"}
+2023-09-20 01:38:03,062 - INFO - Connect successfully to Mongo Production!
+2023-09-20 01:38:13,076 - INFO - {'name': 'referralTest2', 'email': 'referraltest2@gmail.com', 'password': 'testreferral123ab'}
+2023-09-20 01:38:14,146 - INFO - errors: (False, 'Email and user already exists.')
+2023-09-20 01:38:14,148 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'tuple' object has no attribute 'json'"}
+2023-09-20 17:11:10,537 - INFO - Connect successfully to Mongo Production!
+2023-09-20 17:11:17,889 - INFO - {'name': 'referralTest2', 'email': 'referraltest2@gmail.com', 'password': 'testreferral123ab'}
+2023-09-20 17:11:18,898 - INFO - errors: (False, 'Email and user already exists.')
+2023-09-20 17:11:18,899 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'tuple' object has no attribute 'json'"}
+2023-09-20 17:11:46,870 - INFO - {'name': 'referralTest2', 'email': 'referraltest2@gmail.com', 'password': 'testreferral123ab'}
+2023-09-20 17:11:47,034 - INFO - errors: (False, 'Email and user already exists.')
+2023-09-20 17:11:47,037 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'tuple' object has no attribute 'json'"}
+2023-09-20 17:12:06,050 - INFO - Connect successfully to Mongo Production!
+2023-09-20 17:12:09,270 - INFO - {'name': 'referralTest2', 'email': 'referraltest2@gmail.com', 'password': 'testreferral123ab'}
+2023-09-20 17:12:10,230 - INFO - errors: (False, 'Email and user already exists.')
+2023-09-20 17:12:10,232 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'tuple' object has no attribute 'json'"}
+2023-09-20 17:12:27,471 - INFO - Connect successfully to Mongo Production!
+2023-09-20 17:12:31,510 - INFO - {'name': 'referralTest2', 'email': 'referraltest2@gmail.com', 'password': 'testreferral123ab'}
+2023-09-20 17:12:32,985 - INFO - errors: (False, 'Email and user already exists.')
+2023-09-20 17:12:32,987 - INFO - ({'error': 'Email and user already exists.'}, 401)
+2023-09-20 17:12:32,990 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': 'tuple indices must be integers or slices, not str'}
+2023-09-20 17:13:02,662 - INFO - {'name': 'referralTest3', 'email': 'referraltest3@gmail.com', 'password': 'testreferral123ab'}
+2023-09-20 17:13:02,837 - INFO - errors: (True, '')
+2023-09-20 17:13:03,515 - INFO - user data: {'_id': '650b605f31942b8c2bbf2386', 'name': 'referralTest3', 'email': 'referraltest3@gmail.com', 'password': '78c8b609a1ede0270065b6dfbc8937218edd32ae1f3ce907b43995f408e52c8f', 'referral_code': 'HMHLzeuvKF', 'referrals': [], 'auth_provider': None, 'sites': {}, 'role': None, 'isAdmin': False, 'created_at': datetime.datetime(2023, 9, 20, 17, 13, 3, 6000)}
+2023-09-20 17:13:03,978 - INFO - here
+2023-09-20 17:13:03,985 - INFO - <Response 319 bytes [200 OK]>
+2023-09-20 17:13:03,991 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'Response' object is not subscriptable"}
+2023-09-20 17:13:30,384 - INFO - Connect successfully to Mongo Production!
+2023-09-20 17:13:33,306 - INFO - {'name': 'referralTest3', 'email': 'referraltest3@gmail.com', 'password': 'testreferral123ab'}
+2023-09-20 17:13:34,229 - INFO - errors: (False, 'Email and user already exists.')
+2023-09-20 17:13:34,233 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'tuple' object has no attribute 'json'"}
+2023-09-20 17:13:46,439 - INFO - {'name': 'referralTest4', 'email': 'referraltest4@gmail.com', 'password': 'testreferral123ab'}
+2023-09-20 17:13:46,628 - INFO - errors: (True, '')
+2023-09-20 17:13:47,270 - INFO - user data: {'_id': '650b608aefee7d5b38fe5096', 'name': 'referralTest4', 'email': 'referraltest4@gmail.com', 'password': '78c8b609a1ede0270065b6dfbc8937218edd32ae1f3ce907b43995f408e52c8f', 'referral_code': 'k6uBpxjaV9', 'referrals': [], 'auth_provider': None, 'sites': {}, 'role': None, 'isAdmin': False, 'created_at': datetime.datetime(2023, 9, 20, 17, 13, 46, 783000)}
+2023-09-20 17:13:47,730 - INFO - here
+2023-09-20 17:13:47,732 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'dict' object is not callable"}
+2023-09-20 17:18:36,006 - INFO - Connect successfully to Mongo Production!
+2023-09-20 17:18:39,500 - INFO - {'name': 'referralTest4', 'email': 'referraltest4@gmail.com', 'password': 'testreferral123ab'}
+2023-09-20 17:18:40,423 - INFO - errors: (False, 'Email and user already exists.')
+2023-09-20 17:18:40,426 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'tuple' object has no attribute 'json'"}
+2023-09-20 17:18:58,843 - INFO - {'name': 'referralTest5', 'email': 'referraltest5@gmail.com', 'password': 'testreferral123ab'}
+2023-09-20 17:18:58,997 - INFO - errors: (True, '')
+2023-09-20 17:18:59,603 - INFO - user data: {'_id': '650b61c3fdcf11d33db3802c', 'name': 'referralTest5', 'email': 'referraltest5@gmail.com', 'password': '78c8b609a1ede0270065b6dfbc8937218edd32ae1f3ce907b43995f408e52c8f', 'referral_code': 'wA0sGpifmn', 'referrals': [], 'auth_provider': None, 'sites': {}, 'role': None, 'isAdmin': False, 'created_at': datetime.datetime(2023, 9, 20, 17, 18, 59, 162000)}
+2023-09-20 17:19:00,074 - INFO - here
+2023-09-20 17:19:00,077 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'dict' object is not callable"}
+2023-09-20 17:21:08,580 - INFO - Connect successfully to Mongo Production!
+2023-09-20 17:21:12,056 - INFO - {'name': 'referralTest5', 'email': 'referraltest5@gmail.com', 'password': 'testreferral123ab'}
+2023-09-20 17:21:13,061 - INFO - errors: (False, 'Email and user already exists.')
+2023-09-20 17:21:13,064 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'tuple' object has no attribute 'json'"}
+2023-09-20 17:21:22,565 - INFO - {'name': 'referralTest6', 'email': 'referraltest6@gmail.com', 'password': 'testreferral123ab'}
+2023-09-20 17:21:22,724 - INFO - errors: (True, '')
+2023-09-20 17:21:23,341 - INFO - user data: {'_id': '650b62525987c598e933c04d', 'name': 'referralTest6', 'email': 'referraltest6@gmail.com', 'password': '78c8b609a1ede0270065b6dfbc8937218edd32ae1f3ce907b43995f408e52c8f', 'referral_code': 'SV5T2jgEzw', 'referrals': [], 'auth_provider': None, 'sites': {}, 'role': None, 'isAdmin': False, 'created_at': datetime.datetime(2023, 9, 20, 17, 21, 22, 885000)}
+2023-09-20 17:21:23,784 - INFO - here
+2023-09-20 17:21:23,787 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'dict' object is not callable"}
+2023-09-20 17:26:38,284 - INFO - Connect successfully to Mongo Production!
+2023-09-20 17:26:41,213 - INFO - {'name': 'referralTest6', 'email': 'referraltest6@gmail.com', 'password': 'testreferral123ab'}
+2023-09-20 17:26:42,144 - INFO - errors: (False, 'Email and user already exists.')
+2023-09-20 17:26:42,147 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'tuple' object has no attribute 'content'"}
+2023-09-20 17:26:51,042 - INFO - {'name': 'referralTest7', 'email': 'referraltest7@gmail.com', 'password': 'testreferral123ab'}
+2023-09-20 17:26:51,199 - INFO - errors: (True, '')
+2023-09-20 17:26:51,856 - INFO - user data: {'_id': '650b639b22662c0464a47272', 'name': 'referralTest7', 'email': 'referraltest7@gmail.com', 'password': '78c8b609a1ede0270065b6dfbc8937218edd32ae1f3ce907b43995f408e52c8f', 'referral_code': 'tKE4MJn2qt', 'referrals': [], 'auth_provider': None, 'sites': {}, 'role': None, 'isAdmin': False, 'created_at': datetime.datetime(2023, 9, 20, 17, 26, 51, 355000)}
+2023-09-20 17:26:52,305 - INFO - here
+2023-09-20 17:26:52,308 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'Response' object has no attribute 'content'"}
+2023-09-20 18:35:48,294 - INFO - Connect successfully to Mongo Production!
+2023-09-20 18:35:52,573 - INFO - {'name': 'referralTest7', 'email': 'referraltest7@gmail.com', 'password': 'testreferral123ab'}
+2023-09-20 18:35:53,583 - INFO - errors: (False, 'Email and user already exists.')
+2023-09-20 18:35:53,586 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'tuple' object has no attribute 'text'"}
+2023-09-20 18:36:02,913 - INFO - {'name': 'referralTest8', 'email': 'referraltest8@gmail.com', 'password': 'testreferral123ab'}
+2023-09-20 18:36:03,084 - INFO - errors: (True, '')
+2023-09-20 18:36:03,686 - INFO - user data: {'_id': '650b73d35598e68d49cf51ef', 'name': 'referralTest8', 'email': 'referraltest8@gmail.com', 'password': '78c8b609a1ede0270065b6dfbc8937218edd32ae1f3ce907b43995f408e52c8f', 'referral_code': 'HfahSnqLbd', 'referrals': [], 'auth_provider': None, 'sites': {}, 'role': None, 'isAdmin': False, 'created_at': datetime.datetime(2023, 9, 20, 18, 36, 3, 237000)}
+2023-09-20 18:36:04,194 - INFO - here
+2023-09-20 18:36:04,198 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'Response' object has no attribute 'text'"}
+2023-09-20 18:41:49,270 - INFO - Connect successfully to Mongo Production!
+2023-09-20 18:41:52,248 - INFO - {'name': 'referralTest9', 'email': 'referraltest9@gmail.com', 'password': 'testreferral123ab'}
+2023-09-20 18:41:53,213 - INFO - errors: (True, '')
+2023-09-20 18:41:53,890 - INFO - user data: {'_id': '650b7531487e1e662315ad26', 'name': 'referralTest9', 'email': 'referraltest9@gmail.com', 'password': '78c8b609a1ede0270065b6dfbc8937218edd32ae1f3ce907b43995f408e52c8f', 'referral_code': 'gWU9CdwiUh', 'referrals': [], 'auth_provider': None, 'sites': {}, 'role': None, 'isAdmin': False, 'created_at': datetime.datetime(2023, 9, 20, 18, 41, 53, 414000)}
+2023-09-20 18:41:54,375 - INFO - here
+2023-09-20 18:41:54,382 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'dict' object is not callable"}
+2023-09-20 18:43:38,139 - INFO - Connect successfully to Mongo Production!
+2023-09-20 18:43:42,145 - INFO - {'name': 'referralTest10', 'email': 'referraltest10@gmail.com', 'password': 'testreferral123ab'}
+2023-09-20 18:43:43,809 - INFO - errors: (True, '')
+2023-09-20 18:43:44,893 - INFO - here
+2023-09-20 18:43:44,898 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'Response' object has no attribute 'content'"}
+2023-09-20 18:48:24,874 - INFO - {'name': 'referralTest11', 'email': 'referraltest11@gmail.com', 'password': 'testreferral123ab'}
+2023-09-20 18:48:25,048 - INFO - errors: (True, '')
+2023-09-20 18:48:26,519 - INFO - Generating auth token for user referraltest11@gmail.com
+2023-09-20 19:01:16,840 - INFO - Connect successfully to Mongo Production!
+2023-09-20 19:01:29,455 - INFO - {'name': 'referralTest12', 'email': 'referraltest12@gmail.com', 'password': 'testreferral123ab'}
+2023-09-20 19:01:30,395 - INFO - errors: (True, '')
+2023-09-20 19:01:31,858 - INFO - b'{"_id":"650b79cafc98ef350b27fc93","auth_provider":null,"created_at":"Wed, 20 Sep 2023 19:01:30 GMT","email":"referraltest12@gmail.com","isAdmin":false,"name":"referralTest12","password":"78c8b609a1ede0270065b6dfbc8937218edd32ae1f3ce907b43995f408e52c8f","referral_code":"uVNTrN20s0","referrals":[],"role":null,"sites":{}}\n'
+2023-09-20 19:01:31,877 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': 'byte indices must be integers or slices, not str'}
+2023-09-20 19:03:02,971 - INFO - Connect successfully to Mongo Production!
+2023-09-20 19:03:08,774 - INFO - {'name': 'referralTest13', 'email': 'referraltest13@gmail.com', 'password': 'testreferral123ab'}
+2023-09-20 19:03:09,701 - INFO - errors: (True, '')
+2023-09-20 19:03:10,732 - INFO - b'{"_id":"650b7a2d7e8fea90d4289eff","auth_provider":null,"created_at":"Wed, 20 Sep 2023 19:03:09 GMT","email":"referraltest13@gmail.com","isAdmin":false,"name":"referralTest13","password":"78c8b609a1ede0270065b6dfbc8937218edd32ae1f3ce907b43995f408e52c8f","referral_code":"ADOBGA2pqS","referrals":[],"role":null,"sites":{}}\n'
+2023-09-20 19:03:10,736 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'dict' object is not callable"}
+2023-09-20 19:04:52,919 - INFO - Connect successfully to Mongo Production!
+2023-09-20 19:05:15,664 - INFO - Connect successfully to Mongo Production!
+2023-09-20 19:05:18,787 - INFO - {'name': 'referralTest14', 'email': 'referraltest14@gmail.com', 'password': 'testreferral123ab'}
+2023-09-20 19:05:19,727 - INFO - errors: (True, '')
+2023-09-20 19:05:20,785 - INFO - b'{"_id":"650b7aaf26461eaf1cf06fd7","auth_provider":null,"created_at":"Wed, 20 Sep 2023 19:05:19 GMT","email":"referraltest14@gmail.com","isAdmin":false,"name":"referralTest14","password":"78c8b609a1ede0270065b6dfbc8937218edd32ae1f3ce907b43995f408e52c8f","referral_code":"U3rC7wkPlZ","referrals":[],"role":null,"sites":{}}\n'
+2023-09-20 19:05:20,793 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "id must be an instance of (bytes, str, ObjectId), not <class 'bytes'>"}
+2023-09-20 19:09:15,393 - INFO - Connect successfully to Mongo Production!
+2023-09-20 19:09:22,930 - INFO - {'name': 'referralTest15', 'email': 'referraltest15@gmail.com', 'password': 'testreferral123ab'}
+2023-09-20 19:09:24,865 - INFO - errors: (True, '')
+2023-09-20 19:09:26,007 - INFO - b'{"_id":"650b7ba55c87ff3e953a14d5","auth_provider":null,"created_at":"Wed, 20 Sep 2023 19:09:25 GMT","email":"referraltest15@gmail.com","isAdmin":false,"name":"referralTest15","password":"78c8b609a1ede0270065b6dfbc8937218edd32ae1f3ce907b43995f408e52c8f","referral_code":"TBqokZKYbE","referrals":[],"role":null,"sites":{}}\n'
+2023-09-20 19:09:26,014 - INFO - 650b7ba55c87ff3e953a14d5
+2023-09-20 19:09:26,022 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "id must be an instance of (bytes, str, ObjectId), not <class 'bytes'>"}
+2023-09-20 19:10:30,709 - INFO - Connect successfully to Mongo Production!
+2023-09-20 19:10:31,867 - INFO - {'name': 'referralTest16', 'email': 'referraltest16@gmail.com', 'password': 'testreferral123ab'}
+2023-09-20 19:10:32,909 - INFO - errors: (True, '')
+2023-09-20 19:10:34,018 - INFO - b'{"_id":"650b7be9f4a26fdf1e1f4aa5","auth_provider":null,"created_at":"Wed, 20 Sep 2023 19:10:33 GMT","email":"referraltest16@gmail.com","isAdmin":false,"name":"referralTest16","password":"78c8b609a1ede0270065b6dfbc8937218edd32ae1f3ce907b43995f408e52c8f","referral_code":"mJMZ6UCapY","referrals":[],"role":null,"sites":{}}\n'
+2023-09-20 19:10:34,023 - INFO - 650b7be9f4a26fdf1e1f4aa5
+2023-09-20 19:12:48,001 - INFO - Connect successfully to Mongo Production!
+2023-09-20 19:12:51,837 - INFO - {'name': 'referralTest17', 'email': 'referraltest17@gmail.com', 'password': 'testreferral123ab'}
+2023-09-20 19:12:53,326 - INFO - errors: (True, '')
+2023-09-20 19:12:54,478 - INFO - b'{"_id":"650b7c75df3650e413ea8bc1","auth_provider":null,"created_at":"Wed, 20 Sep 2023 19:12:53 GMT","email":"referraltest17@gmail.com","isAdmin":false,"name":"referralTest17","password":"78c8b609a1ede0270065b6dfbc8937218edd32ae1f3ce907b43995f408e52c8f","referral_code":"BUb5cGOpv2","referrals":[],"role":null,"sites":{}}\n'
+2023-09-20 19:12:54,611 - INFO - 650b7c75df3650e413ea8bc1
+2023-09-20 19:13:53,707 - INFO - Connect successfully to Mongo Production!
+2023-09-20 19:13:55,767 - INFO - {'name': 'referralTest18', 'email': 'referraltest18@gmail.com', 'password': 'testreferral123ab'}
+2023-09-20 19:13:56,755 - INFO - errors: (True, '')
+2023-09-20 19:13:57,869 - INFO - b'{"_id":"650b7cb4d05e22b1d451d962","auth_provider":null,"created_at":"Wed, 20 Sep 2023 19:13:56 GMT","email":"referraltest18@gmail.com","isAdmin":false,"name":"referralTest18","password":"78c8b609a1ede0270065b6dfbc8937218edd32ae1f3ce907b43995f408e52c8f","referral_code":"X6AaarCjSk","referrals":[],"role":null,"sites":{}}\n'
+2023-09-20 19:13:57,902 - INFO - 650b7cb4d05e22b1d451d962

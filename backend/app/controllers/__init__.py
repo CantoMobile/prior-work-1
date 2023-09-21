@@ -9,6 +9,7 @@ from .reviews_controller import reviews_bp
 from .admin_controller import admin_bp
 from .category_controller import category_bp
 from .recommendations_controller import recommendations_bp
+from .referrals_controller import referrals_bp
 
 __all__ = [
     'user_bp',
@@ -21,5 +22,6 @@ __all__ = [
     'reviews_bp',
     'admin_bp',
     'category_bp',
-    'recommendations_bp'
+    'recommendations_bp',
+    'referrals_bp'
 ]

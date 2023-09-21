@@ -20,7 +20,7 @@ class Review:
 
     def serialize(self):
         return {
-            'id': str(self.id),
+            'id': str(self._id),
             'site_id': self.site_id,
             'user_id': self.user_id,
             'rating': self.rating,

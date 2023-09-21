@@ -7,10 +7,9 @@ role_bp = Blueprint('role_bp', __name__, url_prefix='/roles')
 
 
 @role_bp.route('', methods=['GET', 'POST'])
-@validate_token
 def roles():
     if request.method == 'GET':
-        return get_all_roles()
+        return role_repo.findAll()
 
     elif request.method == 'POST':
         data = request.json
@@ -42,3 +41,7 @@ def add_role_permissions(role_id, permission_id):
 @role_bp.route('/<role_id>/remove_permissions/<permission_id>', methods=['PUT'])
 def remove_role_permissions(role_id, permission_id):
     return remove_permissions(role_id, permission_id)
+
+@role_bp.route('/<role_id>/extract_permissions', methods=['PUT'])
+def extract_permissions_for_role(role_id):
+    return extract_permissions(role_id)

@@ -8,6 +8,7 @@ from .site_stats_model import SiteStats
 from .permissions_model import Permissions
 from .otp_model import Otp
 from .recommendations_model import Recommendation
+from .referral_model import Referral
 
 __all__ = [
     'User',
@@ -19,5 +20,6 @@ __all__ = [
     'SiteStats',
     'Permissions',
     'Otp',
-    'Recommendation'
+    'Recommendation',
+    'Referral'
 ]

@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, url_for
 from app.services.middleware import validate_token
 from app.services.user_service import *
 from app.services.reviews_service import reviews_by_user
@@ -6,6 +6,8 @@ from app.repositories.category_repository import CategoryRepository
 from app.repositories.user_repository import UserRepository
 from app.config.database import Database
 from app.utils.logger import logger
+
+
 
 category_repo = CategoryRepository()
 user_repo = UserRepository()
@@ -96,3 +98,33 @@ def validate_otp():
 # @validate_token
 def remove_site(user_id, site_id):
     return remove_site_user(user_id, site_id)
+
+
+# google = oauth.register(
+#     name='google',
+#     client_id='YOUR_GOOGLE_CLIENT_ID',
+#     client_secret='YOUR_GOOGLE_CLIENT_SECRET',
+#     authorize_url='https://accounts.google.com/o/oauth2/auth',
+#     authorize_params=None,
+#     authorize_prompt=None,
+#     authorize_response=None,
+#     token_url='https://accounts.google.com/o/oauth2/token',
+#     token_params=None,
+#     refresh_token_url=None,
+#     client_kwargs={'scope': 'openid profile email'},
+# )
+
+# @app.route('/auth/google')
+# def google_login():
+#     return google.authorize_redirect(url_for('google_auth', _external=True))
+
+# @app.route('/auth/google/callback')
+# def google_auth():
+#     try:
+#         token = google.authorize_access_token()
+#         user_info = google.parse_id_token(token)
+#         # Store user_info in session or database as needed
+#         return 'Google login successful!'
+#     except OAuthError as e:
+#         # Handle authentication error
+#         return str(e)

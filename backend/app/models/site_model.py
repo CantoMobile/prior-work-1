@@ -20,7 +20,7 @@ class Site:
 
     def serialize(self):
         return {
-            'id': str(self.id),
+            'id': str(self._id),
             'url': self.url,
             'name': self.name,
             'description': self.description,

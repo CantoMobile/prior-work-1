@@ -1,6 +1,8 @@
 import re
 from bson import ObjectId
 import dns.resolver
+import random
+import string
 from flask import abort, jsonify, request
 from app.repositories.user_repository import UserRepository
 from app.repositories.role_repository import RoleRepository
@@ -15,6 +17,7 @@ from app.models.category_model import Category
 from app.services.otp_service import add_one_otp, validate_otp_code
 from app.services.general_service import extract_objects_dict, extract_object_dict
 from app.repositories.reviews_repository import ReviewsRepository
+from app.utils.logger import logger
 
 
 user_repo = UserRepository()
@@ -41,9 +44,32 @@ def get_one_user(user_id):
     return user
 
 
+def find_user_by_referral_code(referral_code):
+    user = user_repo.findByField('referral_code', referral_code)
+    if not user: return False
+    else: return True
+
+
+# generates a sample referral code to be tested if it's already used
+def generate_referral_code(length=10):
+    characters = string.ascii_letters + string.digits  # Alphanumeric characters
+    referral_code = ''.join(random.choice(characters) for _ in range(length))
+    return referral_code
+
+
+# keeps generating referral codes until a unique one is found to be used for a new user
+def generate_unique_referral_code():
+    referral_code = generate_referral_code()
+    while find_user_by_referral_code(referral_code):
+        referral_code = generate_referral_code()
+    return referral_code
+
+
 def create_user(register=False):
     data = request.json
+    logger.info(data)
     errors = validate_email_domain(data['email'])
+    logger.info(f'errors: {errors}')
     if errors[0] == False:
         return {"error": errors[1]}, 401
 
@@ -52,15 +78,16 @@ def create_user(register=False):
             name=data['name'],
             email=data['email'],
             password=auth.encrypt(data['password']),
+            referral_code=generate_unique_referral_code(),
             isAdmin=data['isAdmin']
         )
     else:
         user = User(
             name=data['name'],
             email=data['email'],
-            password=auth.encrypt(data['password'])
+            password=auth.encrypt(data['password']),
+            referral_code=generate_unique_referral_code()
         )
-
     user_data = user_repo.save(user)
     create_relationship(user_data['_id'])
     if register:
@@ -203,7 +230,7 @@ def validate_email_domain(email):
 
     exist = user_repo.existsByField('email', email)
     if exist and email != 'admin@cantonica.com':
-        return False, "Email and user all ready exists."
+        return False, "Email and user already exists."
 
     return True, ""
 
@@ -255,3 +282,4 @@ def get_count(query=None):
         return user_repo.count(query)
     else:
         return user_repo.count({})
+

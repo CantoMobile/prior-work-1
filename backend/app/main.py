@@ -2,10 +2,11 @@ import os
 from flask import Flask, jsonify
 from flask_cors import CORS
 from app.config import ProductionConfig, DevelopmentConfig
-from app.controllers import user_bp, role_bp, permissions_bp, site_bp, search_results_bp, user_sites_bp, site_stats_bp, reviews_bp, admin_bp, category_bp, recommendations_bp
+from app.controllers import user_bp, role_bp, permissions_bp, site_bp, search_results_bp, user_sites_bp, site_stats_bp, reviews_bp, admin_bp, category_bp, recommendations_bp, referrals_bp
 from app.utils.logger import logger
 from app.models.user_model import User
 from app.models.site_model import Site
+
 app = Flask(__name__)
 
 #Allow cors 
@@ -34,7 +35,8 @@ app.register_blueprint(site_stats_bp)
 app.register_blueprint(category_bp)   
 app.register_blueprint(recommendations_bp)
 app.register_blueprint(reviews_bp)
-app.register_blueprint(admin_bp)   
+app.register_blueprint(admin_bp)  
+app.register_blueprint(referrals_bp) 
     
 
 # Runtime environment validation and run application.

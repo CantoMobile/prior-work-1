@@ -3,10 +3,12 @@ from bson import ObjectId
 
 
 class User:
-    def __init__(self, name, email, password, auth_provider=None, sites=None, role=None, isAdmin=None,created_at=None, _id=None):
+    def __init__(self, name, email, password, referral_code, referrals=None, auth_provider=None, sites=None, role=None, isAdmin=None, created_at=None, _id=None):
         self.name = name
         self.email = email
         self.password = password
+        self.referral_code = referral_code
+        self.referrals = referrals or []
         self.auth_provider = auth_provider
         self.sites = sites or {}
         self.role = role  # or []

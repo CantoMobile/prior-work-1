@@ -21,7 +21,9 @@ def get_one_user_recommendations(user_id):
     return recommendations
 
 def add_one_user_recommendations(user_id):
+    logger.info("100")
     if recommendations_repo.findByField('user_id', user_id):
+        logger.info("here")
         abort(404)
 
     recommendation_model = HybridModel(user_repo.findAll(), site_repo.findAll())
