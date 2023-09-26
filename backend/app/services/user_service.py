@@ -315,8 +315,10 @@ def remove_site_user(site_id, user_id=None):
     site_data = site_repo.findById(site_id)
     user = User(**user_data)
     site = Site(**site_data)
+    logger.info("10")
     validation = any(
         site_item['_id'] == site_id for site_item in user.sites)
+    logger.info("11")
     if validation:
         return user_repo.deleteFromArray(user_data['_id'], 'sites', site)
     else:

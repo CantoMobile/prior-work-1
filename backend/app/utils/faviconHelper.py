@@ -43,6 +43,15 @@ FOLDER_PATH = os.path.abspath(os.path.join(
 
 import urllib.parse
 
+
+def ico_to_png(input_ico_path, output_png_path):
+    try:
+        with Image.open(input_ico_path) as img:
+            img.save(output_png_path, "PNG")
+        return output_png_path
+    except Exception as e:
+        return f'error: {e}'
+
 def getSiteName(url):
     parsed_url = urllib.parse.urlparse(url)
     domain_name = parsed_url.netloc
@@ -55,6 +64,7 @@ def getSiteName(url):
 
 
 def uploadFile(link, image_name):
+    logger.info(link)
     s3 = boto3.client('s3',
                       aws_access_key_id=ACCESS_KEY_ID,
                       aws_secret_access_key=ACCESS_SECRET_KEY
@@ -105,10 +115,10 @@ def scrapeFavicon(url):
         else:
             link = DEFAULT_FAVICON_LINK
             urllib.request.urlretrieve(link, filename)
-            msg += f"Saving file - Failure: Couldn't get favicon"
+            msg += f"Saving file - Failure: Couldn't get favicon \n"
 
     except Exception as e:
-        msg += f'Error saving file: {e}'
+        msg += f'Error saving file: {e} \n'
     finally:
         upload_status = uploadFile(link, image_name)
         msg += f'Upload to s3 message: {upload_status}'
@@ -118,7 +128,6 @@ def scrapeFavicon(url):
 def getFaviconFromURL(url):
     folder_path = FOLDER_PATH
     image_name = f'{getSiteName(url)}.png'
-    filename = os.path.join(folder_path, image_name)
     msg, link, status = "", "", ""
 
     try:
@@ -136,10 +145,15 @@ def getFaviconFromURL(url):
                 break
         if icon is not None:
             r = requests.get(icon.url, headers=headers)
+            image_ico_name = f'{getSiteName(url)}.ico'
+            logger.info(image_ico_name)
+            final_image_name = ico_to_png(image_ico_name, image_name)
+            filename = os.path.join(folder_path, final_image_name)
             with open(filename, "wb") as f:
                 f.write(r.content)
             msg += "Saving file - success"
             link = icon.url
+            logger.info(link)
         else:
             raise ValueError("No favicon.ico found in icons")
 
@@ -149,6 +163,7 @@ def getFaviconFromURL(url):
         status = "DEFAULT"
         # Recupera el favicon por defecto usando link
         r = requests.get(link, headers=headers)
+        filename = os.path.join(folder_path, image_name)
         with open(filename, "wb") as f:
             f.write(r.content)
         logger.error(
