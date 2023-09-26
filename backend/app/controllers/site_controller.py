@@ -27,7 +27,7 @@ def add_site():
 
 
 @site_bp.route('/<site_id>', methods=['POST','GET', 'PUT', 'DELETE'])
-@admin_permission_required
+# @admin_permission_required
 def site(site_id):
     if request.method == 'GET':
         return get_one_site(site_id)

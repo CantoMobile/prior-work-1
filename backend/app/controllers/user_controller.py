@@ -16,7 +16,7 @@ user_bp = Blueprint('user_bp', __name__,  url_prefix='/users')
 
 
 @user_bp.route('', methods=['GET', 'POST'])
-@validate_token
+# @validate_token
 def users():
     if request.method == 'GET':
         return get_all_users()
@@ -38,7 +38,7 @@ def user_registry():
 
 
 @user_bp.route('/<user_id>', methods=['GET', 'PUT', 'DELETE'])
-@validate_token
+# @validate_token
 def user(user_id):
     if request.method == 'GET':
         return get_one_user(user_id)
