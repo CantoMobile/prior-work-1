@@ -29,8 +29,10 @@ class Database:
             try:
                 ca = certifi.where()
                 self.client = MongoClient(self.mongo_uri, tlsCAfile=ca)
-                self.db = self.client['test']
+                #self.db = self.client['test']
+                self.db = self.client['cantonicaprod']
                 logger.info("Connect successfully to Mongo {}!".format(self.env))
+
             except ConnectionError as e:
                 logger.error("Error connecting to Mongo ", str(e))
         return self.db

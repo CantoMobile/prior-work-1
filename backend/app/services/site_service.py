@@ -37,10 +37,10 @@ def create_site():
     change_owner = False
 
     url = data.get('url')
-    # admin_email = data.get('admin_email', 'admin@cantonica.com')
-    # if real_site(url) == False:
-    #     return {"error":"The url is not valid or the site does not exist."}, 401
-    actual_site = site_repo.findByField('url', url)
+    #dmin_email = data.get('admin_email', 'admin@cantonica.com')
+    if real_site(url) == False:
+        return {"error":"The url is not valid or the site does not exist."}, 401
+    actual_site = site_actual(url)
     print("actual site: ", actual_site)
     if actual_site:
         if actual_site['admin_email'] != 'admin@cantonica.com':
@@ -104,6 +104,23 @@ def create_site():
             return site_data
     except Exception as e:
         return jsonify({"error": "Error saving site", "message": str(e)}), 401
+
+def site_actual(url):
+    if url.startswith('https://www.'):
+        actual_site = site_repo.findByField('url', url)
+        if actual_site is None:
+            url = 'http://www.' + url.replace('https://www.','')
+            actual_site = site_repo.findByField('url', url)
+            if actual_site is None:
+                url = 'http://' + url.replace('https://www.','')
+                actual_site = site_repo.findByField('url', url)
+                if actual_site is None:
+                    url = 'https://' + url.replace('https://www.','')
+                    actual_site = site_repo.findByField('url', url)
+
+    else:
+        actual_site = site_repo.findByField('url', url)
+    return actual_site
 
 
 def create_site_admin_relationship(user_id, site_id, create=None):

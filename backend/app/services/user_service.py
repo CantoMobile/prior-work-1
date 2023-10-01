@@ -18,6 +18,7 @@ from app.services.otp_service import add_one_otp, validate_otp_code, get_one_otp
 from app.services.general_service import extract_objects_dict, extract_object_dict
 from app.repositories.reviews_repository import ReviewsRepository
 from app.utils.logger import logger
+from app.repositories.referrals_repository import ReferralsRepository
 
 
 user_repo = UserRepository()
@@ -27,6 +28,7 @@ site_repo = SiteRepository()
 user_site_repo = UserSiteRepository()
 review_repo = ReviewsRepository()
 category_repo = CategoryRepository()
+referrals_repo = ReferralsRepository()
 
 
 def get_all_users(page=None):
@@ -57,37 +59,35 @@ def generate_referral_code(length=10):
     return referral_code
 
 
-# keeps generating referral codes until a unique one is found to be used for a new user
-def generate_unique_referral_code():
-    referral_code = generate_referral_code()
-    while find_user_by_referral_code(referral_code):
-        referral_code = generate_referral_code()
-    return referral_code
+# # keeps generating referral codes until a unique one is found to be used for a new user
+# def generate_unique_referral_code():
+#     referral_code = generate_referral_code()
+#     while find_user_by_referral_code(referral_code):
+#         referral_code = generate_referral_code()
+#     return referral_code
 
 
-def create_user(register=False):
-    data = request.json
+def create_user(data=None, register=False):
+    if data is None:
+        data = request.json
     logger.info(data)
     errors = validate_email_domain(data['email'])
     logger.info(f'errors: {errors}')
     if errors[0] == False:
         return {"error": errors[1]}, 401
-
+    
+    user_data = {
+        "name": data['name'],
+        "email": data['email'],
+        "password": auth.encrypt(data['password'])
+    }
     if 'isAdmin' in data:
-        user = User(
-            name=data['name'],
-            email=data['email'],
-            password=auth.encrypt(data['password']),
-            referral_code=generate_unique_referral_code(),
-            isAdmin=data['isAdmin']
-        )
-    else:
-        user = User(
-            name=data['name'],
-            email=data['email'],
-            password=auth.encrypt(data['password']),
-            referral_code=generate_unique_referral_code()
-        )
+        user_data['isAdmin'] = data['isAdmin']
+    if 'isGoogle' in data:
+        user_data['isGoogle'] = data['isGoogle']
+        user_data['uidGoogle'] = data['uidGoogle']
+
+    user = User(**user_data)
     user_data = user_repo.save(user)
     create_relationship(user_data['_id'])
     if register:
@@ -97,12 +97,13 @@ def create_user(register=False):
         return jsonify(user_data)
 
 
-def update_one_user(user_id):
+def update_one_user(user_id, data=None, generateToken=False):
     user_data = get_one_user(user_id)
     user_data['sites'] = extract_objects_dict(user_data, 'sites', 'site')
     if user_data['role'] != None:
         user_data['role'] = extract_object_dict(user_data, 'role', 'role')
-    data = request.json
+    if data is None:
+        data = request.json
     if 'name' in data:
         user_data['name'] = data['name']
     if 'email' in data:
@@ -113,7 +114,26 @@ def update_one_user(user_id):
         user_data['role'] = {'collection': 'role', '_id': data['role']}
     if 'isAdmin' in data:
         user_data['isAdmin'] = data['isAdmin']
-    return user_repo.update(user_id, user_data)
+    if 'isGoogle' in data:
+        if 'uidGoogle' in user_data:
+            if user_data['uidGoogle'] == data['uidGoogle']:
+                role_id = user_data['role']['_id']
+                return  auth.generate_auth_token(user_data, role_id)
+            else: 
+                return jsonify({"error":
+                                        "The uidGoogle sent does not match the one stored in the database."}), 400
+        user_data['isGoogle'] = data['isGoogle']
+        user_data['uidGoogle'] = data['uidGoogle']
+    if generateToken:
+        updated = user_repo.update(user_id, user_data)
+        if updated['updated_count'] > 0:
+            role_id = user_data['role']['_id']
+            return  auth.generate_auth_token(user_data, role_id)
+        else: 
+            return jsonify({"error":"Failed to generate login token."}), 400
+    else:
+        return user_repo.update(user_id, user_data)
+
 
 
 def update_user_information(user_id):
@@ -151,6 +171,9 @@ def delete_one_user(user_id):
     if user_repo.existsByField('_id', ObjectId(user_id)):
         delete_relationship(user_id)
         review_repo.deleteAllByField('user_id', user_id)
+        if referrals_repo.existsByField("referred_user_id", user_id):
+            print("Referrals delete: ",referrals_repo.deleteByField("referred_user_id", user_id))
+
         return user_repo.delete(user_id)
     else:
         return jsonify({'message': 'This user not exists'}), 304
@@ -169,7 +192,6 @@ def add_user_role(user_id, role_id):
 
 def remove_user_role(user_id, role_id):
     user_data = get_one_user(user_id)
-    role_repo.existsByField('_id', ObjectId(role_id))
     if role_repo.existsByField('_id', ObjectId(role_id)) and user_data['role'] != None:
         if role_id in user_data['role']['_id']:
             user_data['role'] = None
@@ -212,28 +234,15 @@ def user_authentication():
     data = request.json
     if 'isGoogle' in data and 'uidGoogle' in data:
         if user_repo.existsByField('email', data['email']):
-            user_data = user_repo.find_by_email(data['email'])
+            user_id = user_repo.find_by_email(data['email'])['_id']
+            print('user_id')
+            user_data = {}
             user_data['isGoogle'] = True
             if data['uidGoogle'] != None:
-                if 'uidGoogle' not in user_data:
-                    user_data['uidGoogle'] = data['uidGoogle']
-                else:
-                    if data['uidGoogle'] == user_data['uidGoogle']:
-                        role_id = user_data['role']['_id']
-                        print(type(user_data['_id']))
-                        return auth.generate_auth_token(user_data, role_id)
-                    else:
-                        return jsonify({"error":
-                                        "The uidGoogle sent does not match the one stored in the database."}), 400
+                user_data['uidGoogle'] = data['uidGoogle']
+                return update_one_user(user_id,user_data, True)
             else:
                 return jsonify({"error": "uidGoogle no provided"}), 400
-            user_data['sites'] = extract_objects_dict(user_data, 'sites', 'site')
-            user_data['role'] = extract_object_dict(user_data, 'role', 'role')
-            update_data = user_repo.update(user_data['_id'], user_data)
-            if update_data['updated_count'] > 0:
-                role_id = user_data['role']['_id']
-                user_data = user_repo.findById(user_data['_id'])
-                return auth.generate_auth_token(user_data, role_id)
         else:
             user_data = {
                 'name': data['name'],
@@ -242,11 +251,7 @@ def user_authentication():
                 'isGoogle': True,
                 'uidGoogle': data['uidGoogle']
             }
-
-            user_data = user_repo.save(User(**user_data))
-            create_relationship(user_data['_id'])
-            add_user_role(user_data['_id'], "646c0099d72ed166e49c3890")
-            return auth.generate_auth_token(user_data, "646c0099d72ed166e49c3890")
+            return create_user(user_data, True)
     else:
         user_data = user_repo.find_by_email(data['email'])
         if not user_data:

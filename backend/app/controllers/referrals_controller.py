@@ -18,12 +18,15 @@ def get_referrals():
 def get_referral(referral_id):
     return get_one_referral(referral_id)
 
+@referrals_bp.route('/<referral_id>/referreds', methods=['GET'])
+def get_referreds_count(referral_id):
+    return find_referrals_by_referrer(referral_id)
+
+
 
 @referrals_bp.route('/<referring_user_id>/initiate_referral', methods=['POST'])
 def begin_referral(referring_user_id):
-    # return {"error": "hey"}
-    referred_user_data = request.json
-    return initiate_referral(referring_user_id, referred_user_data)
+    return initiate_referral(referring_user_id)
 
 
 @referrals_bp.route('/<referral_id>/complete_referral', methods=['PUT'])

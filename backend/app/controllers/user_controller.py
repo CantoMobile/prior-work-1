@@ -34,7 +34,7 @@ def add_user():
 
 @user_bp.route('/register', methods=['POST'])
 def user_registry():
-    return create_user(True)
+    return create_user(None,True)
 
 
 @user_bp.route('/<user_id>', methods=['GET', 'PUT', 'DELETE'])

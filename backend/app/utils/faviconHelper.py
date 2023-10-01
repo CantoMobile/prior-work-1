@@ -12,6 +12,7 @@ from PIL import Image
 from app.utils.logger import logger
 import io
 import os
+import imghdr
 
 # load_dotenv()
 
@@ -54,14 +55,14 @@ def getSiteName(url):
     return extracted_domain
 
 
-def uploadFile(link, image_name):
+def uploadFile(image, image_name):
     s3 = boto3.client('s3',
                       aws_access_key_id=ACCESS_KEY_ID,
                       aws_secret_access_key=ACCESS_SECRET_KEY
                       )
 
-    image_data = requests.get(link).content
-    image = (io.BytesIO(image_data))
+    #image_data = requests.get(link).content
+    image = (io.BytesIO(image))
     bucket_name = BUCKET_NAME
     try:
         s3.upload_fileobj(
@@ -117,7 +118,7 @@ def scrapeFavicon(url):
 
 def getFaviconFromURL(url):
     folder_path = FOLDER_PATH
-    image_name = f'{getSiteName(url)}.png'
+    image_name = f'{getSiteName(url)}'
     filename = os.path.join(folder_path, image_name)
     msg, link, status = "", "", ""
 
@@ -136,10 +137,17 @@ def getFaviconFromURL(url):
                 break
         if icon is not None:
             r = requests.get(icon.url, headers=headers)
-            with open(filename, "wb") as f:
-                f.write(r.content)
-            msg += "Saving file - success"
-            link = icon.url
+            print(is_image(r))
+            if is_image(r):
+                image_type = imghdr.what(None, r.content)
+                print(image_type)
+                if image_type:
+                    image_name = image_name + f'.{image_type}'
+                else:
+                    raise ValueError("No valid image found in favicon")
+                image = r.content
+                msg += "Saving file - success"
+                link = icon.url
         else:
             raise ValueError("No favicon.ico found in icons")
 
@@ -147,15 +155,18 @@ def getFaviconFromURL(url):
         print(e)
         link = DEFAULT_FAVICON_LINK
         status = "DEFAULT"
-        # Recupera el favicon por defecto usando link
         r = requests.get(link, headers=headers)
-        with open(filename, "wb") as f:
-            f.write(r.content)
+        if is_image(r):
+            image_type = imghdr.what(None, r.content)
+            print(image_type)
+            if image_type:
+                image_name = image_name + f'.{image_type}'
+                image = r.content
         logger.error(
             f'Saving file - Failure:Site - {url}Error message - {e}')
 
     finally:
-        uploadFile(link, image_name)
+        uploadFile(image, image_name)
         public_url = f"https://{BUCKET_NAME}.s3.amazonaws.com/{image_name}"
         logger.info(f' Upload icon to s3 successful.')
         return public_url
@@ -192,6 +203,13 @@ def getUrlFavicon(url, file):
         )
     public_url = f"https://{BUCKET_NAME}.s3.amazonaws.com/{image_name}"
     return public_url
+    
+def is_image(response):
+    content_type = response.headers.get('Content-Type','')
+    if content_type.startswith('image/'):
+        return True
+    else:
+        return False
 
 
 # TEST_SITES = [

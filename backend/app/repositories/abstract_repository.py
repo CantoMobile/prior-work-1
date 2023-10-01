@@ -35,8 +35,8 @@ class AbstractRepository(Generic[T]):
 
         x = laColeccion.find_one({"_id": ObjectId(elId)})
         x["_id"] = x["_id"].__str__()
-        return self.findById(elId)
 
+        return self.findById(elId)
     def delete(self, id):
         laColeccion = self.db[self.coleccion]
         cuenta = laColeccion.delete_one({"_id": ObjectId(id)}).deleted_count
