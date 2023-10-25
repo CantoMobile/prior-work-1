@@ -20,12 +20,12 @@ def sites():
     elif request.method == 'GET':
         return get_all_sites()
 
-
+#IMPORTANT
 @site_bp.route('/add_site', methods=['POST'])
 def add_site():
     return create_site()
 
-
+#IMPORTANT
 @site_bp.route('/<site_id>', methods=['POST','GET', 'PUT', 'DELETE'])
 # @admin_permission_required
 def site(site_id):
@@ -131,7 +131,7 @@ def search_discrimined_sites(user_id):
 def save_site(user_id, site_id):
     return add_created_site_user(site_id, user_id)
 
-
+#IMPORTANT
 @site_bp.route('/update_icon/<site_id>', methods=['PUT'])
 def update_icon_site(site_id):
     return update_site_icon(site_id)

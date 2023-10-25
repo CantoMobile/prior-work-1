@@ -27,7 +27,7 @@ def users():
 
 
 @user_bp.route('/add_user', methods=['POST'])
-@validate_token
+# @validate_token
 def add_user():
     return create_user()
 

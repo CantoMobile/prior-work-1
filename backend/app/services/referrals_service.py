@@ -8,6 +8,7 @@ from app.repositories.referrals_repository import ReferralsRepository
 from app.repositories.user_repository import UserRepository
 from app.services.auth_service import AuthService
 from app.services.user_service import create_user, add_user_role, remove_user_role
+from app.services.user_action_service import addUserAction
 from app.utils.logger import logger
 
 
@@ -65,10 +66,12 @@ def initiate_referral(referring_user_id):
 def complete_referral(referral_id):
     referral_data = get_one_referral(referral_id)
     referral_data['referral_status'] = 'Complete'
-    user_id = referral_data['referred_user_id']
+    referred_user_id = referral_data['referred_user_id']
+    referrer_user_id = referral_data['referred_by']
     
-    remove_user_role(user_id, "6509e07e309e42bea36ffcc7") # Remove Pending role
-    add_user_role(user_id, "646c0099d72ed166e49c3890") # Add User role
+    remove_user_role(referred_user_id, "6509e07e309e42bea36ffcc7") # Remove Pending role
+    add_user_role(referred_user_id, "646c0099d72ed166e49c3890") # Add User role
+    addUserAction(referrer_user_id, referred_user_id, "Refer New User")
 
     return referrals_repo.update(referral_id, referral_data)
 

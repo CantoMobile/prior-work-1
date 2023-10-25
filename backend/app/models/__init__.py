@@ -9,6 +9,8 @@ from .permissions_model import Permissions
 from .otp_model import Otp
 from .recommendations_model import Recommendation
 from .referral_model import Referral
+from .points_system_model import PointsSystem
+from .user_action_model import UserAction
 
 __all__ = [
     'User',
@@ -21,5 +23,7 @@ __all__ = [
     'Permissions',
     'Otp',
     'Recommendation',
-    'Referral'
+    'Referral',
+    'PointsSystem',
+    'UserAction'
 ]

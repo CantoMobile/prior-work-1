@@ -7,6 +7,7 @@ from app.repositories.site_repository import SiteRepository
 from app.repositories.user_site_repository import UserSiteRepository
 from app.repositories.site_stats_repository import SiteStatsRepository
 from app.services.user_site_service import query_referenced, query_not_referenced, get_refereced_ids
+from app.services.user_action_service import addSiteAction
 from app.models.site_model import Site
 from bson.objectid import ObjectId
 from app.services.user_service import save_site_user, validate_email_domain, remove_site_user, exists_relation_site
@@ -33,7 +34,7 @@ def get_all_sites(page=None):
 
 def create_site():
     media_links = []
-    data = json.loads(request.form['json'])
+    data = request.json # json.loads(request.form['json'])
     change_owner = False
 
     url = data.get('url')
@@ -88,9 +89,11 @@ def create_site():
 
     try:
         site_data = site_repo.save(site)
-        if ('admin_email' in data) and (data['admin_email'] != 'admin@cantoncia.com'):
+        #IMPORTANT
+        if ('admin_email' in data) and (data['admin_email'] != 'admin@cantonica.com'):
             data = {"user_id": data['user_id'],
                     "site_url": data['url'], "email": data["admin_email"]}
+            addSiteAction(data['user_id'] or None, site_repo.findByField('url', url)['_id'], 'Adding Your Site')
             if add_one_otp(data):
                 return jsonify({"message": "code sended. Site indexed successfully."})
             else:
@@ -101,6 +104,7 @@ def create_site():
         # if 'user_id' in data:
         #     return create_site_admin_relationship(data['user_id'], site_data['_id'], True)
         else:
+            addSiteAction(data['user_id'], site_repo.findByField('url', url)['_id'], 'Indexing New Site')
             return site_data
     except Exception as e:
         return jsonify({"error": "Error saving site", "message": str(e)}), 401
@@ -238,7 +242,7 @@ def get_one_site_discrimined(site_id):
     ]
     return site_repo.queryAggregation(pipeline)
 
-
+#UPDATE
 def update_one_site(site_id):
     media_links = []
     data = json.loads(request.form['json'])
@@ -248,11 +252,13 @@ def update_one_site(site_id):
         data_icon = request.files.get('icon')
         icon = save_favicon(site['url'], data_icon)
         site['logo'] = icon
+        addSiteAction(data['user_id'], site_id, 'Adding Icon')
 
     if 'media' in request.files:
         data_media = request.files.getlist('media')
         media_links = save_data_media(
             data['name'], data_media) if 'name' in data else save_data_media(site['name'], data_media)
+        addSiteAction(data['user_id'], site_id, 'Adding Screenshot')
 
     if 'name' in data:
         site['name'] = data['name']
@@ -548,9 +554,10 @@ def save_favicon(url, file):
     finally:
         return file_link
 
-
+#UPDATE
 def update_site_icon(site_id):
     data_icon = request.files.get('icon')
+    user_id = request.json['user_id']
 
     site_data = get_one_site(site_id)
     if not data_icon:
@@ -561,7 +568,8 @@ def update_site_icon(site_id):
             site_data['logoChanged'] = data['logoChanged']
 
     site_data['logo'] = save_favicon(site_data['url'], data_icon)
-    response = site_repo.update(site_id, site_data)
+    response = site_repo.update(site_id, site_data, 'Adding Logo')
+    addSiteAction(user_id, site_id, 'Adding Icon')
     return response
 
 

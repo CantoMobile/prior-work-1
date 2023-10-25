@@ -3,10 +3,11 @@ from bson import ObjectId
 
 
 class User:
-    def __init__(self, name, email, password, sites=None, role=None, isAdmin=None, isGoogle=None,  uidGoogle=None,  created_at=None, _id=None):
+    def __init__(self, name, email, password, score=0, sites=None, role=None, isAdmin=None, isGoogle=None,  uidGoogle=None,  created_at=None, _id=None):
         self.name = name
         self.email = email
         self.password = password
+        self.score = score
         self.sites = sites or []
         self.role = role  
         self.isAdmin = isAdmin if isAdmin else False

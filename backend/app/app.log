@@ -238,3 +238,553 @@
 2023-09-20 19:13:56,755 - INFO - errors: (True, '')
 2023-09-20 19:13:57,869 - INFO - b'{"_id":"650b7cb4d05e22b1d451d962","auth_provider":null,"created_at":"Wed, 20 Sep 2023 19:13:56 GMT","email":"referraltest18@gmail.com","isAdmin":false,"name":"referralTest18","password":"78c8b609a1ede0270065b6dfbc8937218edd32ae1f3ce907b43995f408e52c8f","referral_code":"X6AaarCjSk","referrals":[],"role":null,"sites":{}}\n'
 2023-09-20 19:13:57,902 - INFO - 650b7cb4d05e22b1d451d962
+2023-09-21 13:24:27,267 - INFO - Connect successfully to Mongo Production!
+2023-09-21 13:25:20,192 - INFO - Connect successfully to Mongo Production!
+2023-09-21 13:25:25,285 - INFO - {'name': 'referralTest18', 'email': 'referraltest18@gmail.com', 'password': 'testreferral123ab'}
+2023-09-21 13:25:28,100 - INFO - errors: (False, 'Email and user already exists.')
+2023-09-21 13:25:28,102 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'tuple' object has no attribute 'get_data'"}
+2023-09-21 13:29:38,507 - INFO - Connect successfully to Mongo Production!
+2023-09-21 13:29:39,915 - INFO - {'name': 'referralTest18', 'email': 'referraltest18@gmail.com', 'password': 'testreferral123ab'}
+2023-09-21 13:29:40,892 - INFO - errors: (False, 'Email and user already exists.')
+2023-09-21 15:23:00,287 - INFO - {'name': 'referralTest18', 'email': 'referraltest18@gmail.com', 'password': 'testreferral123ab'}
+2023-09-21 15:23:01,845 - INFO - errors: (False, 'Email and user already exists.')
+2023-09-21 15:23:11,185 - INFO - {'name': 'referralTest19', 'email': 'referraltest19@gmail.com', 'password': 'testreferral123ab'}
+2023-09-21 15:23:11,345 - INFO - errors: (True, '')
+2023-09-21 15:23:11,754 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "name 'auth_provider' is not defined"}
+2023-09-21 15:38:07,440 - INFO - {'name': 'referralTest19', 'email': 'referraltest19@gmail.com', 'password': 'testreferral123ab'}
+2023-09-21 15:38:08,617 - INFO - errors: (True, '')
+2023-09-21 15:38:08,775 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "name 'auth_provider' is not defined"}
+2023-09-21 15:38:22,823 - INFO - Connect successfully to Mongo Production!
+2023-09-21 15:38:48,248 - INFO - {'name': 'referralTest19', 'email': 'referraltest19@gmail.com', 'password': 'testreferral123ab'}
+2023-09-21 15:38:49,206 - INFO - errors: (True, '')
+2023-09-21 15:39:56,972 - INFO - {'name': 'referralTest19', 'email': 'referraltest19@gmail.com', 'password': 'testreferral123ab'}
+2023-09-21 15:39:57,706 - INFO - errors: (False, 'Email and user already exists.')
+2023-09-21 15:40:09,148 - INFO - {'name': 'referralTest20', 'email': 'referraltest20@gmail.com', 'password': 'testreferral123ab'}
+2023-09-21 15:40:09,320 - INFO - errors: (True, '')
+2023-09-21 15:41:18,688 - INFO - Connect successfully to Mongo Production!
+2023-09-21 15:43:42,559 - INFO - Connect successfully to Mongo Production!
+2023-09-21 15:44:01,833 - INFO - {'updated_count': 1}
+2023-09-21 15:44:55,957 - INFO - {'updated_count': 1}
+2023-09-21 15:46:08,162 - INFO - Connect successfully to Mongo Production!
+2023-09-21 15:46:13,831 - INFO - {'_id': '650c9c196af4eb9a2f0fecf7', 'name': 'referralTest20', 'email': 'referraltest20@gmail.com', 'password': '78c8b609a1ede0270065b6dfbc8937218edd32ae1f3ce907b43995f408e52c8f', 'referral_code': '8HC9PXTT9I', 'referrals': [], 'auth_provider': None, 'sites': {}, 'role': {'_id': '6509e07e309e42bea36ffcc7', 'name': 'Pending User', 'description': 'This role is for users who have to confirm details', 'permissions': []}, 'isAdmin': False, 'isGoogle': False, 'uidGoogle': None, 'created_at': datetime.datetime(2023, 9, 21, 15, 40, 9, 478000)}
+2023-09-21 15:46:14,000 - INFO - {'updated_count': 1}
+2023-09-21 15:55:14,046 - INFO - Connect successfully to Mongo Production!
+2023-09-21 15:55:23,365 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'str' object has no attribute 'get'"}
+2023-09-21 15:56:15,222 - INFO - Connect successfully to Mongo Production!
+2023-09-21 15:56:19,525 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "string indices must be integers, not 'str'"}
+2023-09-21 15:57:08,638 - INFO - Connect successfully to Mongo Production!
+2023-09-21 15:57:13,652 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "string indices must be integers, not 'str'"}
+2023-09-21 15:57:27,923 - INFO - Connect successfully to Mongo Production!
+2023-09-21 15:57:33,015 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "string indices must be integers, not 'str'"}
+2023-09-21 16:03:19,148 - INFO - Connect successfully to Mongo Production!
+2023-09-21 16:03:23,145 - INFO - _id
+2023-09-21 16:03:23,148 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "string indices must be integers, not 'str'"}
+2023-09-21 16:04:33,463 - INFO - Connect successfully to Mongo Production!
+2023-09-21 16:05:13,360 - INFO - Connect successfully to Mongo Production!
+2023-09-21 16:06:29,605 - INFO - Connect successfully to Mongo Production!
+2023-09-21 16:06:58,673 - INFO - Connect successfully to Mongo Production!
+2023-09-21 16:07:04,892 - INFO - {'updated_count': 1}
+2023-09-21 16:07:05,180 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'_id'"}
+2023-09-21 16:08:02,886 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'_id'"}
+2023-09-21 16:08:43,782 - INFO - Connect successfully to Mongo Production!
+2023-09-21 16:08:50,605 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'_id'"}
+2023-09-21 16:08:56,899 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'_id'"}
+2023-09-21 16:09:30,224 - INFO - Connect successfully to Mongo Production!
+2023-09-21 16:09:34,503 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'_id'"}
+2023-09-21 16:10:32,687 - INFO - Connect successfully to Mongo Production!
+2023-09-21 16:10:37,218 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'_id'"}
+2023-09-21 16:12:06,750 - INFO - Connect successfully to Mongo Production!
+2023-09-21 16:12:12,738 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'_id'"}
+2023-09-21 16:14:17,113 - INFO - Connect successfully to Mongo Production!
+2023-09-21 16:14:27,336 - INFO - a
+2023-09-21 16:14:27,480 - INFO - e
+2023-09-21 16:14:27,624 - INFO - f
+2023-09-21 16:14:27,770 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'_id'"}
+2023-09-21 16:15:22,920 - INFO - Connect successfully to Mongo Production!
+2023-09-21 16:15:26,839 - INFO - a
+2023-09-21 16:15:26,983 - INFO - e
+2023-09-21 16:15:27,126 - INFO - f
+2023-09-21 16:15:27,268 - INFO - g
+2023-09-21 16:15:27,270 - INFO - {}
+2023-09-21 16:15:27,277 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'_id'"}
+2023-09-21 16:18:04,781 - INFO - Connect successfully to Mongo Production!
+2023-09-21 16:18:12,316 - INFO - a
+2023-09-21 16:18:12,460 - INFO - e
+2023-09-21 16:18:12,608 - INFO - f
+2023-09-21 16:18:12,751 - INFO - g
+2023-09-21 16:18:12,755 - INFO - None
+2023-09-21 16:18:12,758 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'NoneType' object is not subscriptable"}
+2023-09-21 16:18:54,579 - INFO - Connect successfully to Mongo Production!
+2023-09-21 16:19:04,295 - INFO - a
+2023-09-21 16:19:04,441 - INFO - e
+2023-09-21 16:19:04,584 - INFO - f
+2023-09-21 16:19:04,729 - INFO - g
+2023-09-21 16:19:04,731 - INFO - None
+2023-09-21 16:19:04,883 - INFO - b
+2023-09-21 16:19:04,886 - INFO - {'updated_count': 1}
+2023-09-21 16:19:04,890 - INFO - 1
+2023-09-21 16:19:05,032 - INFO - 2
+2023-09-21 16:19:05,175 - INFO - {'_id': '646c0099d72ed166e49c3890', 'name': 'User', 'description': 'This role is for users', 'permissions': []}
+2023-09-21 16:19:05,177 - INFO - 4
+2023-09-21 16:21:15,005 - INFO - Connect successfully to Mongo Production!
+2023-09-21 16:21:26,401 - INFO - {'name': 'referralTest22', 'email': 'referraltest22@gmail.com', 'password': 'testreferral123ab'}
+2023-09-21 16:21:27,300 - INFO - errors: (True, '')
+2023-09-26 10:36:06,165 - INFO - Connect successfully to Mongo Production!
+2023-09-26 10:48:03,176 - INFO - {'name': 'TestAdam', 'email': 'jeepersynot@gmail.com', 'password': 'TestAdam1!'}
+2023-09-26 10:48:03,607 - INFO - errors: (True, '')
+2023-09-26 10:48:11,992 - INFO - Generating auth token for user jeepersynot@gmail.com
+2023-09-26 10:51:25,695 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'."}
+2023-09-26 11:07:22,239 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'page'"}
+2023-09-26 11:08:00,521 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '400 Bad Request: The browser (or proxy) sent a request that this server could not understand.'}
+2023-09-26 11:08:35,774 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '400 Bad Request: The browser (or proxy) sent a request that this server could not understand.'}
+2023-09-26 11:09:01,706 - INFO - Connect successfully to Mongo Production!
+2023-09-26 11:09:02,581 - INFO - here
+2023-09-26 11:09:02,585 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '400 Bad Request: The browser (or proxy) sent a request that this server could not understand.'}
+2023-09-26 11:09:56,196 - INFO - here
+2023-09-26 11:09:56,198 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '400 Bad Request: The browser (or proxy) sent a request that this server could not understand.'}
+2023-09-26 11:10:17,038 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'add_site' is not a valid ObjectId, it must be a 12-byte input or a 24-character hex string"}
+2023-09-26 11:10:43,731 - INFO - here
+2023-09-26 11:10:43,739 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '400 Bad Request: The browser (or proxy) sent a request that this server could not understand.'}
+2023-09-26 11:10:51,131 - INFO - here
+2023-09-26 11:10:51,134 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '400 Bad Request: The browser (or proxy) sent a request that this server could not understand.'}
+2023-09-26 11:10:56,245 - INFO - here
+2023-09-26 11:10:56,249 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '400 Bad Request: The browser (or proxy) sent a request that this server could not understand.'}
+2023-09-26 11:10:57,779 - INFO - here
+2023-09-26 11:10:57,782 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '400 Bad Request: The browser (or proxy) sent a request that this server could not understand.'}
+2023-09-26 11:12:29,159 - INFO - here
+2023-09-26 11:12:29,163 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '400 Bad Request: The browser (or proxy) sent a request that this server could not understand.'}
+2023-09-26 11:34:20,392 - INFO - here
+2023-09-26 11:34:20,394 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '400 Bad Request: The browser (or proxy) sent a request that this server could not understand.'}
+2023-09-26 11:35:31,038 - INFO - Connect successfully to Mongo Production!
+2023-09-26 11:35:44,416 - INFO - here
+2023-09-26 11:35:44,417 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '400 Bad Request: The browser (or proxy) sent a request that this server could not understand.'}
+2023-09-26 11:36:42,474 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'get_latest_added' is not a valid ObjectId, it must be a 12-byte input or a 24-character hex string"}
+2023-09-26 11:37:14,581 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'get_lastest_added' is not a valid ObjectId, it must be a 12-byte input or a 24-character hex string"}
+2023-09-26 11:37:27,063 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'add_site' is not a valid ObjectId, it must be a 12-byte input or a 24-character hex string"}
+2023-09-26 11:37:34,565 - INFO - here
+2023-09-26 11:37:34,568 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '400 Bad Request: The browser (or proxy) sent a request that this server could not understand.'}
+2023-09-26 11:39:23,613 - INFO - here
+2023-09-26 11:39:23,617 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '400 Bad Request: The browser (or proxy) sent a request that this server could not understand.'}
+2023-09-26 11:39:27,574 - INFO - here
+2023-09-26 11:39:27,575 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '400 Bad Request: The browser (or proxy) sent a request that this server could not understand.'}
+2023-09-26 11:43:24,935 - INFO - here
+2023-09-26 11:43:24,939 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '400 Bad Request: The browser (or proxy) sent a request that this server could not understand.'}
+2023-09-26 11:43:32,674 - INFO - here
+2023-09-26 11:43:32,678 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '400 Bad Request: The browser (or proxy) sent a request that this server could not understand.'}
+2023-09-26 11:44:26,207 - INFO - here
+2023-09-26 11:44:26,212 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '400 Bad Request: The browser (or proxy) sent a request that this server could not understand.'}
+2023-09-26 11:44:29,955 - INFO - here
+2023-09-26 11:44:29,959 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '400 Bad Request: The browser (or proxy) sent a request that this server could not understand.'}
+2023-09-26 11:44:35,933 - INFO - here
+2023-09-26 11:44:35,937 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '400 Bad Request: The browser (or proxy) sent a request that this server could not understand.'}
+2023-09-26 11:46:15,867 - INFO - here
+2023-09-26 11:46:15,869 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '400 Bad Request: The browser (or proxy) sent a request that this server could not understand.'}
+2023-09-26 11:47:23,434 - INFO - here
+2023-09-26 11:47:23,436 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '400 Bad Request: The browser (or proxy) sent a request that this server could not understand.'}
+2023-09-26 11:47:53,026 - INFO - here
+2023-09-26 11:47:53,029 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '400 Bad Request: The browser (or proxy) sent a request that this server could not understand.'}
+2023-09-26 11:48:56,712 - INFO - here
+2023-09-26 11:48:56,714 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '400 Bad Request: The browser (or proxy) sent a request that this server could not understand.'}
+2023-09-26 11:49:25,850 - INFO - Connect successfully to Mongo Production!
+2023-09-26 11:49:29,814 - INFO - here
+2023-09-26 11:49:29,816 - INFO - 1
+2023-09-26 11:49:29,820 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '400 Bad Request: The browser (or proxy) sent a request that this server could not understand.'}
+2023-09-26 11:50:07,824 - INFO - Connect successfully to Mongo Production!
+2023-09-26 11:50:10,236 - INFO - here
+2023-09-26 11:50:10,240 - INFO - 1
+2023-09-26 11:50:10,242 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'Request' object has no attribute 'body'"}
+2023-09-26 11:50:39,363 - INFO - Connect successfully to Mongo Production!
+2023-09-26 11:50:42,456 - INFO - here
+2023-09-26 11:50:42,458 - INFO - 1
+2023-09-26 11:50:42,462 - INFO - {'url': 'https://www.hp.com', 'name': 'hp', 'description': 'Laptop site', 'keywords': ['laptops', 'tech']}
+2023-09-26 11:50:42,463 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '400 Bad Request: The browser (or proxy) sent a request that this server could not understand.'}
+2023-09-26 11:51:09,389 - INFO - Connect successfully to Mongo Production!
+2023-09-26 11:51:13,383 - INFO - here
+2023-09-26 11:51:13,385 - INFO - 1
+2023-09-26 11:51:13,389 - INFO - {'url': 'https://www.hp.com', 'name': 'hp', 'description': 'Laptop site', 'keywords': ['laptops', 'tech']}
+2023-09-26 11:51:13,390 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': 'the JSON object must be str, bytes or bytearray, not dict'}
+2023-09-26 11:51:41,019 - INFO - Connect successfully to Mongo Production!
+2023-09-26 11:51:47,740 - INFO - here
+2023-09-26 11:51:47,742 - INFO - 1
+2023-09-26 11:51:47,746 - INFO - {'url': 'https://www.hp.com', 'name': 'hp', 'description': 'Laptop site', 'keywords': ['laptops', 'tech']}
+2023-09-26 11:51:51,616 - ERROR - Saving file - Failure:Site - https://www.hp.comError message - not enough values to unpack (expected 2, got 1)
+2023-09-26 11:51:51,623 - INFO - https://cdn-icons-png.flaticon.com/512/44/44386.png
+2023-09-26 11:51:53,699 - INFO -  Upload icon to s3 successful.
+2023-09-26 12:02:19,109 - INFO - here
+2023-09-26 12:02:19,110 - INFO - 1
+2023-09-26 12:02:19,118 - INFO - {'url': 'https://www.house.com', 'name': 'house', 'description': 'Random test', 'keywords': ['Random', 'test']}
+2023-09-26 12:02:20,938 - INFO - https://house.com/favicon.ico
+2023-09-26 12:02:21,694 - INFO -  Upload icon to s3 successful.
+2023-09-26 13:51:50,111 - INFO - Connect successfully to Mongo Production!
+2023-09-26 13:52:03,484 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'add_new_site' is not a valid ObjectId, it must be a 12-byte input or a 24-character hex string"}
+2023-09-26 13:52:08,877 - INFO - here
+2023-09-26 13:52:08,879 - INFO - 1
+2023-09-26 13:52:08,885 - INFO - {'url': 'https://www.pan.com', 'name': 'pan', 'description': 'Random test', 'keywords': ['Random', 'test']}
+2023-09-26 13:52:52,576 - ERROR - Saving file - Failure:Site - https://www.pan.comError message - HTTPSConnectionPool(host='www.pan.com', port=443): Max retries exceeded with url: / (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x000001B97C383B10>, 'Connection to www.pan.com timed out. (connect timeout=None)'))
+2023-09-26 13:52:52,577 - INFO - https://cdn-icons-png.flaticon.com/512/44/44386.png
+2023-09-26 13:52:53,714 - INFO -  Upload icon to s3 successful.
+2023-09-26 13:57:11,080 - INFO - Connect successfully to Mongo Production!
+2023-09-26 13:57:27,954 - INFO - here
+2023-09-26 13:57:27,956 - INFO - 1
+2023-09-26 13:57:27,960 - INFO - {'url': 'https://www.car.com', 'name': 'car', 'description': 'Random test', 'keywords': ['Random', 'test']}
+2023-09-26 13:57:30,507 - INFO - <Response [200]>
+2023-09-26 13:57:30,511 - INFO - https://www.car.com/assets/img/favicon/favicon.ico
+2023-09-26 13:57:30,513 - INFO - https://www.car.com/assets/img/favicon/favicon.ico
+2023-09-26 13:57:31,910 - INFO -  Upload icon to s3 successful.
+2023-09-26 13:58:55,591 - INFO - Connect successfully to Mongo Production!
+2023-09-26 13:59:08,631 - INFO - here
+2023-09-26 13:59:08,632 - INFO - 1
+2023-09-26 13:59:08,636 - INFO - {'url': 'https://www.tan.com', 'name': 'tan', 'description': 'Random test', 'keywords': ['Random', 'test']}
+2023-09-26 13:59:30,687 - ERROR - Saving file - Failure:Site - https://www.tan.comError message - HTTPSConnectionPool(host='www.tan.com', port=443): Max retries exceeded with url: / (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x000001EB414ED8D0>, 'Connection to www.tan.com timed out. (connect timeout=None)'))
+2023-09-26 13:59:30,689 - INFO - https://cdn-icons-png.flaticon.com/512/44/44386.png
+2023-09-26 13:59:31,588 - INFO -  Upload icon to s3 successful.
+2023-09-26 14:01:04,168 - INFO - here
+2023-09-26 14:01:04,171 - INFO - 1
+2023-09-26 14:01:04,173 - INFO - {'url': 'https://www.horse.com', 'name': 'horse', 'description': 'Random test', 'keywords': ['Random', 'test']}
+2023-09-26 14:01:06,841 - INFO - b"\x00\x00\x01\x00\x01\x00\x10\x10\x00\x00\x01\x00 \x00h\x04\x00\x00\x16\x00\x00\x00(\x00\x00\x00\x10\x00\x00\x00 \x00\x00\x00\x01\x00 \x00\x00\x00\x00\x00\x00\x04\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00^U\x0c0`V\x0c\x80aW\x0b\x80aW\x0b\x80`V\x0c\x80^U\x0c0\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00_V\x0c0aX\x0b\xcfdZ\t\xfff\\\x08\xffg\\\x07\xffg\\\x07\xfff\\\x08\xffdZ\t\xffaW\x0b\xcf_V\x0c0\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00aX\x0b`dZ\t\xffg\\\x07\xffg]\x07\xffg]\x07\xffg]\x07\xffg]\x07\xffg]\x07\xffg]\x07\xffg\\\x07\xffdZ\t\xffaX\x0b`\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00aX\x0b0e[\t\xffg]\x07\xffg]\x07\xffg]\x07\xffyp'\xff\xc5\xc1\xa3\xff\xc5\xc1\xa3\xffyp'\xffg]\x07\xffg]\x07\xffg]\x07\xffdZ\t\xff_V\x0c0\x00\x00\x00\x00\x00\x00\x00\x00bY\n\xcfg]\x07\xffg]\x07\xffg]\x07\xff\x9f\x99e\xff\xf5\xf5\xf0\xff\xff\xff\xff\xff\xff\xff\xff\xff\xf5\xf5\xf0\xff\x9f\x98e\xffg]\x07\xffg]\x07\xffg\\\x07\xffaW\x0b\xcf\x00\x00\x00\x00^U\x0c0d[\t\xffg]\x07\xffg]\x07\xff\x9f\x99e\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x9f\x98e\xffg]\x07\xffg]\x07\xffdZ\t\xff^U\x0c0`V\x0c\x80f\\\x08\xffg]\x07\xff\x8c\x84F\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x8c\x84F\xffg]\x07\xfff\\\x08\xff`V\x0c\x80`W\x0b\x8fg\\\x07\xffg]\x07\xff\xd8\xd6\xc2\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xce\xcb\xb2\xfff\\\x07\xffg\\\x07\xffaW\x0b\x80`W\x0b\x8fg\\\x07\xfff\\\x08\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xfff\\\x08\xffg\\\x07\xffaW\x0b\x80_V\x0c\x80f\\\x08\xfff\\\x08\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xfff\\\x08\xfff\\\x08\xff`V\x0c\x80^U\x0c0d[\t\xffg]\x07\xff\xbb\xb7\x93\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xbb\xb7\x94\xffg]\x07\xffdZ\t\xff^U\x0c0\x00\x00\x00\x00bX\n\xcfg]\x07\xffpg\x17\xff\xbb\xb7\x93\xff\xd8\xd5\xc2\xff\xd8\xd5\xc2\xff\x94\x8dV\xff\x94\x8dV\xff\xd8\xd5\xc2\xff\xd8\xd5\xc2\xff\xbb\xb7\x93\xffpf\x17\xffg\\\x07\xffaX\x0b\xcf\x00\x00\x00\x00\x00\x00\x00\x00`W\x0c0dZ\t\xffg]\x07\xffg]\x07\xfff\\\x07\xffg\\\x07\xffg]\x07\xffg]\x07\xffg\\\x07\xfff\\\x07\xffg]\x07\xffg]\x07\xffdZ\t\xff_V\x0c0\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00aX\x0b`dZ\t\xffg]\x07\xffg]\x07\xffg]\x07\xffg]\x07\xffg]\x07\xffg]\x07\xffg]\x07\xffg]\x07\xffe[\t\xffaX\x0b`\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00`W\x0c0bX\n\xcfd[\t\xfff\\\x08\xffg\\\x07\xffg\\\x07\xfff\\\x08\xffd[\t\xffbY\n\xcfaX\x0b0\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00^U\x0c0_V\x0c\x80aW\x0b\x80aX\x0b\x80`V\x0c\x80^U\x0c0\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xfc?\x00\x00\xf0\x0f\x00\x00\xe0\x07\x00\x00\xc0\x03\x00\x00\x80\x01\x00\x00\x80\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x80\x01\x00\x00\x80\x01\x00\x00\xc0\x03\x00\x00\xe0\x07\x00\x00\xf0\x0f\x00\x00\xfc?\x00\x00"
+2023-09-26 14:01:06,852 - INFO - https://www.horse.com/favicon.ico
+2023-09-26 14:01:06,854 - INFO - https://www.horse.com/favicon.ico
+2023-09-26 14:01:07,363 - INFO -  Upload icon to s3 successful.
+2023-09-26 14:15:16,266 - INFO - Connect successfully to Mongo Production!
+2023-09-26 14:15:51,769 - INFO - Connect successfully to Mongo Production!
+2023-09-26 14:16:07,056 - INFO - here
+2023-09-26 14:16:07,058 - INFO - 1
+2023-09-26 14:16:07,061 - INFO - {'url': 'https://www.dog.com', 'name': 'dog', 'description': 'Random test', 'keywords': ['Random', 'test']}
+2023-09-26 14:16:09,603 - INFO - dog.ico
+2023-09-26 14:16:09,682 - ERROR - Saving file - Failure:Site - https://www.dog.comError message - [Errno 22] Invalid argument: "C:\\Users\\adamc\\bulkmag_dev_Yesid\\prior-work-1\\backend\\favicons\\error: [Errno 2] No such file or directory: 'dog.ico'"
+2023-09-26 14:16:09,687 - INFO - https://cdn-icons-png.flaticon.com/512/44/44386.png
+2023-09-26 14:16:10,366 - INFO -  Upload icon to s3 successful.
+2023-09-26 14:18:48,765 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'NoneType' object is not subscriptable"}
+2023-09-26 14:21:01,547 - INFO - Connect successfully to Mongo Production!
+2023-09-26 14:21:07,062 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'NoneType' object is not subscriptable"}
+2023-09-26 14:21:48,636 - INFO - Connect successfully to Mongo Production!
+2023-09-26 14:21:57,433 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'NoneType' object is not subscriptable"}
+2023-09-26 14:23:04,822 - INFO - Connect successfully to Mongo Production!
+2023-09-26 14:23:14,414 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'NoneType' object is not subscriptable"}
+2023-09-26 14:23:54,006 - INFO - Connect successfully to Mongo Production!
+2023-09-26 14:24:01,363 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'NoneType' object is not subscriptable"}
+2023-09-26 14:24:33,229 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'NoneType' object is not subscriptable"}
+2023-09-26 14:24:44,821 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'NoneType' object is not subscriptable"}
+2023-09-26 14:27:08,106 - INFO - Connect successfully to Mongo Production!
+2023-09-26 14:28:15,817 - INFO - Connect successfully to Mongo Production!
+2023-09-26 14:29:59,636 - INFO - Connect successfully to Mongo Production!
+2023-09-26 14:30:09,101 - INFO - house.ico
+2023-09-26 14:30:09,168 - ERROR - Saving file - Failure:Site - https://www.house.comError message - [Errno 22] Invalid argument: "C:\\Users\\adamc\\bulkmag_dev_Yesid\\prior-work-1\\backend\\favicons\\error: [Errno 2] No such file or directory: 'house.ico'"
+2023-09-26 14:30:09,171 - INFO - https://cdn-icons-png.flaticon.com/512/44/44386.png
+2023-09-26 14:30:09,884 - INFO -  Upload icon to s3 successful.
+2023-09-30 13:34:38,944 - INFO - Connect successfully to Mongo Production!
+2023-10-05 19:15:36,558 - INFO - Connect successfully to Mongo Production!
+2023-10-05 19:26:29,659 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '400 Bad Request: The browser (or proxy) sent a request that this server could not understand.'}
+2023-10-05 19:28:40,984 - INFO - Connect successfully to Mongo Production!
+2023-10-05 19:29:13,876 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017: timed out,ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017: timed out,ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017: timed out, Timeout: 30s, Topology Description: <TopologyDescription id: 651f46a85a602c54fde8c77c, topology_type: ReplicaSetNoPrimary, servers: [<ServerDescription ('ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017: timed out')>, <ServerDescription ('ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017: timed out')>, <ServerDescription ('ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017: timed out')>]>"}
+2023-10-05 19:30:24,563 - INFO - Connect successfully to Mongo Production!
+2023-10-05 19:31:13,365 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "cluster0-shard-00-01.hpbqw.mongodb.net:27017: timed out,cluster0-shard-00-02.hpbqw.mongodb.net:27017: timed out,cluster0-shard-00-00.hpbqw.mongodb.net:27017: timed out, Timeout: 30s, Topology Description: <TopologyDescription id: 651f4710dbd0b0151b1d308d, topology_type: ReplicaSetNoPrimary, servers: [<ServerDescription ('cluster0-shard-00-00.hpbqw.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('cluster0-shard-00-00.hpbqw.mongodb.net:27017: timed out')>, <ServerDescription ('cluster0-shard-00-01.hpbqw.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('cluster0-shard-00-01.hpbqw.mongodb.net:27017: timed out')>, <ServerDescription ('cluster0-shard-00-02.hpbqw.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('cluster0-shard-00-02.hpbqw.mongodb.net:27017: timed out')>]>"}
+2023-10-05 19:34:10,920 - INFO - Connect successfully to Mongo Production!
+2023-10-05 19:34:50,446 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017: timed out,ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017: timed out,ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017: timed out, Timeout: 30s, Topology Description: <TopologyDescription id: 651f47f2c90d3d57fda2356c, topology_type: ReplicaSetNoPrimary, servers: [<ServerDescription ('ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017: timed out')>, <ServerDescription ('ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017: timed out')>, <ServerDescription ('ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017: timed out')>]>"}
+2023-10-06 13:29:32,391 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-07 22:16:14,488 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-07 22:18:35,569 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-10-07 22:19:14,051 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'dict' object has no attribute '__dict__'"}
+2023-10-07 22:20:07,195 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-07 22:20:36,241 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-07 22:20:37,762 - INFO - {'actions': [{'action': 'Adding Your Site', 'points': 200}, {'action': 'Indexing New Site', 'points': 100}, {'action': 'Refer New User', 'points': 100}, {'action': 'Adding Logo', 'points': 50}, {'action': 'Adding Screenshot', 'points': 25}]}
+2023-10-07 22:20:37,770 - INFO - [{'action': 'Adding Your Site', 'points': 200}, {'action': 'Indexing New Site', 'points': 100}, {'action': 'Refer New User', 'points': 100}, {'action': 'Adding Logo', 'points': 50}, {'action': 'Adding Screenshot', 'points': 25}]
+2023-10-07 22:20:37,772 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'dict' object has no attribute '__dict__'"}
+2023-10-07 22:21:56,701 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-07 22:21:59,570 - INFO - {'actions': [{'action': 'Adding Your Site', 'points': 200}, {'action': 'Indexing New Site', 'points': 100}, {'action': 'Refer New User', 'points': 100}, {'action': 'Adding Logo', 'points': 50}, {'action': 'Adding Screenshot', 'points': 25}]}
+2023-10-07 22:21:59,580 - INFO - [{'action': 'Adding Your Site', 'points': 200}, {'action': 'Indexing New Site', 'points': 100}, {'action': 'Refer New User', 'points': 100}, {'action': 'Adding Logo', 'points': 50}, {'action': 'Adding Screenshot', 'points': 25}]
+2023-10-07 22:21:59,583 - INFO - {'action': 'Adding Your Site', 'points': 200}
+2023-10-07 22:21:59,585 - INFO - 200
+2023-10-07 22:21:59,587 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'dict' object has no attribute '__dict__'"}
+2023-10-07 22:24:23,304 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-07 22:24:30,900 - INFO - {'actions': [{'action': 'Adding Your Site', 'points': 200}, {'action': 'Indexing New Site', 'points': 100}, {'action': 'Refer New User', 'points': 100}, {'action': 'Adding Logo', 'points': 50}, {'action': 'Adding Screenshot', 'points': 25}]}
+2023-10-07 22:24:30,905 - INFO - [{'action': 'Adding Your Site', 'points': 200}, {'action': 'Indexing New Site', 'points': 100}, {'action': 'Refer New User', 'points': 100}, {'action': 'Adding Logo', 'points': 50}, {'action': 'Adding Screenshot', 'points': 25}]
+2023-10-07 22:24:30,910 - INFO - {'action': 'Adding Your Site', 'points': 200}
+2023-10-07 22:24:30,912 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'dict' object has no attribute 'action'"}
+2023-10-07 22:25:08,788 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-07 22:25:10,642 - INFO - {'actions': [{'action': 'Adding Your Site', 'points': 200}, {'action': 'Indexing New Site', 'points': 100}, {'action': 'Refer New User', 'points': 100}, {'action': 'Adding Logo', 'points': 50}, {'action': 'Adding Screenshot', 'points': 25}]}
+2023-10-07 22:25:10,646 - INFO - [{'action': 'Adding Your Site', 'points': 200}, {'action': 'Indexing New Site', 'points': 100}, {'action': 'Refer New User', 'points': 100}, {'action': 'Adding Logo', 'points': 50}, {'action': 'Adding Screenshot', 'points': 25}]
+2023-10-07 22:25:10,649 - INFO - {'action': 'Adding Your Site', 'points': 200}
+2023-10-07 22:25:10,652 - INFO - Adding Your Site
+2023-10-07 22:25:10,653 - INFO - 200
+2023-10-07 22:25:10,655 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'dict' object has no attribute '__dict__'"}
+2023-10-12 13:15:19,921 - INFO - Connect successfully to Mongo Production!
+2023-10-12 13:17:05,203 - INFO - Connect successfully to Mongo Production!
+2023-10-12 13:18:02,733 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017: timed out,ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017: timed out,ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017: timed out, Timeout: 30s, Topology Description: <TopologyDescription id: 65282a112ea98c83dd602637, topology_type: ReplicaSetNoPrimary, servers: [<ServerDescription ('ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017: timed out')>, <ServerDescription ('ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017: timed out')>, <ServerDescription ('ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017: timed out')>]>"}
+2023-10-12 13:18:31,753 - INFO - {'actions': [{'action': 'Adding Your Site', 'points': 200}, {'action': 'Indexing New Site', 'points': 100}, {'action': 'Refer New User', 'points': 100}, {'action': 'Adding Logo', 'points': 50}, {'action': 'Adding Screenshot', 'points': 25}]}
+2023-10-12 13:18:31,757 - INFO - [{'action': 'Adding Your Site', 'points': 200}, {'action': 'Indexing New Site', 'points': 100}, {'action': 'Refer New User', 'points': 100}, {'action': 'Adding Logo', 'points': 50}, {'action': 'Adding Screenshot', 'points': 25}]
+2023-10-12 13:18:31,761 - INFO - {'action': 'Adding Your Site', 'points': 200}
+2023-10-12 13:18:31,764 - INFO - Adding Your Site
+2023-10-12 13:18:31,767 - INFO - 200
+2023-10-12 13:18:31,773 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'dict' object has no attribute '__dict__'"}
+2023-10-12 13:19:49,478 - INFO - Connect successfully to Mongo Production!
+2023-10-12 13:19:51,624 - INFO - {'actions': [{'action': 'Adding Your Site', 'points': 200}, {'action': 'Indexing New Site', 'points': 100}, {'action': 'Refer New User', 'points': 100}, {'action': 'Adding Logo', 'points': 50}, {'action': 'Adding Screenshot', 'points': 25}]}
+2023-10-12 13:19:51,627 - INFO - [{'action': 'Adding Your Site', 'points': 200}, {'action': 'Indexing New Site', 'points': 100}, {'action': 'Refer New User', 'points': 100}, {'action': 'Adding Logo', 'points': 50}, {'action': 'Adding Screenshot', 'points': 25}]
+2023-10-12 13:19:51,633 - INFO - {'action': 'Adding Your Site', 'points': 200}
+2023-10-12 13:19:51,635 - INFO - Adding Your Site
+2023-10-12 13:19:51,642 - INFO - 200
+2023-10-12 13:19:51,645 - INFO - 1
+2023-10-12 13:19:51,648 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'dict' object has no attribute '__dict__'"}
+2023-10-12 13:25:01,675 - INFO - Connect successfully to Mongo Production!
+2023-10-12 13:25:07,906 - INFO - {'actions': [{'action': 'Adding Your Site', 'points': 200}, {'action': 'Indexing New Site', 'points': 100}, {'action': 'Refer New User', 'points': 100}, {'action': 'Adding Logo', 'points': 50}, {'action': 'Adding Screenshot', 'points': 25}]}
+2023-10-12 13:25:07,911 - INFO - [{'action': 'Adding Your Site', 'points': 200}, {'action': 'Indexing New Site', 'points': 100}, {'action': 'Refer New User', 'points': 100}, {'action': 'Adding Logo', 'points': 50}, {'action': 'Adding Screenshot', 'points': 25}]
+2023-10-12 13:25:07,914 - INFO - {'action': 'Adding Your Site', 'points': 200}
+2023-10-12 13:25:07,918 - INFO - Adding Your Site
+2023-10-12 13:25:07,921 - INFO - 200
+2023-10-12 13:25:07,929 - INFO - 1
+2023-10-12 13:25:38,002 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017: timed out,ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017: timed out,ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017: timed out, Timeout: 30s, Topology Description: <TopologyDescription id: 65282bed5dcc2a33ee494d48, topology_type: ReplicaSetNoPrimary, servers: [<ServerDescription ('ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017: timed out')>, <ServerDescription ('ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017: timed out')>, <ServerDescription ('ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017: timed out')>]>"}
+2023-10-12 13:25:58,761 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.'}
+2023-10-12 13:26:49,281 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017: timed out,ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017: timed out,ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017: timed out, Timeout: 30s, Topology Description: <TopologyDescription id: 65282bed5dcc2a33ee494d48, topology_type: ReplicaSetNoPrimary, servers: [<ServerDescription ('ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017: timed out')>, <ServerDescription ('ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017: timed out')>, <ServerDescription ('ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017: timed out')>]>"}
+2023-10-12 13:28:24,180 - INFO - Connect successfully to Mongo Production!
+2023-10-12 13:29:51,506 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017: timed out,ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017: timed out,ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017: timed out, Timeout: 30s, Topology Description: <TopologyDescription id: 65282cb8b6cfe6a76c04812e, topology_type: ReplicaSetNoPrimary, servers: [<ServerDescription ('ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017: timed out')>, <ServerDescription ('ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017: timed out')>, <ServerDescription ('ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017: timed out')>]>"}
+2023-10-12 13:31:12,597 - INFO - Connect successfully to Mongo Production!
+2023-10-12 13:31:56,180 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017: timed out,ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017: timed out,ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017: timed out, Timeout: 30s, Topology Description: <TopologyDescription id: 65282d600e6d07dd4c3008c0, topology_type: ReplicaSetNoPrimary, servers: [<ServerDescription ('ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017: timed out')>, <ServerDescription ('ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017: timed out')>, <ServerDescription ('ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017: timed out')>]>"}
+2023-10-12 13:35:01,756 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-12 13:36:09,294 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017: timed out,ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017: timed out,ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017: timed out, Timeout: 30s, Topology Description: <TopologyDescription id: 65282e450d83fdc5cdb1b73a, topology_type: ReplicaSetNoPrimary, servers: [<ServerDescription ('ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017: timed out')>, <ServerDescription ('ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017: timed out')>, <ServerDescription ('ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017: timed out')>]>"}
+2023-10-12 13:36:32,542 - INFO - Database(MongoClient(host=['ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017'], document_class=dict, tz_aware=False, connect=True, authsource='admin', replicaset='atlas-2edcwr-shard-0', tls=True, tlscafile='C:\\Users\\adamc\\bulkmag_dev_Yesid\\prior-work-1\\backend\\venv\\Lib\\site-packages\\certifi\\cacert.pem'), 'test')
+2023-10-12 13:36:32,546 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-12 13:37:06,548 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017: timed out,ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017: timed out,ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017: timed out, Timeout: 30s, Topology Description: <TopologyDescription id: 65282ea0feb7c5b534ebdf58, topology_type: ReplicaSetNoPrimary, servers: [<ServerDescription ('ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017: timed out')>, <ServerDescription ('ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017: timed out')>, <ServerDescription ('ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017: timed out')>]>"}
+2023-10-12 13:46:45,027 - INFO - here: ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017: timed out,ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017: timed out,ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017: timed out, Timeout: 30s, Topology Description: <TopologyDescription id: 652830e68910b2bff1031a6d, topology_type: ReplicaSetNoPrimary, servers: [<ServerDescription ('ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017: timed out')>, <ServerDescription ('ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017: timed out')>, <ServerDescription ('ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017: timed out')>]>
+2023-10-12 13:46:45,028 - INFO - Database(MongoClient(host=['ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017'], document_class=dict, tz_aware=False, connect=True, authsource='admin', replicaset='atlas-2edcwr-shard-0', tls=True, tlscafile='C:\\Users\\adamc\\bulkmag_dev_Yesid\\prior-work-1\\backend\\venv\\Lib\\site-packages\\certifi\\cacert.pem'), 'test')
+2023-10-12 13:46:45,030 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-13 20:29:35,808 - INFO - ['test', 'admin', 'local']
+2023-10-13 20:29:35,811 - INFO - Database(MongoClient(host=['ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017'], document_class=dict, tz_aware=False, connect=True, authsource='admin', replicaset='atlas-2edcwr-shard-0', tls=True, tlscafile='C:\\Users\\adamc\\bulkmag_dev_Yesid\\prior-work-1\\backend\\venv\\Lib\\site-packages\\certifi\\cacert.pem'), 'test')
+2023-10-13 20:29:35,814 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-13 20:29:43,875 - INFO - {'actions': [{'action': 'Adding Your Site', 'points': 200}, {'action': 'Indexing New Site', 'points': 100}, {'action': 'Refer New User', 'points': 100}, {'action': 'Adding Logo', 'points': 50}, {'action': 'Adding Screenshot', 'points': 25}]}
+2023-10-13 20:29:43,884 - INFO - [{'action': 'Adding Your Site', 'points': 200}, {'action': 'Indexing New Site', 'points': 100}, {'action': 'Refer New User', 'points': 100}, {'action': 'Adding Logo', 'points': 50}, {'action': 'Adding Screenshot', 'points': 25}]
+2023-10-13 20:29:43,889 - INFO - {'action': 'Adding Your Site', 'points': 200}
+2023-10-13 20:29:43,890 - INFO - Adding Your Site
+2023-10-13 20:29:43,892 - INFO - 200
+2023-10-13 20:29:43,893 - INFO - 1
+2023-10-13 20:29:44,376 - INFO - {'action': 'Indexing New Site', 'points': 100}
+2023-10-13 20:29:44,380 - INFO - Indexing New Site
+2023-10-13 20:29:44,383 - INFO - 100
+2023-10-13 20:29:44,386 - INFO - 1
+2023-10-13 20:29:44,844 - INFO - {'action': 'Refer New User', 'points': 100}
+2023-10-13 20:29:44,846 - INFO - Refer New User
+2023-10-13 20:29:44,849 - INFO - 100
+2023-10-13 20:29:44,851 - INFO - 1
+2023-10-13 20:29:45,299 - INFO - {'action': 'Adding Logo', 'points': 50}
+2023-10-13 20:29:45,305 - INFO - Adding Logo
+2023-10-13 20:29:45,307 - INFO - 50
+2023-10-13 20:29:45,309 - INFO - 1
+2023-10-13 20:29:45,756 - INFO - {'action': 'Adding Screenshot', 'points': 25}
+2023-10-13 20:29:45,759 - INFO - Adding Screenshot
+2023-10-13 20:29:45,762 - INFO - 25
+2023-10-13 20:29:45,763 - INFO - 1
+2023-10-13 22:55:47,304 - INFO - ['test', 'admin', 'local']
+2023-10-13 22:55:47,307 - INFO - Database(MongoClient(host=['ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017'], document_class=dict, tz_aware=False, connect=True, authsource='admin', replicaset='atlas-2edcwr-shard-0', tls=True, tlscafile='C:\\Users\\adamc\\bulkmag_dev_Yesid\\prior-work-1\\backend\\venv\\Lib\\site-packages\\certifi\\cacert.pem'), 'test')
+2023-10-13 22:55:47,313 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-13 22:56:29,903 - INFO - ['test', 'admin', 'local']
+2023-10-13 22:56:29,906 - INFO - Database(MongoClient(host=['ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017'], document_class=dict, tz_aware=False, connect=True, authsource='admin', replicaset='atlas-2edcwr-shard-0', tls=True, tlscafile='C:\\Users\\adamc\\bulkmag_dev_Yesid\\prior-work-1\\backend\\venv\\Lib\\site-packages\\certifi\\cacert.pem'), 'test')
+2023-10-13 22:56:29,911 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-13 22:58:25,211 - INFO - ['test', 'admin', 'local']
+2023-10-13 22:58:25,212 - INFO - Database(MongoClient(host=['ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017'], document_class=dict, tz_aware=False, connect=True, authsource='admin', replicaset='atlas-2edcwr-shard-0', tls=True, tlscafile='C:\\Users\\adamc\\bulkmag_dev_Yesid\\prior-work-1\\backend\\venv\\Lib\\site-packages\\certifi\\cacert.pem'), 'test')
+2023-10-13 22:58:25,213 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-13 23:00:47,541 - INFO - ['test', 'admin', 'local']
+2023-10-13 23:00:47,548 - INFO - Database(MongoClient(host=['ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017'], document_class=dict, tz_aware=False, connect=True, authsource='admin', replicaset='atlas-2edcwr-shard-0', tls=True, tlscafile='C:\\Users\\adamc\\bulkmag_dev_Yesid\\prior-work-1\\backend\\venv\\Lib\\site-packages\\certifi\\cacert.pem'), 'test')
+2023-10-13 23:00:47,549 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-13 23:01:55,535 - INFO - ['test', 'admin', 'local']
+2023-10-13 23:01:55,538 - INFO - Database(MongoClient(host=['ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017'], document_class=dict, tz_aware=False, connect=True, authsource='admin', replicaset='atlas-2edcwr-shard-0', tls=True, tlscafile='C:\\Users\\adamc\\bulkmag_dev_Yesid\\prior-work-1\\backend\\venv\\Lib\\site-packages\\certifi\\cacert.pem'), 'test')
+2023-10-13 23:01:55,542 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-13 23:02:48,680 - INFO - ['test', 'admin', 'local']
+2023-10-13 23:02:48,683 - INFO - Database(MongoClient(host=['ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017'], document_class=dict, tz_aware=False, connect=True, authsource='admin', replicaset='atlas-2edcwr-shard-0', tls=True, tlscafile='C:\\Users\\adamc\\bulkmag_dev_Yesid\\prior-work-1\\backend\\venv\\Lib\\site-packages\\certifi\\cacert.pem'), 'test')
+2023-10-13 23:02:48,687 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-13 23:07:02,530 - INFO - ['test', 'admin', 'local']
+2023-10-13 23:07:02,534 - INFO - Database(MongoClient(host=['ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017'], document_class=dict, tz_aware=False, connect=True, authsource='admin', replicaset='atlas-2edcwr-shard-0', tls=True, tlscafile='C:\\Users\\adamc\\bulkmag_dev_Yesid\\prior-work-1\\backend\\venv\\Lib\\site-packages\\certifi\\cacert.pem'), 'test')
+2023-10-13 23:07:02,538 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-13 23:07:30,079 - INFO - ['test', 'admin', 'local']
+2023-10-13 23:07:30,082 - INFO - Database(MongoClient(host=['ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017'], document_class=dict, tz_aware=False, connect=True, authsource='admin', replicaset='atlas-2edcwr-shard-0', tls=True, tlscafile='C:\\Users\\adamc\\bulkmag_dev_Yesid\\prior-work-1\\backend\\venv\\Lib\\site-packages\\certifi\\cacert.pem'), 'test')
+2023-10-13 23:07:30,088 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-13 23:09:45,859 - INFO - ['test', 'admin', 'local']
+2023-10-13 23:09:45,860 - INFO - Database(MongoClient(host=['ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017'], document_class=dict, tz_aware=False, connect=True, authsource='admin', replicaset='atlas-2edcwr-shard-0', tls=True, tlscafile='C:\\Users\\adamc\\bulkmag_dev_Yesid\\prior-work-1\\backend\\venv\\Lib\\site-packages\\certifi\\cacert.pem'), 'test')
+2023-10-13 23:09:45,862 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-13 23:11:16,890 - INFO - ['test', 'admin', 'local']
+2023-10-13 23:11:16,893 - INFO - Database(MongoClient(host=['ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017'], document_class=dict, tz_aware=False, connect=True, authsource='admin', replicaset='atlas-2edcwr-shard-0', tls=True, tlscafile='C:\\Users\\adamc\\bulkmag_dev_Yesid\\prior-work-1\\backend\\venv\\Lib\\site-packages\\certifi\\cacert.pem'), 'test')
+2023-10-13 23:11:16,898 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-13 23:12:26,484 - INFO - ['test', 'admin', 'local']
+2023-10-13 23:12:26,490 - INFO - Database(MongoClient(host=['ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017'], document_class=dict, tz_aware=False, connect=True, authsource='admin', replicaset='atlas-2edcwr-shard-0', tls=True, tlscafile='C:\\Users\\adamc\\bulkmag_dev_Yesid\\prior-work-1\\backend\\venv\\Lib\\site-packages\\certifi\\cacert.pem'), 'test')
+2023-10-13 23:12:26,493 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-13 23:12:31,542 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '405 Method Not Allowed: The method is not allowed for the requested URL.'}
+2023-10-13 23:12:38,670 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'user_id'"}
+2023-10-13 23:13:27,660 - INFO - ['test', 'admin', 'local']
+2023-10-13 23:13:27,663 - INFO - Database(MongoClient(host=['ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017'], document_class=dict, tz_aware=False, connect=True, authsource='admin', replicaset='atlas-2edcwr-shard-0', tls=True, tlscafile='C:\\Users\\adamc\\bulkmag_dev_Yesid\\prior-work-1\\backend\\venv\\Lib\\site-packages\\certifi\\cacert.pem'), 'test')
+2023-10-13 23:13:27,667 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-13 23:13:31,006 - INFO - 64663fa81016c1c49846c527
+2023-10-13 23:13:31,549 - INFO - 1
+2023-10-13 23:13:31,552 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'user_id'"}
+2023-10-13 23:14:45,584 - INFO - ['test', 'admin', 'local']
+2023-10-13 23:14:45,588 - INFO - Database(MongoClient(host=['ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017'], document_class=dict, tz_aware=False, connect=True, authsource='admin', replicaset='atlas-2edcwr-shard-0', tls=True, tlscafile='C:\\Users\\adamc\\bulkmag_dev_Yesid\\prior-work-1\\backend\\venv\\Lib\\site-packages\\certifi\\cacert.pem'), 'test')
+2023-10-13 23:14:45,592 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-13 23:14:53,512 - INFO - 64663fa81016c1c49846c527
+2023-10-13 23:14:54,083 - INFO - 1
+2023-10-13 23:14:54,086 - INFO - 2
+2023-10-13 23:14:54,092 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'user_id'"}
+2023-10-13 23:15:26,078 - INFO - ['test', 'admin', 'local']
+2023-10-13 23:15:26,081 - INFO - Database(MongoClient(host=['ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017'], document_class=dict, tz_aware=False, connect=True, authsource='admin', replicaset='atlas-2edcwr-shard-0', tls=True, tlscafile='C:\\Users\\adamc\\bulkmag_dev_Yesid\\prior-work-1\\backend\\venv\\Lib\\site-packages\\certifi\\cacert.pem'), 'test')
+2023-10-13 23:15:26,086 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-13 23:15:33,294 - INFO - 64663fa81016c1c49846c527
+2023-10-13 23:15:33,915 - INFO - 1
+2023-10-13 23:15:33,919 - INFO - 2
+2023-10-13 23:15:33,923 - INFO - 64663fa81016c1c49846c527
+2023-10-13 23:15:34,121 - INFO - {'updated_count': 1}
+2023-10-13 23:18:14,857 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'add_user' is not a valid ObjectId, it must be a 12-byte input or a 24-character hex string"}
+2023-10-13 23:18:56,361 - INFO - ['test', 'admin', 'local']
+2023-10-13 23:18:56,363 - INFO - Database(MongoClient(host=['ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017'], document_class=dict, tz_aware=False, connect=True, authsource='admin', replicaset='atlas-2edcwr-shard-0', tls=True, tlscafile='C:\\Users\\adamc\\bulkmag_dev_Yesid\\prior-work-1\\backend\\venv\\Lib\\site-packages\\certifi\\cacert.pem'), 'test')
+2023-10-13 23:18:56,366 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-13 23:18:58,970 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '400 Bad Request: The browser (or proxy) sent a request that this server could not understand.'}
+2023-10-13 23:19:35,272 - INFO - ['test', 'admin', 'local']
+2023-10-13 23:19:35,274 - INFO - Database(MongoClient(host=['ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017'], document_class=dict, tz_aware=False, connect=True, authsource='admin', replicaset='atlas-2edcwr-shard-0', tls=True, tlscafile='C:\\Users\\adamc\\bulkmag_dev_Yesid\\prior-work-1\\backend\\venv\\Lib\\site-packages\\certifi\\cacert.pem'), 'test')
+2023-10-13 23:19:35,280 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-13 23:19:40,333 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '400 Bad Request: The browser (or proxy) sent a request that this server could not understand.'}
+2023-10-13 23:20:29,903 - INFO - ['test', 'admin', 'local']
+2023-10-13 23:20:29,905 - INFO - Database(MongoClient(host=['ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017'], document_class=dict, tz_aware=False, connect=True, authsource='admin', replicaset='atlas-2edcwr-shard-0', tls=True, tlscafile='C:\\Users\\adamc\\bulkmag_dev_Yesid\\prior-work-1\\backend\\venv\\Lib\\site-packages\\certifi\\cacert.pem'), 'test')
+2023-10-13 23:20:29,907 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-13 23:20:34,234 - INFO - 1
+2023-10-13 23:20:34,238 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '400 Bad Request: The browser (or proxy) sent a request that this server could not understand.'}
+2023-10-13 23:20:40,966 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '400 Bad Request: The browser (or proxy) sent a request that this server could not understand.'}
+2023-10-13 23:22:31,171 - INFO - ['test', 'admin', 'local']
+2023-10-13 23:22:31,175 - INFO - Database(MongoClient(host=['ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017'], document_class=dict, tz_aware=False, connect=True, authsource='admin', replicaset='atlas-2edcwr-shard-0', tls=True, tlscafile='C:\\Users\\adamc\\bulkmag_dev_Yesid\\prior-work-1\\backend\\venv\\Lib\\site-packages\\certifi\\cacert.pem'), 'test')
+2023-10-13 23:22:31,180 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-13 23:22:36,905 - INFO - 1
+2023-10-13 23:22:36,908 - INFO - 2
+2023-10-13 23:22:36,914 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '400 Bad Request: The browser (or proxy) sent a request that this server could not understand.'}
+2023-10-13 23:23:12,668 - INFO - ['test', 'admin', 'local']
+2023-10-13 23:23:12,671 - INFO - Database(MongoClient(host=['ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017'], document_class=dict, tz_aware=False, connect=True, authsource='admin', replicaset='atlas-2edcwr-shard-0', tls=True, tlscafile='C:\\Users\\adamc\\bulkmag_dev_Yesid\\prior-work-1\\backend\\venv\\Lib\\site-packages\\certifi\\cacert.pem'), 'test')
+2023-10-13 23:23:12,675 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-13 23:23:16,626 - INFO - 2
+2023-10-13 23:23:16,630 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '400 Bad Request: The browser (or proxy) sent a request that this server could not understand.'}
+2023-10-13 23:24:01,208 - INFO - ['test', 'admin', 'local']
+2023-10-13 23:24:01,212 - INFO - Database(MongoClient(host=['ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017'], document_class=dict, tz_aware=False, connect=True, authsource='admin', replicaset='atlas-2edcwr-shard-0', tls=True, tlscafile='C:\\Users\\adamc\\bulkmag_dev_Yesid\\prior-work-1\\backend\\venv\\Lib\\site-packages\\certifi\\cacert.pem'), 'test')
+2023-10-13 23:24:01,216 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-13 23:24:04,029 - INFO - 2
+2023-10-13 23:24:04,033 - INFO - <Request 'http://127.0.0.1:5000/users/add_user' [POST]>
+2023-10-13 23:24:04,039 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '400 Bad Request: The browser (or proxy) sent a request that this server could not understand.'}
+2023-10-13 23:25:07,048 - INFO - ['test', 'admin', 'local']
+2023-10-13 23:25:07,054 - INFO - Database(MongoClient(host=['ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017'], document_class=dict, tz_aware=False, connect=True, authsource='admin', replicaset='atlas-2edcwr-shard-0', tls=True, tlscafile='C:\\Users\\adamc\\bulkmag_dev_Yesid\\prior-work-1\\backend\\venv\\Lib\\site-packages\\certifi\\cacert.pem'), 'test')
+2023-10-13 23:25:07,056 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-13 23:25:09,862 - INFO - 2
+2023-10-13 23:25:09,867 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "'Request' object has no attribute 'body'"}
+2023-10-13 23:25:44,220 - INFO - ['test', 'admin', 'local']
+2023-10-13 23:25:44,223 - INFO - Database(MongoClient(host=['ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017'], document_class=dict, tz_aware=False, connect=True, authsource='admin', replicaset='atlas-2edcwr-shard-0', tls=True, tlscafile='C:\\Users\\adamc\\bulkmag_dev_Yesid\\prior-work-1\\backend\\venv\\Lib\\site-packages\\certifi\\cacert.pem'), 'test')
+2023-10-13 23:25:44,227 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-13 23:25:48,492 - INFO - {'name': 'Tester Man', 'email': 'testerman@gmail.com', 'password': 'testerman1'}
+2023-10-13 23:25:48,828 - INFO - errors: (True, '')
+2023-10-13 23:26:08,223 - INFO - 652a0a3c54c0ef6eaa23bd77
+2023-10-13 23:26:08,592 - INFO - 1
+2023-10-13 23:26:08,595 - INFO - 2
+2023-10-13 23:26:08,599 - INFO - 652a0a3c54c0ef6eaa23bd77
+2023-10-13 23:26:08,795 - INFO - {'updated_count': 1}
+2023-10-13 23:27:31,026 - INFO - ['test', 'admin', 'local']
+2023-10-13 23:27:31,028 - INFO - Database(MongoClient(host=['ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017'], document_class=dict, tz_aware=False, connect=True, authsource='admin', replicaset='atlas-2edcwr-shard-0', tls=True, tlscafile='C:\\Users\\adamc\\bulkmag_dev_Yesid\\prior-work-1\\backend\\venv\\Lib\\site-packages\\certifi\\cacert.pem'), 'test')
+2023-10-13 23:27:31,032 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-13 23:27:41,318 - INFO - 652a0a3c54c0ef6eaa23bd77
+2023-10-13 23:27:41,673 - INFO - 1
+2023-10-13 23:27:41,675 - INFO - 0
+2023-10-13 23:27:41,680 - INFO - <class 'int'>
+2023-10-13 23:27:41,683 - INFO - 2
+2023-10-13 23:27:41,684 - INFO - 652a0a3c54c0ef6eaa23bd77
+2023-10-13 23:27:41,878 - INFO - {'updated_count': 1}
+2023-10-13 23:28:18,267 - INFO - 652a0a3c54c0ef6eaa23bd77
+2023-10-13 23:28:18,639 - INFO - 1
+2023-10-13 23:28:18,643 - INFO - 0
+2023-10-13 23:28:18,647 - INFO - <class 'int'>
+2023-10-13 23:28:18,650 - INFO - 2
+2023-10-13 23:28:18,652 - INFO - 652a0a3c54c0ef6eaa23bd77
+2023-10-13 23:28:18,844 - INFO - {'updated_count': 1}
+2023-10-13 23:28:57,692 - INFO - 652a0a3c54c0ef6eaa23bd77
+2023-10-13 23:28:58,063 - INFO - 1
+2023-10-13 23:28:58,066 - INFO - 200
+2023-10-13 23:28:58,070 - INFO - <class 'int'>
+2023-10-13 23:28:58,072 - INFO - 2
+2023-10-13 23:28:58,076 - INFO - 652a0a3c54c0ef6eaa23bd77
+2023-10-13 23:28:58,228 - INFO - {'updated_count': 1}
+2023-10-13 23:31:04,124 - INFO - ['test', 'admin', 'local']
+2023-10-13 23:31:04,127 - INFO - Database(MongoClient(host=['ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017'], document_class=dict, tz_aware=False, connect=True, authsource='admin', replicaset='atlas-2edcwr-shard-0', tls=True, tlscafile='C:\\Users\\adamc\\bulkmag_dev_Yesid\\prior-work-1\\backend\\venv\\Lib\\site-packages\\certifi\\cacert.pem'), 'test')
+2023-10-13 23:31:04,130 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-13 23:31:23,124 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.'}
+2023-10-13 23:31:30,031 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.'}
+2023-10-13 23:32:00,134 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': '500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.'}
+2023-10-13 23:33:06,588 - INFO - ['test', 'admin', 'local']
+2023-10-13 23:33:06,590 - INFO - Database(MongoClient(host=['ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017'], document_class=dict, tz_aware=False, connect=True, authsource='admin', replicaset='atlas-2edcwr-shard-0', tls=True, tlscafile='C:\\Users\\adamc\\bulkmag_dev_Yesid\\prior-work-1\\backend\\venv\\Lib\\site-packages\\certifi\\cacert.pem'), 'test')
+2023-10-13 23:33:06,595 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-13 23:33:40,022 - INFO - 652a0a3c54c0ef6eaa23bd77
+2023-10-13 23:33:40,381 - INFO - 1
+2023-10-13 23:33:40,384 - INFO - 200
+2023-10-13 23:33:40,390 - INFO - <class 'int'>
+2023-10-13 23:33:40,393 - INFO - 2
+2023-10-13 23:33:40,401 - INFO - 652a0a3c54c0ef6eaa23bd77
+2023-10-13 23:33:40,690 - INFO - {'updated_count': 1}
+2023-10-13 23:34:11,685 - INFO - 652a0a3c54c0ef6eaa23bd77
+2023-10-13 23:34:11,986 - INFO - 1
+2023-10-13 23:34:11,988 - INFO - 300
+2023-10-13 23:34:11,991 - INFO - <class 'int'>
+2023-10-13 23:34:11,991 - INFO - 2
+2023-10-13 23:34:11,992 - INFO - 652a0a3c54c0ef6eaa23bd77
+2023-10-13 23:34:12,146 - INFO - {'updated_count': 1}
+2023-10-13 23:34:40,287 - INFO - 652a0a3c54c0ef6eaa23bd77
+2023-10-13 23:34:40,586 - INFO - 1
+2023-10-13 23:34:40,589 - INFO - 400
+2023-10-13 23:34:40,593 - INFO - <class 'int'>
+2023-10-13 23:34:40,594 - INFO - 2
+2023-10-13 23:34:40,595 - INFO - 652a0a3c54c0ef6eaa23bd77
+2023-10-13 23:34:40,750 - INFO - {'updated_count': 1}
+2023-10-13 23:34:59,296 - INFO - 652a0a3c54c0ef6eaa23bd77
+2023-10-13 23:34:59,598 - INFO - 1
+2023-10-13 23:34:59,603 - INFO - 500
+2023-10-13 23:34:59,604 - INFO - <class 'int'>
+2023-10-13 23:34:59,606 - INFO - 2
+2023-10-13 23:34:59,607 - INFO - 652a0a3c54c0ef6eaa23bd77
+2023-10-13 23:34:59,760 - INFO - {'updated_count': 1}
+2023-10-13 23:35:20,377 - INFO - 652a0a3c54c0ef6eaa23bd77
+2023-10-13 23:35:20,678 - INFO - 1
+2023-10-13 23:35:20,680 - INFO - 550
+2023-10-13 23:35:20,683 - INFO - <class 'int'>
+2023-10-13 23:35:20,684 - INFO - 2
+2023-10-13 23:35:20,686 - INFO - 652a0a3c54c0ef6eaa23bd77
+2023-10-13 23:35:20,839 - INFO - {'updated_count': 1}
+2023-10-13 23:35:26,184 - ERROR - {'message': 'An unexpected error has occurred on the server.', 'error': "401 Unauthorized: The server could not verify that you are authorized to access the URL requested. You either supplied the wrong credentials (e.g. a bad password), or your browser doesn't understand how to supply the credentials required."}
+2023-10-13 23:42:28,784 - ERROR - Saving file - Failure:Site - https://www.giraffe.comError message - No valid image found in favicon
+2023-10-13 23:42:31,955 - INFO -  Upload icon to s3 successful.
+2023-10-13 23:44:11,360 - INFO - ['test', 'admin', 'local']
+2023-10-13 23:44:11,363 - INFO - Database(MongoClient(host=['ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017'], document_class=dict, tz_aware=False, connect=True, authsource='admin', replicaset='atlas-2edcwr-shard-0', tls=True, tlscafile='C:\\Users\\adamc\\bulkmag_dev_Yesid\\prior-work-1\\backend\\venv\\Lib\\site-packages\\certifi\\cacert.pem'), 'test')
+2023-10-13 23:44:11,367 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-13 23:44:33,741 - ERROR - Saving file - Failure:Site - https://www.zebra.comError message - No valid image found in favicon
+2023-10-13 23:44:36,465 - INFO -  Upload icon to s3 successful.
+2023-10-13 23:44:37,064 - INFO - 652a0a3c54c0ef6eaa23bd77
+2023-10-13 23:44:37,363 - INFO - 1
+2023-10-13 23:44:37,368 - INFO - 575
+2023-10-13 23:44:37,372 - INFO - <class 'int'>
+2023-10-13 23:44:37,373 - INFO - 2
+2023-10-13 23:44:37,375 - INFO - 652a0a3c54c0ef6eaa23bd77
+2023-10-13 23:44:37,531 - INFO - {'updated_count': 1}
+2023-10-13 23:45:12,373 - ERROR - Saving file - Failure:Site - https://www.lion.comError message - No valid image found in favicon
+2023-10-13 23:45:14,640 - INFO -  Upload icon to s3 successful.
+2023-10-13 23:45:15,235 - INFO - 652a0a3c54c0ef6eaa23bd77
+2023-10-13 23:45:15,531 - INFO - 1
+2023-10-13 23:45:15,533 - INFO - 775
+2023-10-13 23:45:15,536 - INFO - <class 'int'>
+2023-10-13 23:45:15,538 - INFO - 2
+2023-10-13 23:45:15,539 - INFO - 652a0a3c54c0ef6eaa23bd77
+2023-10-13 23:45:15,692 - INFO - {'updated_count': 1}
+2023-10-13 23:45:48,519 - INFO - ['test', 'admin', 'local']
+2023-10-13 23:45:48,524 - INFO - Database(MongoClient(host=['ac-x1bz6km-shard-00-02.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-00.tjj7n3c.mongodb.net:27017', 'ac-x1bz6km-shard-00-01.tjj7n3c.mongodb.net:27017'], document_class=dict, tz_aware=False, connect=True, authsource='admin', replicaset='atlas-2edcwr-shard-0', tls=True, tlscafile='C:\\Users\\adamc\\bulkmag_dev_Yesid\\prior-work-1\\backend\\venv\\Lib\\site-packages\\certifi\\cacert.pem'), 'test')
+2023-10-13 23:45:48,525 - INFO - Connect successfully to Mongo PreProduction!
+2023-10-13 23:46:39,608 - ERROR - Saving file - Failure:Site - https://www.test.comError message - HTTPSConnectionPool(host='www.test.com', port=443): Max retries exceeded with url: / (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x000001D02589DAD0>, 'Connection to www.test.com timed out. (connect timeout=None)'))
+2023-10-13 23:46:41,791 - INFO -  Upload icon to s3 successful.
+2023-10-13 23:46:42,399 - INFO - 652a0a3c54c0ef6eaa23bd77
+2023-10-13 23:46:42,697 - INFO - 1
+2023-10-13 23:46:42,698 - INFO - 975
+2023-10-13 23:46:42,701 - INFO - <class 'int'>
+2023-10-13 23:46:42,702 - INFO - 2
+2023-10-13 23:46:42,703 - INFO - 652a0a3c54c0ef6eaa23bd77
+2023-10-13 23:46:42,859 - INFO - {'updated_count': 1}
+2023-10-13 23:47:25,499 - ERROR - Saving file - Failure:Site - https://www.jaguar.comError message - No favicon.ico found in icons
+2023-10-13 23:47:27,308 - INFO -  Upload icon to s3 successful.
+2023-10-13 23:47:27,927 - INFO - 652a0a3c54c0ef6eaa23bd77
+2023-10-13 23:47:28,228 - INFO - 1
+2023-10-13 23:47:28,230 - INFO - 1075
+2023-10-13 23:47:28,233 - INFO - <class 'int'>
+2023-10-13 23:47:28,234 - INFO - 2
+2023-10-13 23:47:28,234 - INFO - 652a0a3c54c0ef6eaa23bd77
+2023-10-13 23:47:28,394 - INFO - {'updated_count': 1}

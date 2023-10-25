@@ -29,6 +29,7 @@ def begin_referral(referring_user_id):
     return initiate_referral(referring_user_id)
 
 
+#IMPORTANT
 @referrals_bp.route('/<referral_id>/complete_referral', methods=['PUT'])
 def confirm_referral(referral_id):
     return complete_referral(referral_id)
