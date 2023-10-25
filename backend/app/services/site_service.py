@@ -34,7 +34,7 @@ def get_all_sites(page=None):
 
 def create_site():
     media_links = []
-    data = request.json # json.loads(request.form['json'])
+    data = json.loads(request.form['json'])
     change_owner = False
 
     url = data.get('url')
@@ -568,7 +568,7 @@ def update_site_icon(site_id):
             site_data['logoChanged'] = data['logoChanged']
 
     site_data['logo'] = save_favicon(site_data['url'], data_icon)
-    response = site_repo.update(site_id, site_data, 'Adding Logo')
+    response = site_repo.update(site_id, site_data)
     addSiteAction(user_id, site_id, 'Adding Icon')
     return response
 
