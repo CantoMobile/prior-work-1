@@ -22,6 +22,11 @@ user_actions_bp = Blueprint('user_actions_bp', __name__, url_prefix='/user_actio
 #         data = request.json
 #         return get_all_user_sites(data['page'])
 
+
+@user_actions_bp.route('/', methods=['GET'])
+def get_user_actions():
+    return getAllActions()
+
 @user_actions_bp.route('/<user_id>/add_site_action/<site_id>', methods=['POST'])
 def add_site_action(user_id, site_id):
     action = request.json['action']
@@ -31,4 +36,9 @@ def add_site_action(user_id, site_id):
 def add_user_action(user_id, other_user_id):
     action = request.json['action']
     return addUserAction(user_id, other_user_id, action)
+
+@user_actions_bp.route('/score_breakdown/<user_id>', methods=['GET'])
+# @validate_token
+def get_user_score_breakdown(user_id):
+    return getScoreBreakdown(user_id)
 

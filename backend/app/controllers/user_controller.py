@@ -93,10 +93,12 @@ def update_information(user_id):
 def validate_otp():
     return validate_user_otp()
 
+
 @user_bp.route('/<user_id>/remove_site/<site_id>', methods=['DELETE'])
 # @validate_token
 def remove_site(user_id, site_id):
     return remove_site_user(user_id, site_id)
+
 
 
 # google = oauth.register(

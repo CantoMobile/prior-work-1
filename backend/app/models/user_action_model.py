@@ -2,9 +2,10 @@ import datetime
 
 class UserAction:
 
-    def __init__(self, user_id, action, site_id=None, other_user_id=None, completed_at=None, _id=None):
+    def __init__(self, user_id, action, points, site_id=None, other_user_id=None, completed_at=None, _id=None):
         self.user_id = user_id
         self.action = action
+        self.points = points
         self.site_id = site_id
         self.other_user_id = other_user_id
         if completed_at is None:
