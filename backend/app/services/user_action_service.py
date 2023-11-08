@@ -23,9 +23,12 @@ def getUserActions(user_id):
     return user_actions
 
 
-def getPoints(action):
-    points = getAction(action)['points']
-    logger.info(points)
+def getPoints(action_name):
+    action = getAction(action_name)
+    if not action:
+        abort(404)
+    else:
+        points = action['points']
     
     if not points:
         abort(404)
@@ -33,14 +36,16 @@ def getPoints(action):
 
 
 def addSiteAction(user_id, site_id, action):
-    logger.info(user_id)
     user_data = user_repo.findById(user_id)
     site_data = site_repo.findById(site_id)
     if not user_data or not site_data:
         abort(404)
-    logger.info("1")
-
     points = getPoints(action)
+    if 'score' not in user_data:
+        user_data['score'] = points
+    else:
+        user_data['score'] += points
+    user_repo.update(user_id, user_data)
     user_action_data = {
         "user_id": user_id,
         "site_id": site_id,
@@ -58,7 +63,9 @@ def addUserAction(user_id, other_user_id, action):
     if not user_data or not other_user_data:
         abort(404)
 
-    getPoints(action)
+    points = getPoints(action)
+    user_data['score'] += points
+    user_repo.update(user_id, user_data)
     user_action_data = {
         "user_id": user_id,
         "other_user_id": other_user_data,

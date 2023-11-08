@@ -160,7 +160,7 @@ def update_user_information(user_id):
                     return jsonify({"error":
                                     "There was an error sending the confirmation code, please try again later."}), 401
             else:
-                return {"error": "Same passwords"}, 401
+                return {"error": "Same emails, other details updated."}, 401
         else:
             return result
     else:
@@ -275,6 +275,8 @@ def set_user_password():
         if add_one_otp(data):
             return jsonify({"message": "code sended",
                             "user_id": user_data['_id']})
+        else:
+            abort(404)
 
 
 def validate_email_domain(email):

@@ -148,6 +148,8 @@ def getFaviconFromURL(url):
                 image = r.content
                 msg += "Saving file - success"
                 link = icon.url
+            else:
+                raise Exception
         else:
             raise ValueError("No favicon.ico found in icons")
 

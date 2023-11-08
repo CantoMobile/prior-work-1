@@ -38,7 +38,7 @@ def create_site():
     change_owner = False
 
     url = data.get('url')
-    #dmin_email = data.get('admin_email', 'admin@cantonica.com')
+    #admin_email = data.get('admin_email', 'admin@cantonica.com')
     if real_site(url) == False:
         return {"error":"The url is not valid or the site does not exist."}, 401
     actual_site = site_actual(url)
@@ -76,7 +76,6 @@ def create_site():
     else:
         print("llegué a el else icono")
         icon = getFaviconFromURL(url)
-
     site = Site(
         url=url,
         name=data['name'],
@@ -558,7 +557,6 @@ def save_favicon(url, file):
 def update_site_icon(site_id):
     data_icon = request.files.get('icon')
     user_id = request.json['user_id']
-
     site_data = get_one_site(site_id)
     if not data_icon:
         abort(404)
@@ -566,10 +564,9 @@ def update_site_icon(site_id):
         data = json.loads(request.form['json'])
         if 'logoChanged' in data:
             site_data['logoChanged'] = data['logoChanged']
-
     site_data['logo'] = save_favicon(site_data['url'], data_icon)
     response = site_repo.update(site_id, site_data)
-    addSiteAction(user_id, site_id, 'Adding Icon')
+    addSiteAction(user_id, site_id, 'Adding Logo')
     return response
 
 

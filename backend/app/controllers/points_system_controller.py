@@ -10,7 +10,7 @@ points_system_bp = Blueprint('points_system_bp', __name__, url_prefix='/points_s
 
 @points_system_bp.route('/', methods=['GET'])
 def get_actions():
-    return getAllActions
+    return getAllActions()
 
 @points_system_bp.route('/add_actions', methods=['POST'])
 def add_actions():

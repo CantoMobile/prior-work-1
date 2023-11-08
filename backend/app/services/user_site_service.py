@@ -96,7 +96,10 @@ def return_not_referenced(user_id, page=None):
 
 def return_referenced(user_id, page=None):
     user_site_data = user_site_repo.findByField('user_id', user_id)
-    sites = user_site_data.get('site', [])
+    try:
+        sites = user_site_data.get('site', [])
+    except: 
+        abort(404)
     referenced_ids = [site['_id'] for site in sites]
     if page is not None:
         return site_repo.getReferenced(referenced_ids, page, 15)
